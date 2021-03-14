@@ -266,7 +266,7 @@
 <body>
 	<%@ include file="../common/mainbar-basic.jsp" %>
     <div class="bcrumb">
-        <span><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="25px" height="25px" onclick="location.href='http://www.naver.com';" style="cursor:pointer;"></span>&nbsp;&nbsp;&nbsp;
+        <span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
         <span><a id="mName" href="">도서관 안내</a></span>&nbsp;&nbsp;&nbsp;
         <span><a id="subName" href="">오시는 길</a></span>
     </div>

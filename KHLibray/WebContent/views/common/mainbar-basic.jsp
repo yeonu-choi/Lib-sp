@@ -192,9 +192,9 @@
     </div>
     <div id="top-sub" onmouseleave="javascript:HideSub();">
             <ul class="sub01">
-                        <li><a href="">간략검색</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">상세검색</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">희망도서신청</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/search/briefSearch.jsp">간략검색</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세검색</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망도서신청</a>&nbsp;&nbsp;&nbsp;</li>
             </ul>
             <ul class="sub02">
                         <li><a href="">공지사항</a>&nbsp;&nbsp;&nbsp;</li>
@@ -210,9 +210,9 @@
              </ul>
              <ul class="sub04">
                         <li><a href="">회원정보수정</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">희망도서신청내역</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">대출내역</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">회원탈퇴</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/myLib/wishBookList.jsp">희망도서신청내역</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/myLib/loanList.jsp">대출내역</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/myLib/userleave.jsp">회원탈퇴</a>&nbsp;&nbsp;&nbsp;</li>
              </ul>
     </div>
 </body>

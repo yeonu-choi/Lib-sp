@@ -238,7 +238,7 @@
     <div class="sidebar">
             <div class="sideMenu">
                 <div id="subTitle">
-                    <span>대출 내역</span>
+                    <span>내 서재</span>
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>

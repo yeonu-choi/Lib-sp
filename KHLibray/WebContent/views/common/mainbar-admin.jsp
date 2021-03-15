@@ -190,27 +190,27 @@
         </div>
     </div>
     <div id="top-sub" onmouseleave="javascript:HideSub();">
-            <ul class="sub01">
-                        <li><a href="">간략검색</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">상세검색</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">희망도서신청</a>&nbsp;&nbsp;&nbsp;</li>
+           <ul class="sub01">
+                        <li><a href="<%= request.getContextPath() %>/views/search/briefSearch.jsp">간략검색</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세검색</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망도서신청</a>&nbsp;&nbsp;&nbsp;</li>
             </ul>
             <ul class="sub02">
-                        <li><a href="">공지사항</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/board/notice.jsp">공지사항</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="">FAQ</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="">Q&A</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="">이달의신간</a>&nbsp;&nbsp;&nbsp;</li>
             </ul>
             <ul class="sub03">
-                        <li><a href="">이용안내</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">도서현황</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">도서관일정</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">오시는길</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/libInfo/useGuide.jsp">이용안내</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/libInfo/bookStatus.jsp">도서현황</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/libInfo/libSchedule.jsp">도서관일정</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/libInfo/libMap.jsp">오시는길</a>&nbsp;&nbsp;&nbsp;</li>
              </ul>
              <ul class="sub04">
                         <li><a href="">도서등록</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">회원관리</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">반납처리</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/admin/userManage.jsp">회원관리</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/admin/bookReturn.jsp">반납처리</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="">희망도서확인</a>&nbsp;&nbsp;&nbsp;</li>
              </ul>
     </div>

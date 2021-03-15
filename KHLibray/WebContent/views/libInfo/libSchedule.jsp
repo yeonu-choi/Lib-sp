@@ -6,10 +6,59 @@
 <meta charset="UTF-8">
 <title>KH도서관</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<link href='<%=request.getContextPath()%>/resources/api/fullcalendar/packages/core/main.css' rel='stylesheet' />
+<link href='<%=request.getContextPath()%>/resources/api/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+<link href='<%=request.getContextPath()%>/resources/api/fullcalendar/packages/list/main.css' rel='stylesheet' />
+<script src='<%=request.getContextPath()%>/resources/api/fullcalendar/packages/core/main.js'></script>
+<script src='<%=request.getContextPath()%>/resources/api/fullcalendar/packages/interaction/main.js'></script>
+<script src='<%=request.getContextPath()%>/resources/api/fullcalendar/packages/daygrid/main.js'></script>
+<script src='<%=request.getContextPath()%>/resources/api/fullcalendar/packages/list/main.js'></script>
+<script src='<%=request.getContextPath()%>/resources/api/fullcalendar/packages/google-calendar/main.js'></script>
+<script src='<%=request.getContextPath()%>/resources/api/fullcalendar/packages/core/locales/ko.js'></script>
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+
+      plugins: [ 'interaction', 'dayGrid', 'list', 'googleCalendar' ],
+
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,listYear'
+      },
+      locale: 'ko',
+      displayEventTime: false, 
+      googleCalendarApiKey: 'AIzaSyAWY8-kKod7rbpoUcLq2Gu3WBZDDKqVlfU',
+
+      eventSources: [
+          {
+            googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+            color: '#a73d3d',
+          },
+          {
+            googleCalendarId: 'nalchip88@gmail.com',
+            className: 'KH도서관일정',
+            color: '#5f5f5f'
+          }
+        ],
+        
+        eventClick: function(arg) {
+            window.open(arg.event.url, 'google-calendar-event', 'width=400,height=300,left=600,top=300');
+
+            arg.jsEvent.preventDefault() 
+          }
+    });
+
+    calendar.render();
+  });
+  </script>
  <style>
-  body {
+  		body {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -125,6 +174,22 @@
             padding-bottom: 5px;
 
         }
+        
+        .schedule {
+        width : 60%;
+        margin-left: 27%;
+        margin-top : 50px;
+        margin-bottom : 100px;
+   		padding: 0;
+   		font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    	font-size: 16px;
+    	}
+        
+        
+        #calendar {
+   		width: 100%;
+   		margin: 0 auto;
+ 		 }
     </style>
 </head>
 <body>
@@ -161,8 +226,8 @@
         <span>도서관일정</span>
     </div>
     <div class="schedule">
-
-    </div>
+    <div id='calendar'></div>
+ 	</div>
 	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

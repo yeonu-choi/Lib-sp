@@ -186,7 +186,7 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                     <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/search/briefSearch.jsp">간략 검색</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/search/simpleSearch.jsp">간략 검색</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세 검색</a></p></td>
@@ -203,12 +203,12 @@
 	<div class="outer">
 		<div><p class="title">간략 검색</p><hr></div>
 		<div class="inner">
-			<form action="" method="get">
+			<form action="<%= request.getContextPath() %>/simple/search" method="get">
 				<div class="searchArea">
 					<div class="selectArea">
 						<select name="searchSelect" id="searchSelect">
-							<option>전체</option>
-							<option value="title">서명</option>
+							<option value="total">전체</option>
+							<option value="name">서명</option>
 							<option value="writer">저자</option>
 							<option value="publisher">발행처</option>
 						</select>

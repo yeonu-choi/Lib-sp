@@ -170,11 +170,21 @@
 
 
         .listArea {
-            width: 86%;
+            width: 83%;
             font-size : 15px;
             margin: auto;
-            padding: 10px 10px 0px 10px;
+            padding: 10px 10px 10px 10px;
             border-bottom: 1px rgb(194, 192, 192) solid;
+        }
+        
+        .select {
+            width :80%;
+            margin: auto;
+            text-align: right;
+            font-size : 15px;
+            padding: 0px 20px 10px 20px;
+            border-bottom: 1px rgb(194, 192, 192) solid;
+            
         }
 
         .resultArea {
@@ -271,7 +281,7 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                     <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/search/briefSearch.jsp">간략 검색</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/search/simpleSearch.jsp">간략 검색</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세 검색</a></p></td>
@@ -292,7 +302,7 @@
                 <div class="searchArea">
                     <div class="selectArea">
                     	<select name="searchSelect" id="searchSelect">
-                        	<option>전체</option>
+                        	<option value="total">전체</option>
                         	<option value="title">서명</option>
                         	<option value="writer">저자</option>
                         	<option value="publisher">발행처</option>
@@ -312,6 +322,25 @@
 			<br>
 
             <div class="listArea"><p>요청하신 에 대한 자료 검색 결과이며 총 건이 검색되었습니다.</p></div>
+	
+	        
+	        <!-- <div class="select">
+                <span>
+                    <select name="sortSelect" id="sortSelect">
+                    <option value="sName">서명순</option>
+                    <option value="sWriter">저자순</option>
+                    <option value="sLatest">최신순</option>
+                    </select>
+                </span>
+                <span>
+                    <select name="numSelect" id="numSelect">
+                        <option value="ten">10개</option>
+                        <option value="twenty">20개</option>
+                        <option value="thirty">30개</option>
+                    </select>
+                </span>
+            </div> -->
+	
 	
             <form action="" method="POST">
                 <div class="resultArea">

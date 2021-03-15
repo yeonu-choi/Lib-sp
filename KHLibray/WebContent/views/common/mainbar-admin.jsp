@@ -55,13 +55,13 @@
             position: relative;
         }
 
-        #top-logo > img {
-            position: absolute;
-            top: 0;
+        #logo {
+        position: absolute;
+            top: 20px;
             bottom: 0;
             left: 50px;
             right: 0;
-            margin: auto;
+            margin: auto; 
         }
 
         #MenuArea {
@@ -178,7 +178,7 @@
     </div>
     <div id="top-main">
         <div id="top-logo">
-            <img src="<%=request.getContextPath() %>/resources/image/yw/logo1.jpg" width="80%" height="80%">
+            <a id="logo" href="<%= request.getContextPath() %>"><img src="<%=request.getContextPath() %>/resources/image/yw/logo1.jpg" width="80%" height="80%"></a>
         </div>
         <div id="MenuArea">
             <ul class="mainMenu">

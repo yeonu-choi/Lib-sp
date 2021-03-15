@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>KH도서관</title>
 <style>
         body {
             margin: 0;
@@ -239,7 +239,6 @@
             text-decoration: none;
         }
     </style>
-</style>
 </head>
 <body>
 <%@ include file="../common/mainbar-basic.jsp" %>
@@ -252,20 +251,20 @@
     <div class="sidebar">
             <div class="sideMenu">
                 <div id="subTitle">
-                    <span>도서관 안내</span>
+                    <span>열린 공간</span>
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/libInfo/useGuide.jsp">이용 안내</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/board/notice.jsp">공지사항</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/libInfo/bookStatus.jsp">도서 현황</a></p></td>
+                        <td align="center"><p class="subm2"><a href="">FAQ</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/libInfo/libSchedule.jsp">도서관 일정</a></p></td>
+                        <td align="center"><p class="subm3"><a href="">Q&A</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/views/libInfo/libMap.jsp">오시는 길</a></p></td>
+                        <td align="center"><p class="subm4"><a href="">이달의 신간</a></p></td>
                     </tr>
                 </table>
             </div>

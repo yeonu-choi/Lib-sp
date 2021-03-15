@@ -206,7 +206,7 @@
     <div class="sidebar">
             <div class="sideMenu">
                 <div id="subTitle">
-                    <span>회원 탈퇴</span>
+                    <span>내 서재</span>
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>

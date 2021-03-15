@@ -204,26 +204,26 @@
 <div class="submArea">
     <div class="bcrumb">
         <span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
-        <span><a id="mName" href="">도서관 안내</a></span>&nbsp;&nbsp;&nbsp;
-        <span><a id="subName" href="">이용안내</a></span>
+        <span><a id="mName" href="">회원가입  및 로그인</a></span>&nbsp;&nbsp;&nbsp;
+        <span><a id="subName" href="">로그인</a></span>
     </div>
     <div class="sidebar">
             <div class="sideMenu">
                 <div id="subTitle">
-                    <span>도서관 안내</span>
+                    <span>로그인</span>
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/libInfo/useGuide.jsp">이용 안내</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%=request.getContextPath() %>/views/member/loginForm.jsp">로그인</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/libInfo/bookStatus.jsp">도서 현황</a></p></td>
+                        <td align="center"><p class="subm2"><a href="<%=request.getContextPath() %>/views/member/memberJoinForm.jsp">회원가입</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/libInfo/libSchedule.jsp">도서관 일정</a></p></td>
+                        <td align="center"><p class="subm3"><a href="">아이디 찾기</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/views/libInfo/libMap.jsp">오시는 길</a></p></td>
+                        <td align="center"><p class="subm4"><a href="">비밀번호 찾기</a></p></td>
                     </tr>
                 </table>
             </div>

@@ -171,9 +171,9 @@
     <div id="topbar">
         <div class="loginArea">
                 <ul id="topmenu">
-                    <li><a href="#" onclick="">로그인</a></li>
+                    <li><a href="<%=request.getContextPath() %>/views/member/loginForm.jsp">로그인</a></li>
                     <li>&nbsp;&nbsp;<img src="<%=request.getContextPath() %>/resources/image/yw/border_line.jpg">&nbsp;&nbsp;</li>
-                    <li><a href="#" onclick="">회원가입</a></li>
+                    <li><a href="<%=request.getContextPath() %>/views/member/memberJoinForm.jsp">회원가입</a></li>
                 </ul>
         </div>
     </div>
@@ -197,7 +197,7 @@
                         <li><a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망도서신청</a>&nbsp;&nbsp;&nbsp;</li>
             </ul>
             <ul class="sub02">
-                        <li><a href="">공지사항</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/board/notice.jsp">공지사항</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="">FAQ</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="">Q&A</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="">이달의신간</a>&nbsp;&nbsp;&nbsp;</li>

@@ -223,7 +223,7 @@
     <div class="sidebar">
             <div class="sideMenu">
                 <div id="subTitle">
-                    <span>희망도서신청내역</span>
+                    <span>내 서재</span>
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>

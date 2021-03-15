@@ -239,33 +239,32 @@
             text-decoration: none;
         }
     </style>
-</style>
 </head>
 <body>
 <%@ include file="../common/mainbar-basic.jsp" %>
 <div class="submArea">
     <div class="bcrumb">
         <span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
-        <span><a id="mName" href="">도서관 안내</a></span>&nbsp;&nbsp;&nbsp;
-        <span><a id="subName" href="">이용안내</a></span>
+        <span><a id="mName" href="">열린공간</a></span>&nbsp;&nbsp;&nbsp;
+        <span><a id="subName" href="">공지사항</a></span>
     </div>
     <div class="sidebar">
             <div class="sideMenu">
                 <div id="subTitle">
-                    <span>도서관 안내</span>
+                    <span>열린공간</span>
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/libInfo/useGuide.jsp">이용 안내</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/board/notice.jsp">공지사항</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/libInfo/bookStatus.jsp">도서 현황</a></p></td>
+                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/board/faq.jsp.jsp">FAQ</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/libInfo/libSchedule.jsp">도서관 일정</a></p></td>
+                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/libInfo/qna.jsp">Q&A</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/views/libInfo/libMap.jsp">오시는 길</a></p></td>
+                        <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/views/libInfo/newbooks.jsp">이달의신간</a></p></td>
                     </tr>
                 </table>
             </div>
@@ -295,25 +294,25 @@
                     <tbody>
                         <tr>
                             <td class="b_num">5</td>
-                            <td class="b_title"><a href="">정리중인 자료목록 예고</a></td>
+                            <td class="b_title"><a href="noticedetail.jsp">정리중인 자료목록 예고</a></td>
                             <td class="b_date">2021-03-13</td>
                             <td class="b_count">10</td>
                         </tr>
                         <tr>
                             <td class="b_num">4</td>
-                            <td class="b_title"><a href="">3월 토요문화광장 운영 안내</a></td>
+                            <td class="b_title"><a href="noticedetail.jsp">3월 토요문화광장 운영 안내</a></td>
                             <td class="b_date">2021-03-12</td>
                             <td class="b_count">20</td>
                         </tr>
                         <tr>
                             <td class="b_num">3</td>
-                            <td class="b_title"><a href="">관광사진전국공모전 안내</a></td>
+                            <td class="b_title"><a href="noticedetail.jsp">관광사진전국공모전 안내</a></td>
                             <td class="b_date">2021-03-11</td>
                             <td class="b_count">30</td>
                         </tr>
                         <tr>
                             <td class="b_num">2</td>
-                            <td class="b_title"><a href="">2021년 어린이 독서회 회원모집 안내</a></td>
+                            <td class="b_title"><a href="noticedetail.jsp">2021년 어린이 독서회 회원모집 안내</a></td>
                             <td class="b_date">2021-03-10</td>
                             <td class="b_count">40</td>
                         </tr>

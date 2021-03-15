@@ -10,3 +10,7 @@
 
 21.03.15 mainbar 로고 링크 수정 - yw
 
+21.03.16 view/search 내의 jsp 이름 및 경로 수정 - ay
+
+21.03.16 mainbar-basic 간략 검색 경로 수정 -ay
+

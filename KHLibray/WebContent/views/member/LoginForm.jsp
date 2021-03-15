@@ -214,7 +214,7 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
-                        <td align="center"><p class="subm1"><a href="<%=request.getContextPath() %>/views/member/loginForm.jsp">로그인</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%=request.getContextPath() %>/views/member/LoginForm.jsp">로그인</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%=request.getContextPath() %>/views/member/memberJoinForm.jsp">회원가입</a></p></td>

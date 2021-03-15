@@ -109,15 +109,7 @@
        		text-decoration: none;
        		color: black;
     	}
-    	
-        #sidebar {
-            width: 220px;
-            height: 510px;
-            margin: 0;
-            background-color: cornsilk;
-            display: inline-block;
-        }
-        
+    	        
        	#wrap{
        		width: 65%;
             height: 80%;
@@ -294,7 +286,7 @@
                             </dd>
                         </dl>
                 </div>
-                    <button id="new">등록하기</button>
+                    <button id="new" onclick="location.href='faqInsert.jsp'">등록하기</button>
             </div>
     </div>    
     

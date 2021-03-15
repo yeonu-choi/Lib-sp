@@ -192,7 +192,7 @@
     </div>
     <div id="top-sub" onmouseleave="javascript:HideSub();">
             <ul class="sub01">
-                        <li><a href="<%= request.getContextPath() %>/views/search/briefSearch.jsp">간략검색</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/search/simpleSearch.jsp">간략검색</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세검색</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망도서신청</a>&nbsp;&nbsp;&nbsp;</li>
             </ul>

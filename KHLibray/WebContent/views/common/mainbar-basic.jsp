@@ -171,7 +171,7 @@
     <div id="topbar">
         <div class="loginArea">
                 <ul id="topmenu">
-                    <li><a href="<%=request.getContextPath() %>/views/member/loginForm.jsp">로그인</a></li>
+                    <li><a href="<%=request.getContextPath() %>/views/member/LoginForm.jsp">로그인</a></li>
                     <li>&nbsp;&nbsp;<img src="<%=request.getContextPath() %>/resources/image/yw/border_line.jpg">&nbsp;&nbsp;</li>
                     <li><a href="<%=request.getContextPath() %>/views/member/memberJoinForm.jsp">회원가입</a></li>
                 </ul>

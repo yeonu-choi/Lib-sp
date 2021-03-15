@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member"%>
+    pageEncoding="UTF-8" import="com.khlibrary.member.model.vo.Member">
     
 <%
    // Session 객체에 담긴 loginUser 정보를 변수에 담아두자

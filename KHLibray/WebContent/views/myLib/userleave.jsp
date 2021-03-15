@@ -129,7 +129,7 @@
 
         .leave {
             margin-top: 50px;
-            margin-left: 25%;
+            margin-left: 28%;
             width: 60%;
             height: 100px;
             background-color: rgb(180, 180, 180);
@@ -150,7 +150,7 @@
 
         .passchk {
             margin-top: 50px;
-            margin-left: 25%;
+            margin-left: 28%;
             margin-bottom : 200px;
             width: 60%;
             overflow: hidden;

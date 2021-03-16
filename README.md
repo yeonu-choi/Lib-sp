@@ -18,4 +18,6 @@
 
 21.03.16 member/vo 수정, mainbar-admin 수정 - yw
 
-21.03.17 SimpleSearchServlet 주소 - /simple/search -ay
+21.03.17 SimpleSearchServlet 주소 - /simple/search - ay
+
+21.03.17 BookLoansServlet 주소 - /book/loans - ay

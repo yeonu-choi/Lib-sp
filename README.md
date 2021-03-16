@@ -14,3 +14,5 @@
 
 21.03.16 mainbar-basic 간략 검색 경로 수정 -ay
 
+21.03.16 mainbar-basic 상단 로그인 경로 수정 -km
+

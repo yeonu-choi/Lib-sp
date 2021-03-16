@@ -124,17 +124,14 @@
             padding: 40px;
             border : 1px rgb(219, 219, 219) solid;
         }
-    	
-    	
+    	    	
     	h2{
     		font-weight: 600;
 			font-size: 28px;
 			padding: 90px 0px 5px 20px;
     	
     	}
-    	insertArea {   	
-    	}
-    	   	
+     	   	
     	.bookInsertTable {
     		margin-left: 130px; 
     	
@@ -163,8 +160,7 @@
      		 border: #aaaaaa;
       		 border-radius:5px;  
    		}  
-    	
-    	
+    	   	
     </style>
 
 
@@ -175,26 +171,26 @@
 <div class="submArea">
     <div class="bcrumb">
         <span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
-        <span><a id="mName" href="">도서관 안내</a></span>&nbsp;&nbsp;&nbsp;
-        <span><a id="subName" href="">이용안내</a></span>
+        <span><a id="mName" href="">관리자</a></span>&nbsp;&nbsp;&nbsp;
+        <span><a id="subName" href="<%= request.getContextPath() %>/views/admin/bookInsert.jsp">도서등록</a></span>
     </div>
     <div class="sidebar">
             <div class="sideMenu">
                 <div id="subTitle">
                     <span>도서관 안내</span>
                 </div>
-                <table id="sideMenu" border="0" style="border-collapse:collapse">
+                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/libInfo/useGuide.jsp">이용 안내</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/admin/bookInsert.jsp">도서 등록</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/libInfo/bookStatus.jsp">도서 현황</a></p></td>
+                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/admin/bookReturn.jsp">회원 관리</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/libInfo/libSchedule.jsp">도서관 일정</a></p></td>
+                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/admin/bookReturn.jsp">반납 처리</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/views/libInfo/libMap.jsp">오시는 길</a></p></td>
+                        <td align="center"><p class="subm4"><a href="">희망 도서 확인</a></p></td>
                     </tr>
                 </table>
             </div>

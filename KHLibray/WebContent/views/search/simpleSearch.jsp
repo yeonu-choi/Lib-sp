@@ -203,7 +203,7 @@
 	<div class="outer">
 		<div><p class="title">간략 검색</p><hr></div>
 		<div class="inner">
-			<form action="<%= request.getContextPath() %>/simple/search" method="get">
+			<form action="<%= request.getContextPath() %>/simple/search" method="get" onsubmit="return searchCheck();">
 				<div class="searchArea">
 					<div class="selectArea">
 						<select name="searchSelect" id="searchSelect">
@@ -217,14 +217,25 @@
 					<div class="textArea">
 						<input type="text" name="search" id="search" placeholder="내용을 입력해주세요">
 					</div>
-
+					
 					<div class="btnArea">
 						<button id="searchBtn" type="submit"><i class="bi bi-search"></i></button>
 					</div>
 				</div>
 			</form>
+			
+			<script>
+			function searchCheck(){
+				if($("#search").val().trim().length == 0){
+					alert("검색어를 입력하세요");
+					return false;
+				}
+				return true;
+			}
+			</script>
 		</div>
 	</div>
+	
 	
 	<%-- 푸터 --%>
 	<%@ include file="../common/footer.jsp" %>

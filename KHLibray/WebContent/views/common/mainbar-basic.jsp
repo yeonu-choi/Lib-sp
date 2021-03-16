@@ -14,37 +14,31 @@
             padding: 0;
             height: 100%;
         }
-
         #topbar {
             height: 30px;
             border: 1px solid #dddddd;
             background: #f6f6f6;
             position: relative;
         }
-
         #topmenu {
             list-style-type: none;
             position: absolute;
             right: 150px;
             margin: 3px 0;
         }
-
         #topmenu li {
             float: right; 
         }
-
         #topmenu li a {
             text-decoration: none;
             color: black;
             font-size: 12px;
             font-weight: 700;
         }
-
         #top-main {
             height: 130px;
             width: 100%;
         }
-
         #top-logo {
             margin: auto;
             float: left;
@@ -61,14 +55,12 @@
             right: 0;
             margin: auto; 
         }
-
         #MenuArea {
             position: relative;
             width: 80%;
             float: left;
             height: 100%;
         }
-
         .mainMenu {
             position: absolute;
             top: 0;
@@ -79,7 +71,6 @@
             list-style-type: none;
             overflow: hidden;
         }
-
         .mainMenu > li {
             float: left;
             padding: 45px;
@@ -97,7 +88,6 @@
            color: rgb(209, 31, 114);
            cursor: pointer;
         }
-
         #top-sub {
             display: none;
             width: 100%;
@@ -105,7 +95,6 @@
             background-color: rgb(163, 163, 163);
             position: relative;
         }
-
         #top-sub a {
             color: white;
             text-align: center;
@@ -113,12 +102,10 @@
             font-size: 16px;
             font-weight: 500;
         }
-
         #top-sub a:hover {
             color: rgb(66, 66, 66);
             font-weight: 600;
         }
-
         .sub01 {
             list-style-type: none;
             position: absolute;
@@ -126,7 +113,6 @@
             overflow: hidden;
             margin: 8px 0;
         }
-
         .sub02 {
             list-style-type: none;
             position: absolute;
@@ -134,7 +120,6 @@
             overflow: hidden;
             margin: 8px 0;
         }
-
         .sub03 {
             list-style-type: none;
             position: absolute;
@@ -142,7 +127,6 @@
             overflow: hidden;
             margin: 8px 0;
         }
-
         .sub04 {
             list-style-type: none;
             position: absolute;
@@ -150,7 +134,6 @@
             overflow: hidden;
             margin: 8px 0;
         }
-
         #top-sub > ul > li {
             float: left;
         }
@@ -161,7 +144,6 @@
             $("#top-sub ul").hide(0);
             $(".sub"+subNum).show(0);	
         }
-
         function HideSub(){
             $("#top-sub").slideUp(300);
         }
@@ -171,7 +153,7 @@
     <div id="topbar">
         <div class="loginArea">
                 <ul id="topmenu">
-                    <li><a href="<%=request.getContextPath() %>/views/member/LoginForm.jsp">로그인</a></li>
+                    <li><a href="<%=request.getContextPath() %>/views/member/loginForm.jsp">로그인</a></li>
                     <li>&nbsp;&nbsp;<img src="<%=request.getContextPath() %>/resources/image/yw/border_line.jpg">&nbsp;&nbsp;</li>
                     <li><a href="<%=request.getContextPath() %>/views/member/memberJoinForm.jsp">회원가입</a></li>
                 </ul>

@@ -17,3 +17,5 @@
 21.03.16 mainbar-basic 상단 로그인 경로 수정 -km
 
 21.03.16 member/vo 수정, mainbar-admin 수정 - yw
+
+21.03.17 SimpleSearchServlet 주소 - /simple/search -ay

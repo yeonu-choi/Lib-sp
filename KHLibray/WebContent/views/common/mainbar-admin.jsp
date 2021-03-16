@@ -85,9 +85,6 @@
         .mainMenu > li {
             float: left;
             padding: 45px;
-        }
-
-        .mainMenu > li > a {
             display: inline-block;
             color: black;
             text-align: center;
@@ -96,7 +93,13 @@
             font-weight: 400;
             margin-top: 20px;
         }
-
+        
+        .mainMenu > li:hover {
+           font-weight : 600;
+           color: rgb(209, 31, 114);
+           cursor: pointer;
+        }
+        
         #top-sub {
             display: none;
             width: 100%;
@@ -182,10 +185,10 @@
         </div>
         <div id="MenuArea">
             <ul class="mainMenu">
-                <li class="searchmain" onmouseover="javascript:ShowSub('01', this);"><a href="">도서검색</a></li>
-                <li class="boardmain" onmouseover="javascript:ShowSub('02', this);"><a href="">열린공간</a></li>
-                <li class="infomain" onmouseover="javascript:ShowSub('03', this);"><a href="">도서관안내</a></li>  
-                <li class="mylibmain" onmouseover="javascript:ShowSub('04', this);"><a href="">관리자</a></li>  
+                <li class="searchmain" onmouseover="javascript:ShowSub('01', this);">도서검색</li>
+                <li class="boardmain" onmouseover="javascript:ShowSub('02', this);">열린공간</li>
+                <li class="infomain" onmouseover="javascript:ShowSub('03', this);">도서관안내</li>  
+                <li class="mylibmain" onmouseover="javascript:ShowSub('04', this);">관리자</li>  
             </ul>
         </div>
     </div>

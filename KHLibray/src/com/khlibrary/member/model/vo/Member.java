@@ -3,7 +3,6 @@ package com.khlibrary.member.model.vo;
 import java.sql.Date;
 
 public class Member {
-	private int userNo;
 	private String user_id;
 	private String user_pwd;
 	private String user_name;
@@ -11,42 +10,25 @@ public class Member {
 	private String phone;
 	private String email;
 	private String address;
+	private String grade;
 	private Date enroll_date;
-	private Date modify_date;
-	private String status;
+	private int user_no;
+	private int overdue;
 	
-	public Member() {
-		super();
-	}
-	
-	public Member(String user_id, String user_name, String birth_date, String phone, String email, String address) {
-		super();
-		this.user_id = user_id;
-		this.user_name = user_name;
-		this.birth_date = birth_date;
-		this.phone = phone;
-		this.email = email;
-		this.address = address;
-	}
+	public Member() {}
 
-	public Member(int userNo, String user_id, String user_pwd, String user_name, String birth_date, String phone,
-			String email, String address, Date enroll_date, Date modify_date, String status) {
+	public Member(String user_id, String user_name, String birth_date, String grade, Date enroll_date, int overdue) {
 		super();
-		this.userNo = userNo;
 		this.user_id = user_id;
-		this.user_pwd = user_pwd;
 		this.user_name = user_name;
 		this.birth_date = birth_date;
-		this.phone = phone;
-		this.email = email;
-		this.address = address;
+		this.grade = grade;
 		this.enroll_date = enroll_date;
-		this.modify_date = modify_date;
-		this.status = status;
+		this.overdue = overdue;
 	}
 
 	public Member(String user_id, String user_pwd, String user_name, String birth_date, String phone, String email,
-			String address) {
+			String address, String grade, Date enroll_date, int user_no, int overdue) {
 		super();
 		this.user_id = user_id;
 		this.user_pwd = user_pwd;
@@ -55,22 +37,10 @@ public class Member {
 		this.phone = phone;
 		this.email = email;
 		this.address = address;
-	}
-
-	
-	
-	public Member(String user_id, String user_pwd) {
-		super();
-		this.user_id = user_id;
-		this.user_pwd = user_pwd;
-	}
-
-	public int getUserNo() {
-		return userNo;
-	}
-
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
+		this.grade = grade;
+		this.enroll_date = enroll_date;
+		this.user_no = user_no;
+		this.overdue = overdue;
 	}
 
 	public String getUser_id() {
@@ -129,6 +99,14 @@ public class Member {
 		this.address = address;
 	}
 
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
 	public Date getEnroll_date() {
 		return enroll_date;
 	}
@@ -137,29 +115,28 @@ public class Member {
 		this.enroll_date = enroll_date;
 	}
 
-	public Date getModify_date() {
-		return modify_date;
+	public int getUser_no() {
+		return user_no;
 	}
 
-	public void setModify_date(Date modify_date) {
-		this.modify_date = modify_date;
+	public void setUser_no(int user_no) {
+		this.user_no = user_no;
 	}
 
-	public String getStatus() {
-		return status;
+	public int getOverdue() {
+		return overdue;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setOverdue(int overdue) {
+		this.overdue = overdue;
 	}
 
 	@Override
 	public String toString() {
-		return "Member [userNo=" + userNo + ", user_id=" + user_id + ", user_pwd=" + user_pwd + ", user_name="
-				+ user_name + ", birth_date=" + birth_date + ", phone=" + phone + ", email=" + email + ", address="
-				+ address + ", enroll_date=" + enroll_date + ", modify_date=" + modify_date + ", status=" + status
-				+ "]";
+		return "Member [user_id=" + user_id + ", user_pwd=" + user_pwd + ", user_name=" + user_name + ", birth_date="
+				+ birth_date + ", phone=" + phone + ", email=" + email + ", address=" + address + ", grade=" + grade
+				+ ", enroll_date=" + enroll_date + ", user_no=" + user_no + ", overdue=" + overdue + "]";
 	}
-
+	
 	
 }

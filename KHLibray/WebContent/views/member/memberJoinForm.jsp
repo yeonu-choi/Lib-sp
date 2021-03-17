@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-   /* 바깥 영역 */
-   <style>  
-   
-    body {
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+   <style>
+        body {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -67,7 +68,7 @@
         }
 
         #sideMenu {
-            width: 252px;
+            width: 250px;
         }
 
         #sideMenu td {
@@ -80,7 +81,7 @@
         }
 
         #sideMenu td p {
-          
+            padding-top: 15px;
             font-size: 16px;
             font-weight: 600;
         }
@@ -90,7 +91,7 @@
             float: left;
             margin-left: auto;
             width: 250px;
-            height: 80px;
+            height: 180px;
             padding-top: 100px;
             text-align: center; 
             border-left: 1px solid rgb(201, 201, 201);
@@ -108,58 +109,82 @@
         #sideMenu a {
        		text-decoration: none;
        		color: black;
-    	}     
-        .outer{
-           margin-left : 25%;
-    		width : 65%;
-      		height : 85%;   
-                   
-        }
-        .join_table {
-             margin-top : 6%;
-          margin-bottom : 5%;           
-            border : 1px solid rgba(0, 0, 0, 0.308);
-            align : "center";
-            width :100%;    
-        }
-        .join_title{
-         
-            background: #dcdcdc;
-            font-weight: 400;
-            height : 50px;
+    	}
+    	
+     .menuTitle {
+            margin-left: 25%;
+            padding-top : 90px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            width: 65%;
+            border-bottom: 1.5px solid rgb(230, 230, 230);
         }
 
-        button{
-   	  		 width:80px;
-      		 height:40px;
-     		 color:white;
-     		 background: #aaaaaa;
-     		 border: #aaaaaa;
-      		 border-radius:5px;  
-   		}   
-        sub{
-            font-size: 15px;
-            color: rgba(0, 81, 255, 0.733);
+        .menuTitle span {
+            font-weight: 600;
+            font-size: 25px;
+            padding-bottom: 5px;
+        }
+
+        .memJoin p {
+            padding-top: 13px;
+            padding-left: 20px;
+            color: rgb(255, 255, 255);
+        }
+
+        .empa {
+            color: red;
+            font-size: 14px;
+        }
+
+        .passchk {
+            margin-top: 50px;
+            margin-left: 28%;
+            margin-bottom : 200px;
+            width: 60%;
+            overflow: hidden;
+        }
+        #tablejoin {
+            border-top: 2px solid rgb(68, 68, 68);
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        #tablejoin th {
+           background-color: rgb(243, 243, 243);
+           border-right: 1px solid rgb(214, 214, 214);
+           text-align: center;
+        }
+
+        #tablejoin tr {
+            height: 50px;
+            border-bottom: 2px solid rgb(190, 189, 189);
+        }
+
+        #tablejoin input {
+            width: 90%;
+            height: 30px;
+            margin-left : 15px;
+            background-color: rgb(243, 243, 243);
+            border: 1px solid rgb(126, 125, 125);
+        }
+
+        .btnArea {
+            width: 100%;
+            text-align: center;
+        }
+        sub {
+        	color : blue;
         }
       
-     	input {
-  			width:350px;
-  			height:40px;
-  			font-size:20px;
-		}
-		h1 {
-   		margin-top : 7%;
-   	}	
-   	
-   	
-   	
-   	
-    </style>
+     
+     
+</style>
 </head>
+
 <body>
    <%@ include file="../common/mainbar-basic.jsp" %>
-
-   
+  
    <div class="submArea">
     <div class="bcrumb">
         <span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
@@ -173,84 +198,93 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                   <tr>
-                        <td align="center"><p class="subm1"><a href="<%=request.getContextPath() %>/views/member/LoginForm.jsp">로그인</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%=request.getContextPath() %>/views/member/loginForm.jsp">로그인</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%=request.getContextPath() %>/views/member/memberJoinForm.jsp">회원가입</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="">아이디 찾기</a></p></td>
+                        <td align="center"><p class="subm3"><a href="<%=request.getContextPath()%>/views/member/idSearch.jsp">아이디 찾기</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm4"><a href="">비밀번호 찾기</a></p></td>
+                        <td align="center"><p class="subm4"><a href="<%=request.getContextPath()%>/views/member/pwdSearch.jsp">비밀번호 찾기</a></p></td>
                     </tr>
                 </table>
             </div>
     </div>
 </div>
    
-   <div class="outer">
-        <form id="joinForm" action="<%= request.getContextPath() %>/member/insert"
+
+   <div class="menuTitle">
+        <span>회원가입</span>
+    </div>
+
+    <div class="passchk">
+        <form class="passout" id="joinForm" action="<%= request.getContextPath() %>/member/insert"
             method="post" onsubmit="return joinValidate();">
-    <h1> 회원가입</h1>
-        <hr>
-    	<table class = "join_table">
-        <tr>
-            <th class="join_title">아이디(*)</th>
-            <td><input type="text" maxlength="20" name="user_id" required> </td>
-            <td><button id="idCheck" type="button">중복확인</button></td>
-            <td><sub>아이디는 영소문자로 시작해서 4~12자 입력(숫자포함 가능)</sub></td>
-        </tr>
-        <tr>
-            <th class="join_title">비밀번호(*)</th>
-            <td> <input type="password" maxlength="12" name="user_pwd" required> </td>
-            <td colspan="2"><sub>!!유효성검사 추후 추가 예정!!</sub></td>
-        </tr>
-        <tr>
-            <th class="join_title">비밀번호 확인(*)</th>
-            <td> <input type="password" maxlength="12" name="user_pwd2" required> </td>
-        </tr>
-        <tr>
-            <th class="join_title">이름(*)</th>
-            <td><input type="text" maxlength="10" name="user_name" required></td>
-            <td colspan="2"><sub>이름은 한글로 2글자 이상 입력</sub></td>
-        </tr>
-        <tr>
-            <th class="join_title">생년월일</th>
-            <td><input type="text" name="birth_date" placeholder="(-없이)"></td>
-            <td colspan="2"><sub>8자리 숫자로 입력하시오 예시) 19950510</sub></td>
-        </tr>
-        <tr>
-            <th class="join_title">휴대폰번호</th>
-            <td><input type="tel" maxlength="11" name="phone" placeholder="(-없이)"></td>
-        </tr>
-        <tr>   
-            <th class="join_title">이메일</th>
-            <td><input type="email" name="email" size="20"></td>
+        
+        <table id="tablejoin" style="border-collapse: collapse;">
+            <tr>
+                 <th width="20%">아이디(<span class="empa">*</span>)</th>
+                 <td><input type="text" maxlength="12" name="user_id" required> </td>
+           		 <td><button id="idCheck" type="button">중복확인</button></td>
+            	 <td><sub>아이디는 영소문자로 시작해서 4~12자 입력(숫자포함 가능)</sub></td>
+            </tr>
+            <tr>
+            	 <th class="join_title">비밀번호(<span class="empa">*</span>)</th>
+            	 <td> <input type="password" maxlength="12" name="user_pwd" required> </td>
+           		 <td colspan="2"><sub>!!유효성검사 추후 추가 예정!!</sub></td>
+       		</tr>
+        	<tr>
+            	 <th class="join_title">비밀번호 확인(<span class="empa">*</span>)</th>
+            	 <td><input type="password" maxlength="12" name="user_pwd2" required> </td>
+            	 <td></td>
+        	</tr>
+        	<tr>
+            	 <th class="join_title">이름(<span class="empa">*</span>)</th>
+            	 <td><input type="text" maxlength="10" name="user_name" required></td>
+            	 <td colspan="2"><sub>이름은 한글로 2글자 이상 입력</sub></td>
+        	</tr>
+        	<tr>
+            	 <th class="join_title">생년월일</th>
+            	 <td><input type="text" name="birth_date" placeholder="(-없이)"></td>
+            	 <td colspan="2"><sub>8자리 숫자로 입력하시오 예시) 19950510</sub></td>
+        	</tr>
+        	<tr>
+           	     <th class="join_title">휴대폰번호</th>
+            	 <td><input type="tel" maxlength="11" name="phone" placeholder="(-없이)"></td>
+            	 <td></td><td></td>
+        	</tr>
+        	<tr>   
+            	 <th class="join_title">이메일</th>
+            	 <td><input type="email" name="email" size="20"></td>
+            	 <td></td><td></td>
          
-        </tr> 
-        <tr>   
-            <th class="join_title">우편번호</th>
-            <td><input type="text" name="address" class="postcodify_postcode5" readonly></td>   
-            <td><button id="postcodify_search_button" type="button">검색</button></td>      
-        </tr> 
-        <tr>   
-            <th class="join_title">도로명 주소</th>
-            <td><input type="text" name="address" class="postcodify_address" readonly></td>         
-        </tr> 
-        <tr>   
-            <th class="join_title">상세 주소</th>
-            <td><input type="text" name="address" class="postcodify_details"></td>         
-        </tr>  
-    </table>
-    <div class="btnArea" align="center">
-        <button id="goMainBtn" type="button">메인으로</button>
-        <button id="joinBtn">가입하기</button>
+        	</tr> 
+        	<tr>   
+            	 <th class="join_title">우편번호</th>
+            	 <td><input type="text" name="address" class="postcodify_postcode5" readonly></td>   
+            	 <td><button id="postcodify_search_button" type="button">검색</button></td><td></td>      
+        	</tr> 
+        	<tr>   
+            	 <th class="join_title">도로명 주소</th>
+            	 <td><input type="text" name="address" class="postcodify_address" readonly></td> 
+            	 <td></td><td></td>        
+        	</tr> 
+        	<tr>   
+            	 <th class="join_title">상세 주소</th>
+            	 <td><input type="text" name="address" class="postcodify_details"></td>
+            	 <td></td><td></td>         
+        	</tr>  
+       </table>
+    	<div class="btnArea">
+        	<button id="goMainBtn" type="button">메인으로</button>
+        	<button id="joinBtn">가입하기</button>
         </div>
     <br>
     </form>
 </div>
-   
+         
    <!-- postcodify -->
    <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 

@@ -30,6 +30,8 @@
 
 21.03.17 member-query, memberDao, memberService 업데이트 - yw
 
+21.03.17 src common 하위 model.vo PageInfo 파일 추가 - yw
+
 21.03.17 UserManageServlet 주소 - /admin/manage - yw
 
 21.03.17 UserManageSortServlet 주소 - /admin/usort -yw

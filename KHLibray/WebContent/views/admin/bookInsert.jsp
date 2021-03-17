@@ -200,37 +200,43 @@
 		<div class="outer">
 		 <h2>도서 등록</h2><hr>
 		<div class="inner">
-		<form action="<%=request.getContextPath()%>/gallery/insert"
+		<form action="<%=request.getContextPath()%>/admin/bookInsert"
 		method="post" enctype="multipart/form-data">
 		<div class="insertArea">
               
         <table class="bookInsertTable">
             <tr>
                 <th><label>ISBN</label></th>
-                <td><input type="number" id="inputId" name="isbn"></td>					
+                <td><input type="number" id="inputId" name="isbn" required></td>					
             </tr>
             <tr>
+                <th><label>청구기호</label></th>
+                <td><input type="text" id="inputId" name="call_num" required></td>					
+            </tr>
+            
+            
+            <tr>
                 <th><label>도서명</label></th>	
-                <td><input type="text"  id="inputId" maxlength="100" name="bk_name"></td>
+                <td><input type="text"  id="inputId" maxlength="100" name="bk_name" required></td>
             </tr>
             <tr>
                 <th><label>저자</label></th>
-                <td><input type="text"  id="inputId" maxlength="30" name="writer"></td>
+                <td><input type="text"  id="inputId" maxlength="30" name="writer" required></td>
 
             </tr>
             <tr>
                 <th><label>발행처</label></th>
-                <td><input type="text"  id="inputId" maxlength="30" name="publisher"></td>
+                <td><input type="text"  id="inputId" maxlength="30" name="publisher" required></td>
 
             </tr>
             <tr>
                 <th><label>발행년도</label></th>	
-                <td><input type="number"  id="inputId" name="issue_year"></td>
+                <td><input type="number"  id="inputId" name="issue_year" required></td>
 
             </tr>
             <tr>
                 <th><label>이미지</label></th>
-                <td><input type="file"name="book_image"></td>
+                <td><input type="file"name="imgname"></td>
 				
             </tr>                       
 		</table>

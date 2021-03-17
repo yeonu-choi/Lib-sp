@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="getSearchTotalListCount">
+		SELECT
+			   COUNT(*)
+	      FROM
+	           BOOK
+	      JOIN
+	           BDETAIL USING (ISBN)
+	     WHERE
+	           BK_NAME LIKE '%' || ? || '%'
+	        OR WRITER LIKE '%' || ? || '%'
+	        OR PUBLISHER LIKE '%' || ? || '%'
+	</entry>
+	<entry key="getSearchNameListCount">
+		SELECT
+			   COUNT(*)
+	      FROM
+	           BOOK
+	      JOIN
+	           BDETAIL USING (ISBN)
+	     WHERE
+	           BK_NAME LIKE '%' || ? || '%'
+	</entry>
+	<entry key="getSearchWriterListCount">
+		SELECT
+			   COUNT(*)
+	      FROM
+	           BOOK
+	      JOIN
+	           BDETAIL USING (ISBN)
+	     WHERE
+	           WRITER LIKE '%' || ? || '%'
+	</entry>
+	<entry key="getSearchPublisherListCount">
+		SELECT
+			   COUNT(*)
+	      FROM
+	           BOOK
+	      JOIN
+	           BDETAIL USING (ISBN)
+	     WHERE
+	           PUBLISHER LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="selectSearchTotalList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	           		   BK_NAME LIKE '%' || ? || '%'
+	        	    OR WRITER LIKE '%' || ? || '%'
+	        		OR PUBLISHER LIKE '%' || ? || '%'
+	          ORDER BY BK_NAME)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectSearchNameList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	           		   BK_NAME LIKE '%' || ? || '%'
+	          ORDER BY BK_NAME)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectSearchWriterList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	        	       WRITER LIKE '%' || ? || '%'
+	          ORDER BY BK_NAME)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectSearchPublisherList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	        	       PUBLISHER LIKE '%' || ? || '%'
+	          ORDER BY BK_NAME)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="insertLoanInfo">
+		INSERT 
+		INTO LOAN
+		(	   
+			   LID
+			 , LOAN_DATE
+			 , RETURN_DATE
+			 , STATUS
+			 , USER_ID
+		)
+		VALUES
+		(
+			   SEQ_LID.NEXTVAL
+			 , SYSDATE
+			 , DEFAULT
+			 , DEFAULT
+			 , ?
+		)
+	</entry>
+	<entry key="insertLoanCallNum">
+		INSERT 
+		INTO LDETAIL
+		(		
+			   LID
+			 , CALL_NUM
+		)
+		VALUES
+		(
+			   SEQ_LID.CURRVAL
+			  , ?
+		)
+	</entry>
+	<entry key="updateLoanCallNum">
+		UPDATE 
+			   BDETAIL
+		   SET 
+		       STATUS = '대출불가능[대출중]'
+		 WHERE 
+		 	   CALL_NUM LIKE ?
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</properties>

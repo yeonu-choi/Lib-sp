@@ -3,7 +3,7 @@ package com.khlibrary.search.model.vo;
 import java.sql.Date;
 
 public class Book {
-	private int isbn;							// 도서 ISBN
+	private Long isbn;							// 도서 ISBN
 	private String bName;						// 도서명
 	private String bWriter;						// 도서 작가
 	private String bPublisher;					// 도서 출판사
@@ -16,7 +16,7 @@ public class Book {
 	
 	public Book() {}
 
-	public Book(int isbn, String bName, String bWriter, String bPublisher, int issueDate, Date registDate,
+	public Book(long isbn, String bName, String bWriter, String bPublisher, int issueDate, Date registDate,
 			String imgName, String imgPath, String callNum, String status) {
 		super();
 		this.isbn = isbn;
@@ -31,11 +31,11 @@ public class Book {
 		this.status = status;
 	}
 
-	public int getIsbn() {
+	public long getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(int isbn) {
+	public void setIsbn(long isbn) {
 		this.isbn = isbn;
 	}
 

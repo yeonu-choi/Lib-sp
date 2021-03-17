@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.khlibrary.member.model.vo.Member"%>
-    
-<%
-   // Session 객체에 담긴 loginUser 정보를 변수에 담아두자
-   Member loginUser = (Member)session.getAttribute("loginUser");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -263,7 +258,7 @@
 </div>
      
       <div class="loginArea">       
-      <% if(loginUser == null) { %>
+      <% if((Member)session.getAttribute("loginUser") == null) { %>
        <div><p class="login">로그인</p><hr></div>
      
       <form id="loginForm" action="<%= request.getContextPath() %>/member/login" 

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.khlibrary.member.model.vo.Member">
+    pageEncoding="UTF-8" import="com.khlibrary.member.model.vo.Member"%>
     
 <%
    // Session 객체에 담긴 loginUser 정보를 변수에 담아두자
@@ -18,8 +18,11 @@
 <%
 	session.removeAttribute("msg");
 } %>
-<style>  
-	 body {
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+   <style>
+        body {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -77,7 +80,7 @@
         }
 
         #sideMenu {
-            width: 252px;
+            width: 250px;
         }
 
         #sideMenu td {
@@ -90,6 +93,7 @@
         }
 
         #sideMenu td p {
+            padding-top: 15px;
             font-size: 16px;
             font-weight: 600;
         }
@@ -99,7 +103,7 @@
             float: left;
             margin-left: auto;
             width: 250px;
-            height: 80px;
+            height: 180px;
             padding-top: 100px;
             text-align: center; 
             border-left: 1px solid rgb(201, 201, 201);
@@ -118,40 +122,42 @@
        		text-decoration: none;
        		color: black;
     	}
+    	
     
-     .loginArea  {
-   
+     .loginArea  {   
     		margin-left : 25%;
     		width : 65%;
       		height : 85%;  
    		}
-   	h1 {
-   		margin-top : 7%;
-   	}	
+      
+      .login {
+        	font-weight: 600;
+			font-size: 28px;
+			padding: 90px 0px 5px 20px;
+		}	
    		
    .loginTable{  		     	  
           margin-top : 5%;
-          margin-bottom : 10%;
-          border : 1px solid gray;   
+          margin-bottom : 20%;        
           padding :80px;
-           width :100%;                   
+           width : 100%;                   
   		 }
   		 
    #user_id{
    			height: 40px;
    			width: 300px;
-   			font-size:20px;			   
+   			font-size:17px;			   
   		 }
   		 
    #user_pwd {
    			height: 40px;
    			width: 300px;
-   			font-size:20px;
+   			font-size:17px;
+   			
   		 }
    
-
    #userInfo {
-      margin-top : 25px;
+      margin-top :200px;
       margin-right : 10px;
   		 }
       
@@ -172,7 +178,7 @@
   		 }
    
    #memberJoinBtn, #id_searchBtn{
-   	  width:95px;
+   	  width:92px;
       height:40px;
       color:white;
       background: #aaaaaa;
@@ -194,8 +200,34 @@
    
    }
    
-   
-   
+   .inner {
+            width: 95%;
+            margin: auto;
+			margin-top: 80px;
+				margin-bottom: 80px;		
+            padding: 40px;
+            border : 1px rgb(219, 219, 219) solid;
+        }
+  
+   #td {
+   		width : 200px;
+   		margin-left: 600px;
+   		
+   }
+   #btn {
+   		width: 320px;
+   		padding : 10px;
+   }
+   #span1 {
+   		margin-left: 200px;
+   }
+   #btn3 {
+   		padding-top : 7px;
+   		
+   }
+   #td1 {
+   	padding-top : 20px;
+   }
 </style>
 </head>
 <body>
@@ -214,16 +246,16 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
-                        <td align="center"><p class="subm1"><a href="<%=request.getContextPath() %>/views/member/LoginForm.jsp">로그인</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%=request.getContextPath() %>/views/member/loginForm.jsp">로그인</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%=request.getContextPath() %>/views/member/memberJoinForm.jsp">회원가입</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="">아이디 찾기</a></p></td>
+                        <td align="center"><p class="subm3"><a href="<%=request.getContextPath()%>/views/member/idSearch.jsp">아이디 찾기</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm4"><a href="">비밀번호 찾기</a></p></td>
+                        <td align="center"><p class="subm4"><a href="<%=request.getContextPath()%>/views/member/pwdSearch.jsp">비밀번호 찾기</a></p></td>
                     </tr>
                 </table>
             </div>
@@ -232,43 +264,45 @@
      
       <div class="loginArea">       
       <% if(loginUser == null) { %>
-      
+       <div><p class="login">로그인</p><hr></div>
+     
       <form id="loginForm" action="<%= request.getContextPath() %>/member/login" 
       method="post" onsubmit="return validate();">
-        <h1> 로그인</h1>
-        <hr>
+       
          <table class="loginTable">
+        
             <tr>
-               <td align="center">
+               <td id="td" align="right" >
                   <input type="text" name="user_id" id="user_id" placeholder="아이디를 입력">
                   
                </td> 
-                 <td rowspan="2">                  
+                 <td rowspan="2" id="btn">                  
                   <button id="loginBtn" type="submit">로그인</button>
                </td> 
                           
             </tr>                      
             <tr>
-               <td align="center"><input type="password" name="user_pwd" id="user_pwd" placeholder="비밀번호를 입력"></td>
-            </tr>            
+               <td align="right"><input type="password" name="user_pwd" id="user_pwd" placeholder="비밀번호를 입력"></td>
+            </tr>
+                  
             <tr>
-               <td align="center">
+               <td id= "btn3" align="right">
                   <button id="memberJoinBtn" type="button">회원가입</button>
                   <button id="id_searchBtn" type="button">아이디찾기</button>
                   <button id="pwd_searchBtn" type="button">비밀번호찾기</button>             
                </td>
-            </tr>  
-             
-             <tr align="center">
-         		<td>※회원가입 아이디 비밀번호 분실등 관련문의: 1544-9970 </td> 
-             </tr>	            	
-            <tr align="center">
-         		<td>※로그인 정보가 기억이 나지 않는 경우 아이디 찾기 또는</td>         		 
+            </tr>   
+                 
+            <tr>
+         		<td id="td1" colspan="2"><span id="span1">※&nbsp;회원가입 아이디 비밀번호 분실등 관련문의: 1544-9970 </span></td> 
+            </tr>            	            	
+            <tr>
+         		<td colspan="2"><span id="span1">※&nbsp;로그인 정보가 기억이 나지 않는 경우 아이디 찾기 또는</span></td>         		 
              </tr>	
-             	<tr align="center">
-         		<td> 비밀번호 찾기를 통해 확인 가능합니다.</td>         		 
+             <tr>
+         		<td colspan="2"><span id="span1">&nbsp; 비밀번호 찾기를 통해 확인 가능합니다.</span></td>         		 
              </tr>	
-               
+            
          </table>
       </form>
       
@@ -306,9 +340,11 @@
               
       </script>
    <%} else { %>
+      <div class="inner">
       <div id="userInfo">
+      
          <table>
-          
+          	
             <tr>
                <td>
                   <button id="myPageBtn">정보수정</button>
@@ -317,7 +353,7 @@
             </tr>
          </table>
       </div>
-      
+      </div>
       <script>
          // 2_2. 로그아웃 작성하기
          const logoutBtn = document.getElementById("logoutBtn");
@@ -332,6 +368,7 @@
           });
          
       </script>
+    
            <% } %>
      </div>
   

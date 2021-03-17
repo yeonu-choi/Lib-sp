@@ -130,7 +130,27 @@
 			ENROLL_DATE,
 			OVERDUE
 		FROM
-			MLIST
+			(SELECT 
+				ROWNUM RNUM, A.* 
+            FROM
+            	(SELECT 
+	            	USER_ID,
+	           		USER_PWD,
+	           		USER_NAME,
+	           		BIRTH_DATE,
+	           		PHONE,
+	           		EMAIL,
+	                ADDRESS,
+	                GRADE,
+	                ENROLL_DATE,
+	                USER_NO,
+	                OVERDUE,
+	                STATUS
+           		 FROM 
+            		MEMBER
+            	WHERE 
+            		NOT USER_ID = 'admin'
+            ) A)
 		WHERE
         (RNUM BETWEEN ? AND ?)
 	</entry>

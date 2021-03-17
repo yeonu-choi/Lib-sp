@@ -46,12 +46,12 @@
 
 21.03.18 mainbar-basic 로그인 세션 연결 및 수정 mainbar-admin과 통합 (중요!) - yw
 
-21.03.18 member-query 수정
+21.03.18 member-query 수정 - yw
 
-21.03.18 LoginServlet 수정, loginForm 일부 수정
+21.03.18 LoginServlet 수정, loginForm 일부 수정 - yw
 
-21.03.18 BookReturnListServlet 주소 - /admin/rblist
+21.03.18 BookReturnListServlet 주소 - /admin/rblist - yw
 
-21.03.18 BookReturnListSortServlet 주소 - /admin/rbsort
+21.03.18 BookReturnListSortServlet 주소 - /admin/rbsort - yw
 
-21.03.18 ReturnBookServlet 주소 - /admin/return
+21.03.18 ReturnBookServlet 주소 - /admin/return - yw

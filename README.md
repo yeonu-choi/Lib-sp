@@ -25,3 +25,13 @@
 21.03.17 LoginServlet 주소 - /member/login - km
 
 21.03.17 InsertMemberServlet 주소 - /member/insert - km
+
+21.03.17 mainbar-admin sub04 일부 경로 수정, msg 세션 스크립트 추가 - yw
+
+21.03.17 member-query, memberDao, memberService 업데이트 - yw
+
+21.03.17 UserManageServlet 주소 - /admin/manage - yw
+
+21.03.17 UserManageSortServlet 주소 - /admin/usort -yw
+
+21.03.17 ChangeGradeServlet 주소 - /admin/grade - yw

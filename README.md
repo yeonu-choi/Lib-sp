@@ -21,3 +21,7 @@
 21.03.17 SimpleSearchServlet 주소 - /simple/search - ay
 
 21.03.17 BookLoansServlet 주소 - /book/loans - ay
+
+21.03.17 LoginServlet 주소 - /member/login - km
+
+21.03.17 InsertMemberServlet 주소 - /member/insert - km

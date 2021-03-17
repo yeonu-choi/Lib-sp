@@ -34,5 +34,31 @@ public class BookService {
 	}
 	
 	
+	// 대출
+	public int loanBook(String[] chk, String userId) {
+		Connection conn = getConnection();
+		
+		BookDao bDao = new BookDao();
+		
+		int result1 = bDao.insertLoanInfo(conn, userId);	// 대출 정보 입력(Loan 테이블 - 대출일, 반납일)
+		int result2 = bDao.insertLoanCallNum(conn, chk);	// 대출 상세 정보 입력(Ldetail테이블 - call_num)
+		int result3 = bDao.updateLoanCallNum(conn, chk);	// Bdetail테이블  status update
+		
+		int result = 0;
+		
+		if(result1 > 0 && result2 == chk.length && result3 == chk.length) {
+			result = 1;
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		
+		return result;
+	}
+	
+	
 
 }

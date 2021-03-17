@@ -1,5 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.admin.model.vo.*, com.khlibrary.common.model.vo.*" %>
+<% 
+   	ArrayList<ReturnBook> list = (ArrayList<ReturnBook>)request.getAttribute("list");
+   	PageInfo pi = (PageInfo)request.getAttribute("pi");
+   	
+   	String rank = request.getParameter("rank");
+   	String[] rankSelected = new String[2];
+   	if(rank != null){
+   		if(rank.equals("asc")){
+   			rankSelected[0] = "selected";
+   		} else {
+   			rankSelected[1] = "selected";
+   		}
+   	}
+   	String viewCondition = request.getParameter("viewCondition");
+	String[] viewSelected = new String[2];
+	if(viewCondition != null){
+		if(viewCondition.equals("lid"))
+			viewSelected[0] = "selected";
+		else
+			viewSelected[1] = "selected";
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -109,14 +131,111 @@
        		text-decoration: none;
        		color: black;
     	}
+    	
+    	 .menuTitle {
+            margin-left: 25%;
+            padding-top : 90px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            width: 65%;
+            border-bottom: 1.5px solid rgb(230, 230, 230);
+        }
+
+        .menuTitle span {
+            font-weight: 600;
+            font-size: 25px;
+            padding-bottom: 5px;
+
+        }
+        
+        .userList {
+            margin-top: 50px;
+            margin-left: 28%;
+            width: 60%;
+            height: 350px;
+        }
+
+        #subselect {
+            width: 100%;
+        }
+
+        #viewCondition, #rank, #view {
+            float: right;
+        }
+        
+         #viewCondition, #rank {
+        	margin-right : 2px;
+        	margin-top : 2px;
+        }
+
+        #returnbtn {
+            background-color: white;
+            border: 1px solid gray;
+            color: rgb(73, 73, 73);
+            border-radius : 3px;
+        }
+
+        #userlist {
+            margin-top: 3px;
+            width: 100%;
+            text-align : center;
+        }
+
+        #userlist th {
+            height: 40px;
+            background-color: rgb(139, 138, 138);
+            font-size: 14px;
+            border-bottom: 2px solid rgb(121, 120, 120);
+            border-top : 2px solid rgb(73, 73, 73);
+            color: white;
+        }
+
+        #blank td {
+            height: 250px;
+            border-bottom: 2px solid rgb(228, 228, 228);
+            background-color: #f8f7f7;
+        }
+        
+        #userlist td:not(#blank td) {
+        	height: 40px;
+        	background-color: #f8f7f7;
+        	border-bottom : 1px solid #c2c2c2;
+        }
+        
+       #userlist tr:not(#blank):last-child{
+            border-bottom: 2px solid rgb(121, 120, 120);
+        }
+
+        #paging {
+            margin-top: 50px;
+            margin-left: 28%;
+            margin-bottom : 100px;
+            width: 60%;
+            text-align: center;
+        }
+        
+        #paging button {
+        	background-color: white;
+            border: 1px solid gray;
+            color: rgb(73, 73, 73);
+            border-radius : 3px;
+        }
+
+        #view {
+            background-color: white;
+            border: 1px solid gray;
+            color: rgb(73, 73, 73);
+            border-radius : 3px;
+        }
     </style>
 </head>
 <body>
+<%@ include file="../common/mainbar-basic.jsp" %>
 <div class="submArea">
     <div class="bcrumb">
         <span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
         <span><a id="mName" href="">관리자</a></span>&nbsp;&nbsp;&nbsp;
-        <span><a id="subName" href="">반납처리</a></span>
+        <span><a id="subName" href="<%= request.getContextPath() %>/views/admin/bookReturn.jsp">반납처리</a></span>
     </div>
     <div class="sidebar">
             <div class="sideMenu">
@@ -128,10 +247,10 @@
                         <td align="center"><p class="subm1"><a href="">도서 등록</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/admin/bookReturn.jsp">회원 관리</a></p></td>
+                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/admin/manage">회원 관리</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/admin/bookReturn.jsp">반납 처리</a></p></td>
+                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/admin/rblist">반납 처리</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm4"><a href="">희망 도서 확인</a></p></td>
@@ -140,5 +259,127 @@
             </div>
     </div>
 </div>
+ <div class="menuTitle">
+        <span>반납처리</span>
+    </div>
+    <div class=userList>
+        <table id=subselect style="border-collapse: collapse;">
+            <tr>
+                <td><button id="returnbtn" name="returnbtn">반납처리</button></td>
+                <td>
+                <form action="<%= request.getContextPath() %>/admin/rbsort" method="get">
+                <button id="view" type="submit">보기</button>
+                <select id="rank" name="rank">
+                    <option value="desc" <%= rankSelected[1] %>>내림차순</option>
+                    <option value="asc" <%= rankSelected[0] %>>오름차순</option>
+                </select>
+                <select id="viewCondition" name="viewCondition">
+                    <option value="lid" <%= viewSelected[0] %>>대출번호</option>
+                    <option value="ldate" <%= viewSelected[1] %>>대출일</option>
+                </select>   
+                </form>
+           	 	</td>  
+            </tr>
+        </table>
+        <table id="userlist" style="border-collapse: collapse;">
+            <tr>
+                <th width="5%"><input type="checkbox" id="chkAll" name="chkAll"></th>
+                <th width="10%">대출번호</th>
+                <th width="15%">회원아이디</th>
+                <th width="30%">도서명</th>
+                <th width="20%">대출일</th>
+                <th width="20%">상태</th>
+            </tr>
+            <% if(list.isEmpty()) { %>
+            <tr id="blank">
+                <td colspan="6" align="center">반납 신청 내역이 없습니다.</td>
+            </tr>
+            <% } else {%>
+					<% for(ReturnBook rb : list) { %>
+					<tr>
+						<td><input type="checkbox" name="returnChk" class="returnChk"></td>
+						<td><%= rb.getLid() %></td>
+						<td><%= rb.getUser_id() %></td>
+						<td><%= rb.getBk_name() %></td>
+						<td><%= rb.getLoan_date() %></td>
+						<td><%= rb.getStatus() %></td>
+					</tr>
+					<% } %>
+				<% } %>			
+        </table>
+    </div>
+    
+    <script>
+    	$("#chkAll").click(function(){
+    		$(".returnChk").prop('checked', this.checked);
+    	})
+    	
+    	$("#returnbtn").click(function(){
+			var lidList = "";
+			
+			var chk = $(".returnChk:checked");
+    		
+    		chk.each(function(i){
+    			var tr = chk.parent().parent().eq(i);
+    			var td = tr.children();
+    			
+    			var lid = td.eq(1).text();
+    			
+    			lidList += lid + "/";
+    		});
+    		
+    		lidList = lidList.substring(0, lidList.length-1);
+ 		
+
+    	 location.href="<%= request.getContextPath() %>/admin/return?lidList=" + lidList;
+    	
+    	});
+    </script>
+    
+    <div id="paging">
+       		 <!-- 맨 처음으로(<<) -->
+       		<% if(pi.getCurrentPage() == 1) { %>
+			<button disabled> &lt;&lt; </button>
+			<%} else if(viewCondition == null) { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/admin/rblist?currentPage=1'"> &lt;&lt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/admin/rbsort?currentPage=1&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &lt;&lt; </button>
+			<% } %>
+			<!-- 이전 페이지로(<) -->
+			<% if(pi.getCurrentPage() == 1) { %>
+			<button disabled> &lt; </button>
+			<% } else if(viewCondition == null){ %>
+			<button onclick="location.href='<%= request.getContextPath() %>/admin/rblist?currentPage=<%= pi.getCurrentPage() -1 %>'"> &lt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/admin/rbsort?currentPage=<%= pi.getCurrentPage() -1 %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &lt; </button>
+			<% } %>
+			<!-- 숫자로 된 페이지 목록 (최대 10개) -->
+			<% for(int p = pi.getStartPage(); p<= pi.getEndPage(); p++) { %>
+				<% if(p == pi.getCurrentPage()) { %>
+				<button style="background:#ececec;" disabled> <%= p %></button>
+				<% } else if(viewCondition == null) { %>
+				<button onclick="location.href='<%=request.getContextPath()%>/admin/rblist?currentPage=<%= p %>'"><%= p %></button>
+				<% } else { %>
+				<button onclick="location.href='<%= request.getContextPath() %>/admin/rbsort?currentPage=<%= p %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"><%= p %></button>
+				<% } %>
+			<% } %>
+			<!--  다음 페이지로(>) -->
+			<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+			<button disabled> &gt; </button>
+			<% } else if(viewCondition == null) { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/admin/rblist?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/admin/rbsort?currentPage=<%= pi.getCurrentPage() + 1 %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &gt; </button>
+			<% } %>
+			<!-- 맨 끝으로(>>) -->
+			<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+			<button disabled> &gt;&gt; </button>
+			<% } else if(viewCondition == null) { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/admin/rblist?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/admin/rbsort?currentPage=<%= pi.getMaxPage() %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &gt;&gt; </button>
+			<% } %>
+		</div>
+    <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

@@ -189,12 +189,12 @@
         #blank {
             height: 250px;
             border-bottom: 2px solid rgb(228, 228, 228);
-            background-color: rgb(241, 239, 239);
+            background-color: #f8f7f7;
         }
         
         #userlist td:not(#blank td) {
         	height: 40px;
-        	background-color: rgb(241, 239, 239);
+        	background-color: #f8f7f7;
         	border-bottom : 1px solid #c2c2c2;
         }
         
@@ -238,7 +238,7 @@
     </style>
 </head>
 <body>
-<%@ include file="../common/mainbar-admin.jsp" %>
+<%@ include file="../common/mainbar-basic.jsp" %>
 <div class="submArea">
     <div class="bcrumb">
         <span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
@@ -258,7 +258,7 @@
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/admin/manage">회원 관리</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/admin/bookReturn.jsp">반납 처리</a></p></td>
+                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/admin/rblist">반납 처리</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm4"><a href="">희망 도서 확인</a></p></td>
@@ -363,7 +363,6 @@
     </script>
     
     <div id="paging">
-       		 <!-- 맨 처음으로(<<) -->
        		<% if(pi.getCurrentPage() == 1) { %>
 			<button disabled> &lt;&lt; </button>
 			<%} else if(viewCondition == null) { %>
@@ -371,7 +370,7 @@
 			<% } else { %>
 			<button onclick="location.href='<%= request.getContextPath() %>/admin/usort?currentPage=1&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &lt;&lt; </button>
 			<% } %>
-			<!-- 이전 페이지로(<) -->
+			
 			<% if(pi.getCurrentPage() == 1) { %>
 			<button disabled> &lt; </button>
 			<% } else if(viewCondition == null){ %>
@@ -379,7 +378,7 @@
 			<% } else { %>
 			<button onclick="location.href='<%= request.getContextPath() %>/admin/usort?currentPage=<%= pi.getCurrentPage() -1 %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &lt; </button>
 			<% } %>
-			<!-- 숫자로 된 페이지 목록 (최대 10개) -->
+			
 			<% for(int p = pi.getStartPage(); p<= pi.getEndPage(); p++) { %>
 				<% if(p == pi.getCurrentPage()) { %>
 				<button style="background:#ececec;" disabled> <%= p %></button>
@@ -389,7 +388,7 @@
 				<button onclick="location.href='<%= request.getContextPath() %>/admin/usort?currentPage=<%= p %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"><%= p %></button>
 				<% } %>
 			<% } %>
-			<!--  다음 페이지로(>) -->
+			
 			<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
 			<button disabled> &gt; </button>
 			<% } else if(viewCondition == null) { %>
@@ -397,7 +396,7 @@
 			<% } else { %>
 			<button onclick="location.href='<%=request.getContextPath()%>/admin/usort?currentPage=<%= pi.getCurrentPage() + 1 %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &gt; </button>
 			<% } %>
-			<!-- 맨 끝으로(>>) -->
+			
 			<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
 			<button disabled> &gt;&gt; </button>
 			<% } else if(viewCondition == null) { %>

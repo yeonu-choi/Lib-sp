@@ -396,7 +396,7 @@
             </div> -->
 	
 	
-            <form action="<%= request.getContextPath() %>/book/loans" method="POST" id="loansForm">
+            <form action="<%= request.getContextPath() %>/book/loan" method="POST" id="loansForm">
                 <div class="resultArea">
                 	<% if(list.isEmpty()) {%>
                     		<div class="resultBook"><p>조회 된 도서가 없습니다.</p></div>

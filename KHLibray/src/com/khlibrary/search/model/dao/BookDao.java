@@ -132,6 +132,79 @@ public class BookDao {
 		return list;
 	}
 
+	// 대출 정보 입력
+	public int insertLoanInfo(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0; 
+		String sql = query.getProperty("insertLoanInfo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	// 대출 상세 정보 입력
+	public int insertLoanCallNum(Connection conn, String[] chk) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = query.getProperty("insertLoanCallNum");	// Ldetail insert
+		
+		try {
+			
+			for(String c : chk) {
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, c);
+				
+				result += pstmt.executeUpdate();
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateLoanCallNum(Connection conn, String[] chk) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = query.getProperty("updateLoanCallNum");	// bdetail status update
+		
+		try {
+			
+			for(String c : chk) {
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, c);
+				
+				result += pstmt.executeUpdate();
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 	
 	
 }

@@ -37,3 +37,5 @@
 21.03.17 UserManageSortServlet 주소 - /admin/usort -yw
 
 21.03.17 ChangeGradeServlet 주소 - /admin/grade - yw
+
+21.03.17 BookLoanServlet 이름변경, 주소변경 - /book/loan -ay

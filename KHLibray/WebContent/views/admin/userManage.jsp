@@ -1,5 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.member.model.vo.*, com.khlibrary.common.model.vo.*" %>
+<% 
+   	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+   	PageInfo pi = (PageInfo)request.getAttribute("pi");
+   	
+   	String rank = request.getParameter("rank");
+   	String[] rankSelected = new String[2];
+   	if(rank != null){
+   		if(rank.equals("asc")){
+   			rankSelected[0] = "selected";
+   		} else {
+   			rankSelected[1] = "selected";
+   		}
+   	}
+   	String viewCondition = request.getParameter("viewCondition");
+	String[] viewSelected = new String[3];
+	if(viewCondition != null){
+		if(viewCondition.equals("overdue"))
+			viewSelected[0] = "selected";
+		else if(viewCondition.equals("edate"))
+			viewSelected[1] = "selected";
+		else
+			viewSelected[2] = "selected";
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -109,9 +133,112 @@
        		text-decoration: none;
        		color: black;
     	}
+    	
+		.menuTitle {
+            margin-left: 25%;
+            padding-top : 90px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            width: 65%;
+            border-bottom: 1.5px solid rgb(230, 230, 230);
+        }
+
+        .menuTitle span {
+            font-weight: 600;
+            font-size: 25px;
+            padding-bottom: 5px;
+
+        }
+
+        .manage {
+            margin-top: 50px;
+            margin-left: 28%;
+            width: 60%;
+            height: 350px;
+        }
+
+        #subselect {
+            width: 100%;
+            
+        }
+
+        #viewCondition, #rank, #view{
+            float: right;
+        }
+        
+        #viewCondition, #rank {
+        	margin-right : 2px;
+        	margin-top : 2px;
+        }
+
+        #userlist {
+            width: 100%;
+            text-align : center;
+            margin-top : 3px;
+        }
+
+        #userlist th {
+            height: 40px;
+            border-top : 2px solid rgb(73, 73, 73);
+            background-color: rgb(139, 138, 138);
+            font-size: 14px;
+            border-bottom: 2px solid rgb(121, 120, 120);
+            color: white;
+        }
+
+        #blank {
+            height: 250px;
+            border-bottom: 2px solid rgb(228, 228, 228);
+            background-color: rgb(241, 239, 239);
+        }
+        
+        #userlist td:not(#blank td) {
+        	height: 40px;
+        	background-color: rgb(241, 239, 239);
+        	border-bottom : 1px solid #c2c2c2;
+        }
+        
+       #userlist tr:not(#blank):last-child{
+            border-bottom: 2px solid rgb(121, 120, 120);
+        }
+        
+         #gradeUpdate {
+            background-color: white;
+            border: 1px solid gray;
+            color: rgb(73, 73, 73);
+            border-radius : 3px;
+        }
+
+        #view {
+            background-color: white;
+            border: 1px solid gray;
+            color: rgb(73, 73, 73);
+            border-radius : 3px;
+        }
+
+        #paging {
+            margin-top: 150px;
+            margin-left: 27%;
+            margin-bottom : 100px;
+            width: 60%;
+            text-align: center;
+        }
+        
+        #paging button {
+        	background-color: white;
+            border: 1px solid gray;
+            color: rgb(73, 73, 73);
+            border-radius : 3px;
+        }
+        
+        #paging button:disabled {
+        	background-color: #ececec;
+        }
+
     </style>
 </head>
 <body>
+<%@ include file="../common/mainbar-admin.jsp" %>
 <div class="submArea">
     <div class="bcrumb">
         <span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
@@ -128,7 +255,7 @@
                         <td align="center"><p class="subm1"><a href="">도서 등록</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/admin/bookReturn.jsp">회원 관리</a></p></td>
+                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/admin/manage">회원 관리</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/admin/bookReturn.jsp">반납 처리</a></p></td>
@@ -139,6 +266,146 @@
                 </table>
             </div>
     </div>
-</div>
+ </div>  
+ <div class="menuTitle">
+        <span>회원관리</span>
+    </div>
+    <div class="manage">
+    	
+        <table id=subselect style="border-collapse: collapse;">
+            <tr>
+            	<td><button id="gradeUpdate">등급조정</button></td>  
+                <td>
+                <form action="<%= request.getContextPath() %>/admin/usort" method="get">
+                <button id="view" type="submit">보기</button>
+                <select id="rank" name="rank">
+                    <option value="desc"  <%= rankSelected[1] %>>내림차순</option>
+                    <option value="asc" <%= rankSelected[0] %>>오름차순</option>
+                </select>
+				 <select id="viewCondition" name="viewCondition" >
+                    <option value="overdue" <%= viewSelected[0] %>>연체횟수</option>
+                    <option value="edate" <%= viewSelected[1] %>>가입일</option>
+                    <option value="grade" <%= viewSelected[2] %>>회원등급</option>
+                </select>
+            	</form>
+            </td>
+            </tr>
+        </table>
+            <table id="userlist" style="border-collapse: collapse;">
+                <tr>
+                	<th width="5%"><input type="checkbox" id="checkAll"></th>
+                    <th width="15%">아이디</th>
+                    <th width="15%">이름</th>
+                    <th width="15%">등급</th>
+                    <th width="20%">가입일</th>
+                    <th width="10%">연체횟수</th>
+                    <th width="20%">변경할등급</th>
+                </tr>
+                <% if(list.isEmpty()) { %>
+                <tr id="blank">
+                    <td colspan="7" align="center">관리할 회원이 없습니다.</td>
+                </tr>
+                <% } else {%>
+					<% for(Member m : list) { %>
+					<tr>
+						<td><input type="checkbox" name="change" class="change"></td>
+						<td><%= m.getUser_id() %></td>
+						<td><%= m.getUser_name() %></td>
+						<td><%= m.getGrade() %></td>
+						<td><%= m.getEnroll_date() %></td>
+						<td><%= m.getOverdue() %></td>
+						<td>
+						<select id="newGrade" name="newGrade">
+						<option value="정회원">정회원</option>
+						<option value="준회원">준회원</option>
+						<option value="블랙">블랙</option>
+						</select>
+						</td>
+					</tr>
+					<% } %>
+				<% } %>			
+            </table>
+    </div>
+    
+    <script>
+    	$("#checkAll").click(function(){
+    		$(".change").prop('checked', this.checked);
+    	})
+    	
+    	$("#gradeUpdate").click(function(){
+			var idList = "";
+			var gradeList = "";
+			var newGradeList = "";
+			
+			var chk = $(".change:checked");
+    		
+    		chk.each(function(i){
+    			var tr = chk.parent().parent().eq(i);
+    			var td = tr.children();
+    			
+    			var userid = td.eq(1).text();
+    			var grade = td.eq(3).text();
+    			var newGrade = td.eq(6).children().val();
+    			
+    			idList += userid + "/";
+    			gradeList += grade + "/";
+    			newGradeList += newGrade + "/";	
+    		});
+    		
+    		idList = idList.substring(0, idList.length-1);
+    		gradeList = gradeList.substring(0, gradeList.length-1);
+    		newGradeList = newGradeList.substring(0, idList.length-1);
+ 		
+
+    	 location.href="<%= request.getContextPath() %>/admin/grade?idList=" + idList +"&gradeList=" + gradeList + "&newGradeList=" + newGradeList;
+    	
+    	});
+    </script>
+    
+    <div id="paging">
+       		 <!-- 맨 처음으로(<<) -->
+       		<% if(pi.getCurrentPage() == 1) { %>
+			<button disabled> &lt;&lt; </button>
+			<%} else if(viewCondition == null) { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/admin/manage?currentPage=1'"> &lt;&lt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/admin/usort?currentPage=1&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &lt;&lt; </button>
+			<% } %>
+			<!-- 이전 페이지로(<) -->
+			<% if(pi.getCurrentPage() == 1) { %>
+			<button disabled> &lt; </button>
+			<% } else if(viewCondition == null){ %>
+			<button onclick="location.href='<%= request.getContextPath() %>/admin/manage?currentPage=<%= pi.getCurrentPage() -1 %>'"> &lt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/admin/usort?currentPage=<%= pi.getCurrentPage() -1 %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &lt; </button>
+			<% } %>
+			<!-- 숫자로 된 페이지 목록 (최대 10개) -->
+			<% for(int p = pi.getStartPage(); p<= pi.getEndPage(); p++) { %>
+				<% if(p == pi.getCurrentPage()) { %>
+				<button style="background:#ececec;" disabled> <%= p %></button>
+				<% } else if(viewCondition == null) { %>
+				<button onclick="location.href='<%=request.getContextPath()%>/admin/manage?currentPage=<%= p %>'"><%= p %></button>
+				<% } else { %>
+				<button onclick="location.href='<%= request.getContextPath() %>/admin/usort?currentPage=<%= p %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"><%= p %></button>
+				<% } %>
+			<% } %>
+			<!--  다음 페이지로(>) -->
+			<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+			<button disabled> &gt; </button>
+			<% } else if(viewCondition == null) { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/admin/manage?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/admin/usort?currentPage=<%= pi.getCurrentPage() + 1 %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &gt; </button>
+			<% } %>
+			<!-- 맨 끝으로(>>) -->
+			<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+			<button disabled> &gt;&gt; </button>
+			<% } else if(viewCondition == null) { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/admin/manage?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/admin/usort?currentPage=<%= pi.getMaxPage() %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &gt;&gt; </button>
+			<% } %>
+    </div>
+<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

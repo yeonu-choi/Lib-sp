@@ -38,17 +38,18 @@ public class MemberDao {
          rset = pstmt.executeQuery();
          
          if(rset.next()) {
-            loginUser = new Member(rset.getInt("user_no"),
-                              rset.getString("user_id"),
+            loginUser = new Member(rset.getString("user_id"),
                               rset.getString("user_pwd"),
                               rset.getString("user_name"),
                               rset.getString("birth_date"),
                               rset.getString("phone"),
                               rset.getString("email"),
                               rset.getString("address"),
+                              rset.getString("grade"),
                               rset.getDate("enroll_date"),
-                              rset.getDate("modify_date"),
-                              rset.getString("status"));
+                              rset.getInt("user_no"),
+                              rset.getInt("overdue"));
+                           
          }
          
       } catch (SQLException e) {
@@ -131,10 +132,10 @@ public class MemberDao {
 		e.printStackTrace();
 	} finally {
 		close(pstmt);
-	}
-	  
-	return result;
+	}	  
+	return result;	
    }
+   
    public Member selectMember(Connection conn, String user_id) {
 	   Member member = null;
 	   PreparedStatement pstmt = null;
@@ -149,26 +150,24 @@ public class MemberDao {
 		rset = pstmt.executeQuery();
 		
 		if(rset.next()) {
-			member = new Member(rset.getInt("User_no"),
-					rset.getString("User_id"),
-					rset.getString("User_pwd"),
-					rset.getString("user_name"),
-					rset.getString("birth_date"),
-					rset.getString("phone"),
-					rset.getString("email"),
-					rset.getString("address"),
-					rset.getDate("enroll_date"),
-					rset.getDate("modify_date"),
-					rset.getString("status"));														
-		}
-		
+			member =new Member(rset.getString("user_id"),
+                    rset.getString("user_pwd"),
+                    rset.getString("user_name"),
+                    rset.getString("birth_date"),
+                    rset.getString("phone"),
+                    rset.getString("email"),
+                    rset.getString("address"),
+                    rset.getString("grade"),
+                    rset.getDate("enroll_date"),
+                    rset.getInt("user_no"),
+                    rset.getInt("overdue"));
+		}	
 	} catch (SQLException e) {
 		e.printStackTrace();
 	} finally {
 		close(rset);
 		close(pstmt);		
 	}
-
 	return member;
    }
 

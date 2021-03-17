@@ -38,15 +38,14 @@ public class LoginServlet extends HttpServlet {
 		
 		Member loginUser = new MemberService().loginMember(new Member(user_id, user_pwd));
 		
-		if(loginUser != null) {
-			
+		if(loginUser != null) {		
 			HttpSession session = request.getSession();							
 			session.setAttribute("loginUser", loginUser);			
 			response.sendRedirect(request.getContextPath());
 						
 		} else {		
-			request.setAttribute("msg", "로그인에 실패했습니다.");
-			RequestDispatcher view = request.getRequestDispatcher("/views/common/errorPage.jsp");
+			request.getSession().setAttribute("msg", "로그인에 실패했습니다.");
+			RequestDispatcher view = request.getRequestDispatcher("/views/member/loginForm.jsp");
 			view.forward(request, response);
 		}	
 	}

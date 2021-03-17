@@ -180,9 +180,9 @@
             </ul>
             <ul class="sub02">
                         <li><a href="<%= request.getContextPath() %>/views/board/notice.jsp">공지사항</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">FAQ</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">Q&A</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">이달의신간</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/board/faq.jsp">FAQ</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/board/qna.jsp">Q&A</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/board/newbooks.jsp">이달의신간</a>&nbsp;&nbsp;&nbsp;</li>
             </ul>
             <ul class="sub03">
                         <li><a href="<%= request.getContextPath() %>/views/libInfo/useGuide.jsp">이용안내</a>&nbsp;&nbsp;&nbsp;</li>

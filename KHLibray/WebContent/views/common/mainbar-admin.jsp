@@ -8,6 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mainbar-admin</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <% if(session.getAttribute("msg") != null) { %>
+	<script>
+	alert(" <%= session.getAttribute("msg")%> ");
+	</script>
+	<% 
+	session.removeAttribute("msg");
+	} %>
     <style>
        body {
             margin: 0;
@@ -211,8 +218,8 @@
                         <li><a href="<%= request.getContextPath() %>/views/libInfo/libMap.jsp">오시는길</a>&nbsp;&nbsp;&nbsp;</li>
              </ul>
              <ul class="sub04">
-                        <li><a href="">도서등록</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="<%= request.getContextPath() %>/views/admin/userManage.jsp">회원관리</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/admin/bookInsert.jsp">도서등록</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/admin/manage">회원관리</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/views/admin/bookReturn.jsp">반납처리</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="">희망도서확인</a>&nbsp;&nbsp;&nbsp;</li>
              </ul>

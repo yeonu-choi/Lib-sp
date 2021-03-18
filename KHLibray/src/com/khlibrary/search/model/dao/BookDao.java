@@ -356,7 +356,27 @@ public class BookDao {
 		return list;
 	}
 
-
+	// 도서 등록
+	
+	public int insertBook(Connection conn, Book book) {		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = query.getProperty("insertBook");
+		try {
+			pstmt = conn.prepareStatement(sql);
+						
+			result=pstmt.executeUpdate();
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}		
+		return result;
+		
+	
+	}
 	
 
 	

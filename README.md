@@ -77,3 +77,7 @@
 21.03.18 NoticeInsertServlet 주소 - /notice/insert - doo
 
 21.03.18 NoticeDetailServlet 주소 - /notice/detail - doo
+
+21.03.18 DetailSearchServlet 주소 - /detail/search - ay
+
+21.03.18 DetailLoanServlet 주소 - /detail/loan - ay

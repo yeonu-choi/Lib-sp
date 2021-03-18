@@ -107,6 +107,23 @@ public class BookService {
 		
 	}
 
+	// 도서 등록 
 	
+	public int insertBook(Book book) {
+		
+		Connection conn = getConnection();
+		int result = new BookDao().insertBook(conn, book);
+		
+		if(result> 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	
+	}
+
 
 }

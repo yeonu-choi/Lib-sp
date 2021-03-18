@@ -215,7 +215,7 @@
     </div>
     <div id="top-sub" onmouseleave="javascript:HideSub();">
             <ul class="sub01">
-                        <li><a href="<%= request.getContextPath() %>/views/search/briefSearch.jsp">간략검색</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/views/search/simpleSearch.jsp">간략검색</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세검색</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망도서신청</a>&nbsp;&nbsp;&nbsp;</li>
             </ul>
@@ -241,7 +241,7 @@
                         <li><a href="<%= request.getContextPath() %>/views/admin/bookInsert.jsp">도서등록</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/admin/manage">회원관리</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/admin/rblist">반납처리</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="">희망도서확인</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/wish/list">희망도서확인</a>&nbsp;&nbsp;&nbsp;</li>
                         <% } else { %>
                         <li><a href="javascript:alert('접근 권한이 없습니다. 로그인 해주세요.');" onfocus="this.blur()">회원정보수정</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="javascript:alert('접근 권한이 없습니다. 로그인 해주세요.');" onfocus="this.blur()">희망도서신청내역</a>&nbsp;&nbsp;&nbsp;</li>

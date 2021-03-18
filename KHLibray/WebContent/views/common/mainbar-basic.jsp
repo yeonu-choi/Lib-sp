@@ -200,7 +200,11 @@
             <ul class="sub01">
                         <li><a href="<%= request.getContextPath() %>/views/search/simpleSearch.jsp">간략검색</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세검색</a>&nbsp;&nbsp;&nbsp;</li>
+                        <% if(lu != null) {%>
                         <li><a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망도서신청</a>&nbsp;&nbsp;&nbsp;</li>
+                        <% } else { %>
+                        <li><a href="#" onClick="alert('로그인 후 이용이 가능합니다.')">희망도서신청</a>&nbsp;&nbsp;&nbsp;</li>
+                        <% }%>
             </ul>
             <ul class="sub02">
                         <li><a href="<%= request.getContextPath() %>/notice">공지사항</a>&nbsp;&nbsp;&nbsp;</li>

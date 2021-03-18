@@ -73,4 +73,80 @@
 		   	   STATUS LIKE '입고중'
 	</entry>
 
+	
+	<!-- ////////////이하 yw /////////////////////////////////////////////// -->
+	<entry key="getMyListCount">
+		SELECT 
+			COUNT(*)
+        FROM   
+        	WISHBOOK
+        WHERE 
+        REQUEST_DATE BETWEEN (TO_DATE(TO_CHAR(SYSDATE,'YYYYMM') || '01')) 
+        AND SYSDATE
+        AND USER_ID = ?
+	</entry>
+	<entry key="selectMyList">
+		SELECT WB_ID,
+               WB_NAME,
+               WB_WRITER,
+               REQUEST_DATE,
+               STATUS     
+        FROM
+        	(SELECT
+       			 ROWNUM RNUM,
+            		A.*
+    		FROM
+       			 (
+                SELECT 
+                	WB_ID,
+                    WB_NAME,
+                    WB_WRITER,
+                    REQUEST_DATE,
+                    STATUS
+                FROM   
+                	WISHBOOK
+                WHERE (REQUEST_DATE BETWEEN (TO_DATE(TO_CHAR(SYSDATE,'YYYYMM') || '01')) AND SYSDATE)
+                AND USER_ID = ?) A)
+                WHERE RNUM BETWEEN ? AND ?
+                ORDER BY WB_ID
+	</entry>
+	<entry key="getMySortListCount">
+		SELECT 
+			COUNT(*)   
+        FROM   
+        	WISHBOOK
+        WHERE 
+        	(REQUEST_DATE BETWEEN TO_DATE(TO_CHAR(TO_DATE(?, 'YYYYMM'),'YYYYMM') || '01') 
+        AND TO_DATE(TO_CHAR(LAST_DAY(TO_DATE(?, 'YYYYMM')),'YYYYMMDD')))
+        AND STATUS = ?
+        AND USER_ID = ?
+	</entry>
+	<entry key="selectMySortList">
+		SELECT 
+			WB_ID,
+            WB_NAME,
+            WB_WRITER,
+            REQUEST_DATE,
+            STATUS     
+         FROM
+         	(SELECT
+       			 ROWNUM rnum,
+            		A.*
+    		 FROM
+       			 (
+                	SELECT 
+	              	   	 WB_ID,
+	                     WB_NAME,
+	                     WB_WRITER,
+	                     REQUEST_DATE,
+	                     STATUS
+                	FROM   
+                	 	WISHBOOK
+	                WHERE (REQUEST_DATE BETWEEN TO_DATE(TO_CHAR(TO_DATE(?, 'YYYYMM'),'YYYYMM') || '01') 
+	                AND TO_DATE(TO_CHAR(LAST_DAY(TO_DATE(?, 'YYYYMM')),'YYYYMMDD')))
+	                AND STATUS = ?
+	                AND USER_ID = ?) A)
+	                WHERE RNUM BETWEEN ? AND ?
+	                ORDER BY WB_ID
+	</entry>
 </properties>

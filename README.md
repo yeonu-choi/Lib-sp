@@ -57,3 +57,11 @@
 21.03.18 ReturnBookServlet 주소 - /admin/return - yw
 
 21.03.18 mainbar-basic.jsp 경로 수정 - ay
+
+21.03.18 WishBookServlet 주소 - /wish/apply - ay
+
+21.03.18 WishBookCheckServlet 주소 - /wish/bkCheck - ay
+
+21.03.18 WishBookListServlet 주소 - /wish/list - ay
+
+21.03.18 WishBookManageServlet 주소 - /wish/manage - 

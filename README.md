@@ -67,3 +67,5 @@
 21.03.18 WishBookManageServlet 주소 - /wish/manage - ay
 
 21.03.18 BookListServlet 주소 - /book/list - ay
+
+21.03.18 LogoutServlet 주소 - /member/logout - km

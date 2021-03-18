@@ -3,7 +3,7 @@ package com.khlibrary.search.model.vo;
 import java.sql.Date;
 
 public class Book {
-	private Long isbn;							// 도서 ISBN
+	private long isbn;							// 도서 ISBN
 	private String bName;						// 도서명
 	private String bWriter;						// 도서 작가
 	private String bPublisher;					// 도서 출판사

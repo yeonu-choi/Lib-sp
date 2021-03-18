@@ -11,6 +11,30 @@ import static com.khlibrary.common.JDBCTemplate.*;
 
 public class BookService {
 	
+	// 전체 목록 카운트
+	public int getBookListCount() {
+		Connection conn = getConnection();
+		
+		int result = new BookDao().getBookListCount(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+
+	// 전체 목록 결과
+	public List<Book> selectBookList(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		List<Book> list = new BookDao().selectBookList(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	
 	// 검색 리스트 카운트
 	public int getSearchListCount(String searchSelect, String search) {
 		Connection conn = getConnection();
@@ -58,7 +82,7 @@ public class BookService {
 		
 		return result;
 	}
-	
-	
+
+
 
 }

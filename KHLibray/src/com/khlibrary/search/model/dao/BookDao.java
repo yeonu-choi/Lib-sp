@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -29,6 +30,77 @@ public class BookDao {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	// 전체 목록 카운트
+	public int getBookListCount(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		String sql = query.getProperty("getBookListCount");
+		
+			try {
+				stmt = conn.createStatement();
+
+				rset = stmt.executeQuery(sql);
+				
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(stmt);
+			}
+			
+		return listCount;
+	}
+
+	
+	
+	public List<Book> selectBookList(Connection conn, PageInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Book> list = new ArrayList<>();
+		String sql = query.getProperty("selectBookList");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Book(rset.getInt("isbn")
+								, rset.getString("bk_name")
+								, rset.getString("writer")
+								, rset.getString("publisher")
+								, rset.getInt("issue_year")
+								, rset.getDate("r_date")
+								, rset.getString("imgname")
+								, rset.getString("imgpath")
+								, rset.getString("call_num")
+								, rset.getString("status")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+	
 	
 	// 검색 리스트 카운트
 	public int getSearchListCount(Connection conn, String searchSelect, String search) {
@@ -204,6 +276,9 @@ public class BookDao {
 		
 		return result;
 	}
+
+
+	
 
 	
 	

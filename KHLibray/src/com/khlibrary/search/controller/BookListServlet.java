@@ -14,16 +14,16 @@ import com.khlibrary.search.model.vo.Book;
 import com.khlibrary.search.model.vo.PageInfo;
 
 /**
- * Servlet implementation class SimpleSearchServlet
+ * Servlet implementation class BookListServlet
  */
-@WebServlet("/simple/search")
-public class SimpleSearchServlet extends HttpServlet {
+@WebServlet("/book/list")
+public class BookListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SimpleSearchServlet() {
+    public BookListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,17 +32,6 @@ public class SimpleSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// getParameter로 넘어온 값 변수에 저장
-		String searchSelect = request.getParameter("searchSelect");
-		String search = request.getParameter("search");
-		
-		// 검색 초기화 or 재검색 
-//		String reSearch = request.getParameter("reSearch");
-//		
-//		if(reSearch != null) {
-//			request.removeAttribute("list"); // 다시 생각하기
-//		}
-		
 		int currentPage = 1;
 		
 		if(request.getParameter("currentPage") != null) {
@@ -52,7 +41,7 @@ public class SimpleSearchServlet extends HttpServlet {
 		BookService bService = new BookService();
 		
 		// 게시글 총 갯수 구하기 
-		int listCount = bService.getSearchListCount(searchSelect, search);
+		int listCount = bService.getBookListCount();
 		
 		// 페이징 처리용 변수
 		int pageLimit = 10;
@@ -69,12 +58,13 @@ public class SimpleSearchServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
 		
-		List<Book> list = bService.selectSearchList(pi, searchSelect, search);
+		List<Book> list = bService.selectBookList(pi);
 		
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/views/search/simpleSearchResult.jsp").forward(request, response);
+		
 		
 	}
 

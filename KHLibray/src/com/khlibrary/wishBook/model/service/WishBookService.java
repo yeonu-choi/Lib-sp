@@ -68,4 +68,52 @@ public class WishBookService {
 		return result;
 	}
 
+	
+	
+	////////////////// 이하 yw //////////////////////////////////////////////////////////
+	
+	
+	public int getMyListCount(String user_id) {
+		Connection conn = getConnection();
+		
+		int listCount = new WishBookDao().getMyListCount(conn, user_id);
+				
+		close(conn);
+		
+		return listCount;
+	}
+
+	public List<WishBook> selectMyList(PageInfo pi, String user_id) {
+		Connection conn = getConnection();
+		
+		List<WishBook> list = new WishBookDao().selectMyList(conn, pi, user_id);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	public List<WishBook> selectMySortList(PageInfo pi, String user_id, String wstatus, String smonth1,
+			String emonth1) {
+		
+		Connection conn = getConnection();
+		
+		List<WishBook> list = new WishBookDao().selectMySortList(conn, pi, user_id, wstatus, smonth1, emonth1);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	public int getMySortListCount(String user_id, String wstatus, String smonth1, String emonth1) {
+		Connection conn = getConnection();
+		
+		int listCount = new WishBookDao().getMySortListCount(conn, user_id, wstatus, smonth1, emonth1);
+				
+		close(conn);
+		
+		return listCount;
+	}
+
+	
 }

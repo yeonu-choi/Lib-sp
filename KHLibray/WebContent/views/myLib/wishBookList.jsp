@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.wishBook.model.vo.*, com.khlibrary.common.model.vo.*"%>
+<% 
+   	ArrayList<WishBook> list = (ArrayList<WishBook>)request.getAttribute("list");
+   	PageInfo pi = (PageInfo)request.getAttribute("pi");
+   	
+   	String smonth = request.getParameter("smonth2");
+   	String emonth = request.getParameter("emonth2");
+   	String wstatus = request.getParameter("wstatus");
+	String[] wSelected = new String[3];
+	if(wstatus != null){
+		if(wstatus.equals("입고중"))
+			wSelected[0] = "selected";
+		else if(wstatus.equals("입고완료"))
+			wSelected[1] = "selected";
+		else
+			wSelected[2] = "selected";
+	}
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -184,12 +201,18 @@
             font-size: 15px;
         }
 
-        #wishDetail td {
-            height: 80px;
-            font-weight: 550;
+
+        #wishDetail td:not(#blank td) {
+            height: 50px;
             color: rgb(85, 85, 85);
         }
 
+		#blank td {
+			height: 80px;
+            font-weight: 550;
+            color: rgb(85, 85, 85);
+		}
+        
         #blank td:last-child {
             padding-right: 30px;
         }
@@ -230,7 +253,7 @@
                         <td align="center"><p class="subm1"><a href="">회원 정보 수정</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/myLib/wishBookList.jsp">희망 도서 신청 내역</a></p></td>
+                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/mylib/wlist">희망 도서 신청 내역</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/myLib/loanList.jsp">대출 내역</a></p></td>
@@ -246,17 +269,17 @@
         <span>희망도서신청내역</span>
     </div>
     <div class="modiArea">
-        <form action="<%= request.getContextPath() %>/wish/search" method="get">
+        <form action="<%= request.getContextPath() %>/mylib/wsort" method="get">
            <span>신청일 : </span>
             <input type="month" id="start" name="start"> - 
             <input type="month" id="end" name="end">
             <span> &nbsp;진행상태 선택 : </span>
-            <select>
-                <option>신청중</option>
-                <option>입고완료</option>
-                <option>취소완료</option>
+            <select id="wstatus" name="wstatus">
+                <option value="입고중" <%= wSelected[0] %>>신청중</option>
+                <option value="입고완료" <%= wSelected[1] %>>입고완료</option>
+                <option value="취소완료" <%= wSelected[2] %>>취소완료</option>
             </select>
-            <button type="button" class="btn btn-secondary">조회</button>
+            <button type="submit" id="view" class="btn btn-secondary">조회</button>
         </form>
     </div>
     <div class="detailArea">
@@ -267,22 +290,81 @@
                 <th width="13%">저자</th>
                 <th width="13%">신청일</th>
                 <th  width="13%">진행상태</th>
-                <th width = "8%">취소여부</th>
             </tr>
+             <% if(list.isEmpty()) { %>
             <tr id="blank">
                 <td align="center"><img src="<%=request.getContextPath()%>/resources/image/yw/bicon.png" width="20px"></td>
                 <td colspan="5">희망 도서 신청 내역이 없습니다.</td>
             </tr>
+            <% } else {%>
+					<% for(WishBook wb: list) { %>
+					<tr>
+						<td><%= wb.getWbId() %></td>
+						<td><%= wb.getWbName() %></td>
+						<td><%= wb.getWbWriter() %></td>
+						<td><%= wb.getRequestDate() %></td>
+						<td><%= wb.getStatus() %></td>
+					</tr>
+					<% } %>
+				<% } %>			
         </table>
     </div>
-     <div id="paging">
-        <button onclick="">1</button>
-    </div>
-    <script>
+     
+     <% if(wstatus == null) {%>
+     <script>
      document.getElementById('start').value= new Date().toISOString().slice(0, 7);
      document.getElementById('end').value= new Date().toISOString().slice(0, 7);
-     $('#blank').attr("width : ")
-    </script>
+     </script>
+     <% } else {%>
+     <script>
+     document.getElementById('start').value= new Date('<%= smonth %>').toISOString().slice(0, 7);
+     document.getElementById('end').value= new Date('<%= emonth %>').toISOString().slice(0, 7);
+     </script>
+     <% } %>  
+     <div id="paging">
+        <!-- 맨 처음으로(<<) -->
+       		<% if(pi.getCurrentPage() == 1) { %>
+			<button disabled> &lt;&lt; </button>
+			<%} else if(wstatus == null) { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/mylib/wlist?currentPage=1'"> &lt;&lt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/mylib/wsortcurrentPage=1&wstatus=<%=wstatus%>'"> &lt;&lt; </button>
+			<% } %>
+			<!-- 이전 페이지로(<) -->
+			<% if(pi.getCurrentPage() == 1) { %>
+			<button disabled> &lt; </button>
+			<% } else if(wstatus == null){ %>
+			<button onclick="location.href='<%= request.getContextPath() %>/mylib/wlist?currentPage=<%= pi.getCurrentPage() -1 %>'"> &lt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/mylib/wsort?currentPage=<%= pi.getCurrentPage() -1 %>&wstatus=<%=wstatus%>'"> &lt; </button>
+			<% } %>
+			<!-- 숫자로 된 페이지 목록 (최대 10개) -->
+			<% for(int p = pi.getStartPage(); p<= pi.getEndPage(); p++) { %>
+				<% if(p == pi.getCurrentPage()) { %>
+				<button style="background:#ececec;" disabled> <%= p %></button>
+				<% } else if(wstatus == null) { %>
+				<button onclick="location.href='<%=request.getContextPath()%>/mylib/wlist?currentPage=<%= p %>'"><%= p %></button>
+				<% } else { %>
+				<button onclick="location.href='<%= request.getContextPath() %>/mylib/wsort?currentPage=<%= p %>&wstatus=<%=wstatus%>'"><%= p %></button>
+				<% } %>
+			<% } %>
+			<!--  다음 페이지로(>) -->
+			<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+			<button disabled> &gt; </button>
+			<% } else if(wstatus == null) { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/mylib/wlist?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/mylib/wsort?currentPage=<%= pi.getCurrentPage() + 1 %>&wstatus=<%=wstatus%>'"> &gt; </button>
+			<% } %>
+			<!-- 맨 끝으로(>>) -->
+			<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+			<button disabled> &gt;&gt; </button>
+			<% } else if(wstatus == null) { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/mylib/wlist?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/mylib/wsort?currentPage=<%= pi.getMaxPage() %>&wstatus=<%=wstatus%>'"> &gt;&gt; </button>
+			<% } %>
+    </div>
 <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

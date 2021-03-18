@@ -64,4 +64,6 @@
 
 21.03.18 WishBookListServlet 주소 - /wish/list - ay
 
-21.03.18 WishBookManageServlet 주소 - /wish/manage - 
+21.03.18 WishBookManageServlet 주소 - /wish/manage - ay
+
+21.03.18 BookListServlet 주소 - /book/list - ay

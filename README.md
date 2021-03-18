@@ -89,3 +89,5 @@
 21.03.18 MyWishBookListServlet 주소 - /mylib/wlist - yw
 
 21.03.18 MyWishBookListSortServlet 주소 - /mylib/wsort - yw
+
+21.03.18 mainbar-basic 수정 - ay

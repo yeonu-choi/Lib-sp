@@ -1,5 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.search.model.vo.*"%>
+<%
+	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	String bName = (String)request.getAttribute("bName") != null ? request.getParameter("bName") : "";
+	String bWriter = (String)request.getAttribute("bWriter") != null ? request.getParameter("bWriter") : "";
+	String bPublisher = (String)request.getAttribute("bPublisher") != null ? request.getParameter("bWriter") : "";
+	String isbn = request.getAttribute("isbn") != null ? request.getParameter("isbn") : "";
+	String tDate = request.getAttribute("tDate") != null ? request.getParameter("tDate") : "";
+	String fDate = request.getAttribute("fDate") != null ? request.getParameter("fDate") : "";	
+
+//int tDate = request.getAttribute("tDate") != "" ? Integer.parseInt(request.getParameter("tDate")) : "";
+//int fDate = request.getAttribute("fDate") != "" ? Integer.parseInt(request.getParameter("fDate")) : "";
+ %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -278,7 +293,13 @@
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세 검색</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망 도서 신청</a></p></td>
+                        <td align="center"><p class="subm3">
+                        <% if(lu != null) {%>
+                        <a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망 도서 신청</a>
+                        <% } else { %>
+                        <a href="#" onClick="alert('로그인 후 이용이 가능합니다.')">희망 도서 신청</a>
+                        <% }%>
+                        </p></td>
                     </tr>
                 </table>
             </div>
@@ -289,12 +310,12 @@
     <div class="outer">
         <div><p class="title">상세 검색</p><hr></div>
         <div class="inner">
-            <form action="" method="get">
+            <form action="<%= request.getContextPath() %>/simple/search" method="get">
                 <div class="searchArea">
 
                     <div class="selectArea">
                     	<select name="searchSelect" id="searchSelect">
-                        	<option>전체</option>
+                        	<option value="total">전체</option>
                         	<option value="title">서명</option>
                         	<option value="writer">저자</option>
                         	<option value="publisher">발행처</option>
@@ -313,51 +334,159 @@
             
 			<br>
 
-            <div class="listArea"><p>요청하신 에 대한 자료 검색 결과이며 총 건이 검색되었습니다.</p></div>
+            <div class="listArea"><p>요청하신 에 대한 자료 검색 결과이며 총 <%= pi.getListCount() %> 건이 검색되었습니다.</p></div>
 	
-            <form action="" method="POST">
+            <form action="<%= request.getContextPath() %>/detail/loan" method="POST" id="loansForm">
                 <div class="resultArea">
-                    <div class="resultBook" >
-                        <input type="hidden" value="">
-                        <div class="bookImg"><img src="<%= request.getContextPath() %>/resources/image/bookImg/14427514.jpg"></img></div>
-                        <div class="book">
-                            <div class="bName">생활코딩! HTML + CSS + 자바스크립트</div>
-                            <div><span>저자 : 이고잉 지음 | </span>
-                                <span>발행처 : 위키북스 | </span>
-                                <span>발행연도 : 2017</span></div>
-                            <div><span>ISBN : 9791158391331 |</span>
-                                <span>청구 기호 : 005.118-ㅇ664사</span></div>
-                            <div>재고 여부 : N</div>
-                        </div>
-                        <span class="chk"><input type="checkbox"></span>
-                    </div>
- 
+                     <% if(list.isEmpty()) {%>
+                    	<div class="resultBook"><p>조회 된 도서가 없습니다.</p></div>
+                    		
+                    	<script>
+                    		$(document).ready(function() {
+                    			if(confirm("희망 도서를 신청하시겠습니까?")) {
+                    				<% if(lu != null) {%>
+                    				location.href = "<%=  request.getContextPath() %>/views/search/wishBook.jsp";
+                    				<% } else { %>
+                    				alert("로그인 후 이용이 가능합니다.")
+                    				location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"
+                    				<% } %>
+                    			}
+                    		});
+                    	</script>
+                    	
+                    <% } else { %>
+                    	<% int i = 0; %>
+                   		<% for(Book bk : list) { %>
+                    	<div class="resultBook" >
+                        	<input type="hidden" name="bName" value="<%=bName%>">
+                        	<input type="hidden" name="bWriter" value="<%=bWriter%>">
+                        	<input type="hidden" name="bPublisher" value="<%=bPublisher%>">
+                        	<input type="hidden" name="isbn" value="<%=isbn%>">
+                        	<input type="hidden" name="tDate" value="<%=tDate%>">
+                        	<input type="hidden" name="fDate" value="<%=fDate%>">
+                        	<input type="hidden" name="bName" value="<%=bName%>">
+                        	
+                        	<div class="bookImg"><img src="<%= request.getContextPath() %><%= bk.getImgPath()%><%= bk.getImgName() %>"></img></div>
+                        	<div class="book">
+                            		<div class="bName"><%= bk.getbName() %></div>
+                            		<div><span>저자 : <%= bk.getbWriter() %>  지음 | </span>
+                                		<span>발행처 : <%= bk.getbPublisher() %> | </span>
+                                		<span>발행연도 : <%= bk.getIssueDate() %> 년</span></div>
+                            		<div><span>ISBN : <%= bk.getIsbn() %> | </span>
+                                		<span>청구 기호 : <%= bk.getCallNum() %></span></div>
+                            		<div>재고 여부 : <%= bk.getStatus() %></div>
+                        	</div>
+                        	<span class="chk"><input type="checkbox" value=<%= bk.getCallNum() %> name="checkSelect" id="checkSelect<%=i%>"></span>
+                        		<input type="hidden" value="">
+                        	<% i++; %>
+                    	</div>
+ 						<% }%>
+                    <% } %>
                 </div> 
 
                 <div class="pageArea">
-                    <a href=""><i class="bi bi-chevron-double-left"></i></a>
-                    <a href=""><i class="bi bi-chevron-compact-left"></i></a>
-
-                    <script>
-                        // 리스트 가져올때 고칠 것
-                        for(var i = 1; i<=1; i++){
-                            document.write("<a href=''>" + i +"</a>");
-                        }
-                    </script>
+                    <% if(pi.getCurrentPage() == 1) {%>
+                    <a href="#;"><i class="bi bi-chevron-double-left"></i></a>						
+                    	<a href="#;"><i class="bi bi-chevron-compact-left"></i></a>					
+                    	<% } else {%>
+                    	<a href="<%= request.getContextPath() %>/detail/search?currentPage=1&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-double-left"></i></a>
+                    	<a href="<%= request.getContextPath() %>/detail/search?currentPage=<%= pi.getCurrentPage()- 1 %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-compact-left"></i></a>
+                    	
+					<% } %>
+	
+                    <% for(int i = pi.getStartPage(); i <= pi.getEndPage(); i++) { %>
+                    	<% if(i == pi.getCurrentPage()) { %>
+                    		<a href="#;" style="background:rgb(216, 215, 215)"><%= i %></a>
+                    	<% } else { %>
+                    		<a href="<%= request.getContextPath() %>/detail/search?currentPage=<%= i %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><%= i %></a>
+                    	<% } %>
+                    <% } %>
                     
-                    <a href=""><i class="bi bi-chevron-right"></i></a>
-                    <a href=""><i class="bi bi-chevron-double-right"></i></a>
+                    <% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+                    	<a href="#;"><i class="bi bi-chevron-right"></i></a>
+                    	<a href="#;"><i class="bi bi-chevron-double-right"></i></a>
+                    <% } else {%>
+                    	<a href="<%= request.getContextPath() %>/detail/search?currentPage=<%= pi.getCurrentPage() + 1 %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-right"></i></a>
+                    	<a href="<%= request.getContextPath() %>/detail/search?currentPage=<%= pi.getMaxPage() %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-double-right"></i></a>
+                    <% } %>
                 </div>
 
                 <div class="loansArea">
-                    <button type="submit">대출 예약</button>
-                    <button type="button" onclick="location.reload() ">선택 취소</button>
+                    <button type="button" id="loansBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">대출 예약</button>
+                    <button type="button" onclick="location.reload()">선택 취소</button>
                 </div>
 
             </form>
         </div>
     </div>
     
+    
+    <!-- 모달창 -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  	<div class="modal-dialog">
+		 	<div class="modal-content">
+      			<div class="modal-header">
+      			<h6 class="modal-title" id="exampleModalLabel">선택 도서 예약 하시겠습니까?</h6>
+        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      			</div>
+      			<div class="modal-body" id="modal-body">
+      			
+      			</div>
+      			<div class="modal-footer">
+      			<button type="button" class="btn btn-primary" id="yesBtn">네</button>
+        		<button type="button" class="btn btn-secondary" id="cancelBtn" data-bs-dismiss="modal">아니오</button>
+      			</div>
+    		</div>
+  		</div>
+	</div>
+
+
+
+	<script>
+		const modalbody = document.getElementById("modal-body");
+		
+		
+		$("#loansBtn").click(function(){
+			//if(){ 로그인 유저 확인 -  로그인 아닐 시 alert 창 , 5개 이상 대출시 불가능
+			const arr = [];
+			<% for(int i = 0; i < list.size(); i++){ %>
+			
+				if($('#checkSelect' + <%= i %>).is(":checked") == true){
+					// console.log('체크된 상태');
+					arr.push('<%= list.get(i).getbName() %>');
+				}
+			<% } %>
+			// console.log(arr);
+			modalbody.innerHTML = arr.join('<br>');
+		});
+		
+		
+				
+		$("#yesBtn").click(function(){
+			// 로그인 유저만 가능
+			<% if(lu != null) { %>
+			
+			<% for(int i = 0; i < list.size(); i++){ %>
+				if($('#checkSelect' + <%= i %>).is(":checked") == true){
+					// console.log('체크된 상태');
+					<% if( list.get(i).getStatus().equals("대출가능")) { %>
+						$("#loansForm").submit();
+					<% } else { %>
+						alert("해당 도서는 대출 불가능합니다.")
+						
+					<% } %>
+					}
+				<% } %>
+				
+			<% } else {%>
+				alert("로그인 후 이용이 가능합니다.")
+				location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"
+			<% }%>
+			
+		});
+		
+
+	</script>
     <%-- 푸터 --%>
     <%@ include file="../common/footer.jsp" %>
 </body>

@@ -329,7 +329,13 @@
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세 검색</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망 도서 신청</a></p></td>
+                        <td align="center"><p class="subm3">
+                        <% if(lu != null) {%>
+                        <a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망 도서 신청</a>
+                        <% } else { %>
+                        <a href="#" onClick="alert('로그인 후 이용이 가능합니다.')">희망 도서 신청</a>
+                        <% }%>
+                        </p></td>
                     </tr>
                 </table>
             </div>
@@ -405,10 +411,16 @@
                     		<div class="resultBook"><p>조회 된 도서가 없습니다.</p></div>
                     		
                     	<script>
-                    		$(document).ready(function() {
-                    			if(confirm("희망 도서를 신청하시겠습니까?"))
-                    				document.location = "<%=  request.getContextPath() %>/views/search/wishBook.jsp";
-                    		});
+                		$(document).ready(function() {
+                			if(confirm("희망 도서를 신청하시겠습니까?")) {
+                				<% if(lu != null) {%>
+                				location.href = "<%=  request.getContextPath() %>/views/search/wishBook.jsp";
+                				<% } else { %>
+                				alert("로그인 후 이용이 가능합니다.")
+                				location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"
+                				<% } %>
+                			}
+                		});
                     	</script>
                     	
                     <% } else { %>
@@ -515,7 +527,7 @@
 				
 		$("#yesBtn").click(function(){
 			// 로그인 유저만 가능
-			<% if(loginUser != null) { %>
+			<% if(lu != null) { %>
 			
 			<% for(int i = 0; i < list.size(); i++){ %>
 				if($('#checkSelect' + <%= i %>).is(":checked") == true){
@@ -529,7 +541,7 @@
 				<% } %>
 				
 			<% } else {%>
-				alert("로그인 유저만 대출 가능합니다.")
+				alert("로그인 후 이용이 가능합니다.")
 				location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"
 			<% }%>
 			

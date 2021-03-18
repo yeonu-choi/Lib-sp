@@ -223,7 +223,13 @@
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세 검색</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망 도서 신청</a></p></td>
+                        <td align="center"><p class="subm3">
+                        <% if(lu != null) {%>
+                        <a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망 도서 신청</a>
+                        <% } else { %>
+                        <a href="#" onClick="alert('로그인 후 이용이 가능합니다.')">희망 도서 신청</a>
+                        <% }%>
+                        </p></td>
                     </tr>
                 </table>
             </div>
@@ -234,7 +240,7 @@
 	<div class="outer">
         <div><p class="title">상세 검색</p><hr></div>
         <div class="inner">
-            <form action="" method="get">
+            <form action="<%= request.getContextPath() %>/detail/search" method="get">
                 <div class="searchArea">
                     <ul>
                         <li>

@@ -150,4 +150,138 @@ public class WishBookDao {
 
 	
 	
+	
+	////////////////////////// 이하 yw /////////////////////////////////////////////////////////
+	public int getMyListCount(Connection conn, String user_id) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		String sql = query.getProperty("getMyListCount");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, user_id);
+			
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return listCount;
+	}
+
+	public List<WishBook> selectMyList(Connection conn, PageInfo pi, String user_id) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<WishBook> list = new ArrayList<>();
+		String sql = query.getProperty("selectMyList");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, user_id);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				list.add(new WishBook(rset.getInt("wb_id"), 
+										rset.getString("wb_name"), 
+										rset.getString("wb_writer"),
+										rset.getDate("request_date"), 
+										rset.getString("status")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public List<WishBook> selectMySortList(Connection conn, PageInfo pi, String user_id, String wstatus, String smonth1,
+			String emonth1) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<WishBook> list = new ArrayList<>();
+		String sql = query.getProperty("selectMySortList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+
+			pstmt.setString(1, smonth1);
+			pstmt.setString(2, emonth1);
+			pstmt.setString(3, wstatus);
+			pstmt.setString(4, user_id);
+			pstmt.setInt(5, startRow);
+			pstmt.setInt(6, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				list.add(new WishBook(rset.getInt("wb_id"), 
+										rset.getString("wb_name"), 
+										rset.getString("wb_writer"),
+										rset.getDate("request_date"), 
+										rset.getString("status")));
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
+
+	public int getMySortListCount(Connection conn, String user_id, String wstatus, String smonth1, String emonth1) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		String sql = query.getProperty("getMySortListCount");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, smonth1);
+			pstmt.setString(2, emonth1);
+			pstmt.setString(3, wstatus);
+			pstmt.setString(4, user_id);
+			
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return listCount;
+	}
+	
 }

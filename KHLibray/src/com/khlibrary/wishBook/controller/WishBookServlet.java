@@ -33,7 +33,7 @@ public class WishBookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		String userId = "user01"; //((Member)request.getSession().getAttribute("loginUser")).getUser_id();
+		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUser_id();
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String bName = request.getParameter("bName");

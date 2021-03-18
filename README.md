@@ -72,3 +72,8 @@
 
 21.03.18 mainbar-basic.jsp 경로 수정 - doo
 
+21.03.18 NoticeServlet 주소 - /notice - doo
+
+21.03.18 NoticeInsertServlet 주소 - /notice/insert - doo
+
+21.03.18 NoticeDetailServlet 주소 - /notice/detail - doo

@@ -4,12 +4,14 @@
 	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
-	String searchSelect = request.getParameter("searchSelect");
-	String search = request.getParameter("search");
+	String searchSelect = request.getParameter("searchSelect") != null ? request.getParameter("searchSelect") : "";
+	String search = request.getParameter("search")!= null ? request.getParameter("search") : "";
 
 	String select[] = new String[4];
 
-	if(searchSelect != null) {
+	if(searchSelect == "") {
+		select[0] = "selected";
+	} else {
 		if(searchSelect.equals("total")){
 			select[0] = "selected";
 		} else if (searchSelect.equals("name")){
@@ -26,11 +28,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>KH도서관</title>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
     
     <style>
     	/* 사이드바 부분*/
@@ -375,7 +378,7 @@
             
 			<br>
 
-            <div class="listArea"><p>요청하신 <%= search %>에 대한 자료 검색 결과이며 총 <%= pi.getListCount() %>건이 검색되었습니다.</p></div>
+            <div class="listArea"><p>요청하신 <%= searchSelect %> : <%= search %>에 대한 자료 검색 결과이며 총 <%= pi.getListCount() %>건이 검색되었습니다.</p></div>
 	
 	        
 	        <!-- <div class="select">
@@ -400,6 +403,14 @@
                 <div class="resultArea">
                 	<% if(list.isEmpty()) {%>
                     		<div class="resultBook"><p>조회 된 도서가 없습니다.</p></div>
+                    		
+                    	<script>
+                    		$(document).ready(function() {
+                    			if(confirm("희망 도서를 신청하시겠습니까?"))
+                    				document.location = "<%=  request.getContextPath() %>/views/search/wishBook.jsp";
+                    		});
+                    	</script>
+                    	
                     <% } else { %>
                     	<% int i = 0; %>
                    		<% for(Book bk : list) { %>
@@ -423,13 +434,13 @@
                 </div> 
 
                 <div class="pageArea">
-                    
                     <% if(pi.getCurrentPage() == 1) {%>
-						<a href="#;"><i class="bi bi-chevron-double-left"></i></a>
+                    <a href="#;"><i class="bi bi-chevron-double-left"></i></a>
                     	<a href="#;"><i class="bi bi-chevron-compact-left"></i></a>
                     	<% } else {%>
-                    	<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getCurrentPage()- 1 %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-compact-left"></i></a>
                     	<a href="<%= request.getContextPath() %>/simple/search?currentPage=1&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-left"></i></a>
+                    	<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getCurrentPage()- 1 %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-compact-left"></i></a>
+                    	
 					<% } %>
 	
                     <% for(int i = pi.getStartPage(); i <= pi.getEndPage(); i++) { %>
@@ -447,13 +458,11 @@
                     	<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getCurrentPage() + 1 %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-right"></i></a>
                     	<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getMaxPage() %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-right"></i></a>
                     <% } %>
-					
                 </div>
 
                 <div class="loansArea">
                 
                     <button type="button" id="loansBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">대출 예약</button>
-                   
                     <button type="button" onclick="location.reload()">선택 취소</button>
                 </div>
                 
@@ -463,7 +472,6 @@
     </div>
     
 
-    
     
     <!-- 모달창 -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -484,12 +492,16 @@
   		</div>
 	</div>
 
+
+
 	<script>
 		const modalbody = document.getElementById("modal-body");
-      			
+		
+		
 		$("#loansBtn").click(function(){
+			//if(){ 로그인 유저 확인 -  로그인 아닐 시 alert 창 , 5개 이상 대출시 불가능
 			const arr = [];
-			<% for(int i = 0; i < list.size(); i ++){ %>
+			<% for(int i = 0; i < list.size(); i++){ %>
 				if($('#checkSelect' + <%= i %>).is(":checked") == true){
 					// console.log('체크된 상태');
 					arr.push('<%= list.get(i).getbName() %>');
@@ -499,14 +511,33 @@
 			modalbody.innerHTML = arr.join('<br>');
 		});
 		
+		
+				
 		$("#yesBtn").click(function(){
-			$("#loansForm").submit();
+			// 로그인 유저만 가능
+			<% if(loginUser != null) { %>
+			
+			<% for(int i = 0; i < list.size(); i++){ %>
+				if($('#checkSelect' + <%= i %>).is(":checked") == true){
+					// console.log('체크된 상태');
+					<% if( list.get(i).getStatus().equals("대출가능")) { %>
+						$("#loansForm").submit();
+					<% } else { %>
+						alert("해당 도서는 대출 불가능합니다.")
+					<% } %>
+					}
+				<% } %>
+				
+			<% } else {%>
+				alert("로그인 유저만 대출 가능합니다.")
+				location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"
+			<% }%>
+			
 		});
 		
 		
+
 	</script>
-
-
     <%-- 푸터 --%>
     <%@ include file="../common/footer.jsp" %>
 </body>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>KH도서관</title>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
@@ -128,7 +128,7 @@
 		}
 
         .inner {
-            width: 95%;
+            width: 90%;
             margin: auto;
 			margin-top: 60px;
             padding: 40px;
@@ -216,7 +216,7 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                     <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/search/briefSearch.jsp">간략 검색</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/search/simpleSearch.jsp">간략 검색</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세 검색</a></p></td>
@@ -233,13 +233,13 @@
 	<div class="outer">
         <div><p class="title">희망 도서 신청</p><hr></div>
         <div class="inner">
-            <form action="" method="POST">
+            <form action="<%= request.getContextPath() %>/wish/apply" method="POST" id="wishBookForm" >
                  <div><p class="info">신청자 정보</p></div>
                  <div class="userArea">
                     <table class="userTable">
                         <tr>
                             <th><label>신청자명</label></th>
-                            <td><label>나회원</label></td>
+                            <td><label><!% loginUser.getUser_name() %></label></td>
                         </tr>
                         <tr>
                             <th><label>휴대폰 번호</label></th>
@@ -267,7 +267,7 @@
                             <th><label>희망 도서명 * </label></th>
                             <td>
                                 <span class="input_area">
-                                <input type="text" name="bName" required>
+                                <input type="text" name="bName" class="iCheck" required>
                                 </span>
                             </td>
                         </tr>
@@ -275,7 +275,7 @@
                             <th><label>저자 * </label></th>
                             <td>
                                 <span class="input_area">
-                                <input type="text" name="bWriter" required>
+                                <input type="text" name="bWriter" class="iCheck" required>
                                 </span>
                             </td>
                         </tr>
@@ -283,7 +283,7 @@
                             <th><label>발행처* </label></th>
                             <td>
                                 <span class="input_area">
-                                <input type="text" name="bPublisher" required>
+                                <input type="text" name="bPublisher" class="iCheck" required>
                                 </span>
                             </td>
                         </tr>
@@ -291,7 +291,7 @@
                             <th><label>발행연도 </label></th>
                             <td>
                                 <span class="input_area">
-                                <input type="text" name="issueDate" maxlength="4" > <span> ※ 숫자만 입력</span> 
+                                <input type="text" name="issueDate" maxlength="4" > <span> ※ 숫자만 입력 (ex. 2021)</span> 
                                 </span>
                             </td>
                         </tr>
@@ -299,13 +299,91 @@
                 </div>
 
                 <div class="btnArea">
-                    <button type="submit">도서 신청</button>
+                    <button type="button" id="wishBtn" onclick="return wishBookApply();">도서 신청</button>
                     <button type="button" onclick="location.reload()">신청 취소</button>
                 </div>
 
             </form>
         </div>
     </div>
+    
+    
+   <script>
+   // 휴대폰번호, 발행연도 유효성 검사
+   function wishBookApply(){
+	   
+	   var phone = $(".userTable input[name=phone]").val().trim();
+	   var iDate = $(".bookTable input[name=issueDate]").val().trim();
+	   
+	   if(phone != ""){
+		   if(!(/^(01[016789]{1})([0-9]{3,4})([0-9]{4})$/.test(phone))){
+			   alert("잘못된 휴대폰 번호입니다.")
+			   $(".userTable input[name=phone]").select();
+			   return false;
+		   }
+	   }
+	   
+	   if(iDate != ""){
+			if(!(/^[1-2][0-9]{3}$/.test(iDate))){
+		   		alert("발행연도는 연도 4자로 입력해 주세요 ex.2021");
+		   		$(".bookTable input[name=issueDate]").select();
+		   		return false;
+	   		}
+		}
+	   
+	   if($(".iCheck").val().trim().length == 0){
+		   alert("필수 사항을 입력하세요.");
+		   return false;
+		   
+	   }
+	   
+	   var flag = "";   
+	   
+	   $(function(){
+		
+		var bName = $(".bookTable input[name=bName]");
+		   
+			$.ajax({
+				url : "<%= request.getContextPath() %>/wish/bkCheck",
+				type : "post",
+				data : { bName : bName.val() },
+				asyan: false,
+				success : function(data){
+					console.log(data);
+					
+					if(data == "fail"){
+						flag="false";
+						alert("해당 도서는 이미 희망 도서 신청 상태입니다.");
+						bName.focus();
+						
+						
+					} else {
+						flag = "true";
+						$("#wishBookForm").submit();
+					}
+					
+				},
+				error : function(e){
+					console.log(e);
+				}
+				
+			});
+			console.log(flag);
+			
+	   });
+	   
+   }
+			
+
+	   
+	   
+   
+   
+   
+   
+   
+   
+   </script>
     
     <%-- 푸터 --%>
     <%@ include file="../common/footer.jsp" %>

@@ -129,18 +129,28 @@
 			padding: 90px 0px 5px 20px;
 		}
 		
+		.inner {
+			width:90%;
+			margin:auto;
+        	margin-top: 60px;
+        	border : 1px rgb(219, 219, 219) solid;
+            border-top: 2px rgb(138, 137, 137) solid;
+            padding: 50px;
+		}
 
         .searchArea ul {
-        	margin-top: 60px;
+        	width:100%;
             list-style: none;
+            
         }
 
         .searchArea li {
             width: 90%;
-            min-width: 800px;
+            min-width: 650px;
             height: 40px;
             font-size: 16px;
             margin:auto;
+            padding:10px;
         }
 
         .searchArea label {
@@ -149,12 +159,12 @@
             text-align: center;
             padding: 6px;
             border: 1px rgb(218, 215, 215) solid;
-            border-radius: 10px;
+            border-radius: 5px;
         }
         
 
         .input_area {
-            width : 600px;
+            width : 70%;
             margin: 5px;
             display: inline-block;
             text-align: left;
@@ -184,7 +194,7 @@
          	width: 100px;
             height: 30px;
             text-align:center;
-            margin: 30px 10px;
+            margin: 30px 10px 5px 10px;
             border: rgb(216, 215, 215) 1px solid;
             border-radius: 5px;
         }
@@ -207,7 +217,7 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                     <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/search/briefSearch.jsp">간략 검색</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/search/simpleSearch.jsp">간략 검색</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세 검색</a></p></td>

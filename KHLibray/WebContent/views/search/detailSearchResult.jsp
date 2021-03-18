@@ -272,7 +272,7 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                     <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/search/briefSearch.jsp">간략 검색</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/search/simpleSearch.jsp">간략 검색</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세 검색</a></p></td>

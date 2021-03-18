@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.khlibrary.board.model.vo.Notice" %>
+<%
+	Notice n = (Notice)request.getAttribute("notice");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -230,14 +233,15 @@
     </style>
 </head>
 <body>
-<%@ include file="../common/mainbar-basic.jsp" %>
-<div class="submArea">
-    <div class="bcrumb">
-        <span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
-        <span><a id="mName" href="">열린 공간</a></span>&nbsp;&nbsp;&nbsp;
-        <span><a id="subName" href="">공지사항</a></span>
-    </div>
-    <div class="sidebar">
+
+	<%@ include file="../common/mainbar-basic.jsp" %>
+	<div class="submArea">
+    	<div class="bcrumb">
+        	<span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
+        	<span><a id="mName" href="">열린 공간</a></span>&nbsp;&nbsp;&nbsp;
+        	<span><a id="subName" href="">공지사항</a></span>
+    	</div>
+    	<div class="sidebar">
             <div class="sideMenu">
                 <div id="subTitle">
                     <span>열린 공간</span>
@@ -269,23 +273,35 @@
                 <div id="top_info">
                     <dl class="info_1">
                         <dt class="info_1">제 목</dt>
-                        <dd class="info_1">어린이자료실 독서문화프로그램 안내</dd>
+                        <dd class="info_1"><%= n.getnTitle() %></dd>
                     </dl>
                     <dl class="info_2">
                         <dt class="info_2">작성일</dt>
-                        <dd class="info_2">2021.03.14</dd>
+                        <dd class="info_2"><%= n.getC_Date() %></dd>
                         <dt class="info_2_1">조회수</dt>
-                        <dd class="info_2_1">50</dd>
+                        <dd class="info_2_1"><%= n.getnCount() %></dd>
                         <dt class="info_2_2">첨부파일</dt>
                         <dd class="info_2_2"></dd>
                     </dl>
                 </div>
-                <div id="main_content">
-                   	 어린이자료실에서 진행하는 독서문화프로그램에 대한 안내입니다.
-                </div>
+                <div id="main_content"><%= n.getnContent() %></div>
+     
                 <div id="tolist">
                     <button id="modify">수정하기</button>
-                    <button id="list_b" onclick="location.href='notice.jsp'">목록으로</button>
+                    <button id="list_b" onclick="javascript:history.back();">목록으로</button>
+                    
+                    <form id="nnoForm" method="POST">
+                    	<input type="hidden" name="nno" value="<%= n.getnNo() %>">
+                    </form>
+                    
+                    <script>
+                    	const updateBtn = document.getElementById('modify');
+                    	updateBtn.addEventListener('click', function(){
+                    		$("#nnoForm").attr("action", "<%= request.getContextPath() %>/notice/update");
+                    		$("#nnoForm").submit();
+                    	});
+                    </script>
+                    
                 </div>
             </div>
     </div>   

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.board.model.vo.Notice"%>
+<%
+	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -155,7 +158,7 @@
             padding: 3px 40px 3px 5px;
         }
 
-        #search input[type="text"] {
+        #search input[type="search"] {
             display: inline-block;
             width: 90%;
             border: 0;
@@ -217,7 +220,6 @@
         #paging {
             padding-top: 30px;
             text-align:center;
-            position: relative;
             
         }
 
@@ -225,14 +227,16 @@
             height: 30px;
             width: 30px;
         }
+        
+        
 
-        #write {
-            width: 100px;
-            height: 30px;
-            border-radius: 6px;
-            position: absolute;
-            right: 20px;
-            background: #fcfcfc ;
+        #writeb{
+        	float:right;
+        }
+        
+        #write{
+        	width: 90px;
+        	height: 30px;
         }
 
         #wrap a {
@@ -255,7 +259,7 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/board/notice.jsp">공지사항</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/notice">공지사항</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/board/faq.jsp">FAQ</a></p></td>
@@ -278,8 +282,10 @@
                 </div>
                 <div id="top_empty"></div>
                 <fieldset id="search">
-                    <input type="text" id="search_box" placeholder="검색어를 입력하세요">
-                    <button type="submit">검색</button>
+                	<form>
+                    	<input type="search" id="search_box" placeholder="검색어를 입력하세요">
+                    	<button type="submit">검색</button>
+                    </form>
                 </fieldset>
 
                 <table id="boardlist">
@@ -291,37 +297,21 @@
                             <th class="b_count">조회</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="t_b">
+                    <% if(list.isEmpty()) { %>
+                    	<tr>
+                    		<td colspan="4">조회 된 게시글이 없습니다.</td>
+                    	</tr>                    
+                    <% } else { %>
+                    	<% for(Notice n : list) { %>
                         <tr>
-                            <td class="b_num">5</td>
-                            <td class="b_title"><a href="noticedetail.jsp">정리중인 자료목록 예고</a></td>
-                            <td class="b_date">2021-03-13</td>
-                            <td class="b_count">10</td>
+                            <td class="b_num"><%= n.getnNo() %></td>
+                            <td class="b_title"><%= n.getnTitle() %></td>
+                            <td class="b_date"><%= n.getC_Date() %></td>
+                            <td class="b_count"><%= n.getnCount() %></td>
                         </tr>
-                        <tr>
-                            <td class="b_num">4</td>
-                            <td class="b_title"><a href="noticedetail.jsp">3월 토요문화광장 운영 안내</a></td>
-                            <td class="b_date">2021-03-12</td>
-                            <td class="b_count">20</td>
-                        </tr>
-                        <tr>
-                            <td class="b_num">3</td>
-                            <td class="b_title"><a href="noticedetail.jsp">관광사진전국공모전 안내</a></td>
-                            <td class="b_date">2021-03-11</td>
-                            <td class="b_count">30</td>
-                        </tr>
-                        <tr>
-                            <td class="b_num">2</td>
-                            <td class="b_title"><a href="noticedetail.jsp">2021년 어린이 독서회 회원모집 안내</a></td>
-                            <td class="b_date">2021-03-10</td>
-                            <td class="b_count">40</td>
-                        </tr>
-                        <tr>
-                            <td class="b_num">1</td>
-                            <td class="b_title"><a href="">어린이자료실 독서문화프로그램 안내</a></td>
-                            <td class="b_date">2021-03-09</td>
-                            <td class="b_count">50</td>
-                        </tr>
+                        <% } %>
+                     <% } %>
                     </tbody>
                 </table>
                 <div id="paging">
@@ -330,10 +320,34 @@
                     <button>1</button>
                     <button>&gt;</button>
                     <button>&gt;&gt;</button>
-                    <input id="write" type="button" value="글쓰기" onclick="location.href='noticeInsert.jsp'">
+                 
                 </div>
+                    <form id="writeb">
+                    	<input id="write" type="button" value="글쓰기" onclick="location.href='noticeInsert.jsp'">
+                    	<script>
+                    		const write = document.getElementById('write');
+                    		write.addEventListener('click', function(){
+                    			location.href='<%= request.getContextPath() %>/views/board/noticeInsert.jsp';
+                    		});
+                    		
+                    	</script>
+                    </form>                
             </div>
     </div>
+    <script>
+    	$(function(){
+    		$("#t_b td").mouseenter(function(){
+    			$(this).parent().css({"background":"lightgray", "cursor" : "pointer"});
+    		}).mouseout(function(){
+    				$(this).parent().css("background", "white");
+    			}).click(function(){
+    				let nno = $(this).parent().children().eq(0).text();
+    				location.href="<%= request.getContextPath() %>/notice/detail?nno=" + nno;
+    			});
+    		});
+    </script>
+    
+    
 	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

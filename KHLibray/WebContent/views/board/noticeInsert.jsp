@@ -275,18 +275,18 @@
                     <hr>                   
                 </div>
                 <div id="top_empty"></div>
-                <form id="b_area">
+                <form id="b_area" action="<%= request.getContextPath() %>/notice/insert" method="POST">
                     <dl class="b_title">
                         <dt class="b_title">제 목</dt>
-                        <dd class="b_title"><input type="text"></dd>
+                        <dd class="b_title"><input type="text" name="title" required></dd>
                     </dl>
                     <dl class="b_content">
                         <dt class="b_content">내 용</dt>
-                        <dd class="b_content"><textarea></textarea></dd>
+                        <dd class="b_content"><textarea name="content"></textarea></dd>
                     </dl>
                     <input type="file" id="upload">
                         <button type="submit" id="bsubmit">등록</button>
-                        <button type="button" id="bcancel">취소</button>
+                        <button type="button" id="bcancel" onclick="javascript:history.back();">취소</button>
                 </form>
             </div>
     </div>

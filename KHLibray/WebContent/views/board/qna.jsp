@@ -293,7 +293,7 @@
                         <tr>
                             <td class="b_num">5</td>
                             <td class="b_ctgr">회원</td>
-                            <td class="b_title"><a href="">탈퇴 요청합니다.</a></td>
+                            <td class="b_title"><a href="qnadetail.jsp">탈퇴 요청합니다.</a></td>
                             <td class="b_writer">두*형</td>
                             <td class="b_date">2021-03-13</td>
                             <td class="b_count">10</td>
@@ -301,7 +301,7 @@
                         <tr>
                             <td class="b_num">4</td>
                             <td class="b_ctgr">도서대출</td>
-                            <td class="b_title"><a href="">대출도서 연장 신청 어떻게 하나요?</a></td>
+                            <td class="b_title"><a href="qnadetail.jsp">대출도서 연장 신청 어떻게 하나요?</a></td>
                             <td class="b_writer">이*빈</td>
                             <td class="b_date">2021-03-12</td>
                             <td class="b_count">20</td>
@@ -310,7 +310,7 @@
                         <tr>
                             <td class="b_num">3</td>
                             <td class="b_ctgr">공통</td>
-                            <td class="b_title"><a href="">대체공휴일에도 휴관인가요?</a></td>
+                            <td class="b_title"><a href="qnadetail.jsp">대체공휴일에도 휴관인가요?</a></td>
                             <td class="b_writer">황*혜</td>
                             <td class="b_date">2021-03-11</td>
                             <td class="b_count">30</td>
@@ -319,7 +319,7 @@
                         <tr>
                             <td class="b_num">2</td>
                             <td class="b_ctgr">도서</td>
-                            <td class="b_title"><a href="">책 추천 해주세요</a></td>
+                            <td class="b_title"><a href="qnadetail.jsp">책 추천 해주세요</a></td>
                             <td class="b_writer">안*란</td>
                             <td class="b_date">2021-03-12</td>
                             <td class="b_count">40</td>
@@ -327,7 +327,7 @@
                         <tr>
                             <td class="b_num">1</td>
                             <td class="b_ctgr">시설</td>
-                            <td class="b_title"><a href="">제 2 열람실 이용 가능한가요?</a></td>
+                            <td class="b_title"><a href="qnadetail.jsp">제 2 열람실 이용 가능한가요?</a></td>
                             <td class="b_writer">엄*인</td>
                             <td class="b_date">2021-03-11</td>
                             <td class="b_count">50</td>

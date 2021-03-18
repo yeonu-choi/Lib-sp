@@ -223,7 +223,7 @@
                     </tr>
                     <tr>
                         <td align="center"><p class="subm3">
-                        <% if(lu != null) {%>
+                        <% if(loginUser != null) {%>
                         <a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망 도서 신청</a>
                         <% } else { %>
                         <a href="#" onClick="alert('로그인 후 이용이 가능합니다.')">희망 도서 신청</a>
@@ -245,13 +245,13 @@
                     <table class="userTable">
                         <tr>
                             <th><label>신청자명</label></th>
-                            <td><label><%= lu.getUser_name() %></label></td>
+                            <td><label><%= loginUser.getUser_name() %></label></td>
                         </tr>
                         <tr>
                             <th><label>휴대폰 번호</label></th>
                             <td>
                                 <span class="input_area">
-                                <input type="tel" maxlength="11" name="phone" value="<%= lu.getPhone() %>" placeholder="(-없이)01012345678">
+                                <input type="tel" maxlength="11" name="phone" value="<%= loginUser.getPhone() %>" placeholder="(-없이)01012345678">
                                 </span>
                             </td>
                         </tr>
@@ -259,7 +259,7 @@
                             <th><label>이메일</label></th>
                             <td>
                                 <span class="input_area">
-                                <input type="email" name="email" value="<%= lu.getEmail() %>"placeholder="@gmail.com">
+                                <input type="email" name="email" value="<%= loginUser.getEmail() %>"placeholder="@gmail.com">
                                 </span>
                             </td>
                         </tr>

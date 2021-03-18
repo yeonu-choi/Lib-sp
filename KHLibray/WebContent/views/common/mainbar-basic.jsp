@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" import="com.khlibrary.member.model.vo.Member"%>
 <%
    Member loginUser = (Member)session.getAttribute("loginUser");
+   String loginId = (String)session.getAttribute("login_id");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -216,7 +217,7 @@
              <ul class="sub04">
              			<% if(loginUser!=null && !loginUser.getUser_id().equals("admin")) {%>
                         <li><a href="<%= request.getContextPath() %>/views/myLib/userUpdate.jsp">회원정보수정</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="<%= request.getContextPath() %>/views/myLib/wishBookList.jsp">희망도서신청내역</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/mylib/wlist">희망도서신청내역</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/views/myLib/loanList.jsp">대출내역</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/views/myLib/userleave.jsp">회원탈퇴</a>&nbsp;&nbsp;&nbsp;</li>
                         <% } else if(loginUser!= null && loginUser.getUser_id().equals("admin")) {%>

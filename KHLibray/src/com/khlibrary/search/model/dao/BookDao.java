@@ -79,7 +79,7 @@ public class BookDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new Book(rset.getInt("isbn")
+				list.add(new Book(rset.getLong("isbn")
 								, rset.getString("bk_name")
 								, rset.getString("writer")
 								, rset.getString("publisher")
@@ -182,7 +182,7 @@ public class BookDao {
 				rset = pstmt.executeQuery();
 				
 				while(rset.next()) {
-					list.add(new Book(rset.getInt("isbn")
+					list.add(new Book(rset.getLong("isbn")
 									, rset.getString("bk_name")
 									, rset.getString("writer")
 									, rset.getString("publisher")
@@ -275,6 +275,85 @@ public class BookDao {
 		}
 		
 		return result;
+	}
+
+	// 상세 검색 리스트 카운트
+	public int getSearchListCount(Connection conn, String isbn ,Book bk, int tDate, int fDate) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		String sql = query.getProperty("getSearchListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, bk.getbName());
+			pstmt.setString(2, bk.getbWriter());
+			pstmt.setString(3, bk.getbPublisher());
+			pstmt.setString(4, isbn);
+			pstmt.setInt(5, tDate);
+			pstmt.setInt(6, fDate);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+
+	// 상세 검색 리스트
+	public List<Book> selectSearchList(Connection conn, PageInfo pi, String isbn, Book bk, int tDate, int fDate) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Book> list = new ArrayList<>();
+		String sql = query.getProperty("selectSearchList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, bk.getbName());
+			pstmt.setString(2, bk.getbWriter());
+			pstmt.setString(3, bk.getbPublisher());
+			pstmt.setString(4, isbn);
+			pstmt.setInt(5, tDate);
+			pstmt.setInt(6, fDate);
+			pstmt.setInt(7, startRow);
+			pstmt.setInt(8, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Book((rset.getLong("to_number(isbn)"))
+								, rset.getString("bk_name")
+								, rset.getString("writer")
+								, rset.getString("publisher")
+								, rset.getInt("issue_year")
+								, rset.getDate("r_date")
+								, rset.getString("imgname")
+								, rset.getString("imgpath")
+								, rset.getString("call_num")
+								, rset.getString("status")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 
 

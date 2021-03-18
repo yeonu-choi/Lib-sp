@@ -15,6 +15,27 @@ public class Book {
 	private String status;						// 도서 상태 (대출 가능, 대출 불가능)
 	
 	public Book() {}
+	
+	
+
+	public Book(String bName, String bWriter, String bPublisher) {
+		super();
+		this.bName = bName;
+		this.bWriter = bWriter;
+		this.bPublisher = bPublisher;
+	}
+
+
+
+	public Book(long isbn, String bName, String bWriter, String bPublisher) {
+		super();
+		this.isbn = isbn;
+		this.bName = bName;
+		this.bWriter = bWriter;
+		this.bPublisher = bPublisher;
+	}
+
+
 
 	public Book(long isbn, String bName, String bWriter, String bPublisher, int issueDate, Date registDate,
 			String imgName, String imgPath, String callNum, String status) {

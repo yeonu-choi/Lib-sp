@@ -27,11 +27,25 @@ public class WishBookService {
 		return result;
 	}
 	
-	// 희망 도서 중복 체크
-	public int wishBookCheck(String bName) {
+	
+	// 희당 도서 소장 체크
+	public int firstCheckWishBook(String bName) {
 		Connection conn = getConnection();
 		
-		int result = new WishBookDao().wishBookCheck(conn, bName);
+		int result = new WishBookDao().firstCheckWishBook(conn, bName);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	
+	
+	// 희망 도서 중복 체크
+	public int checkWishBook(String bName) {
+		Connection conn = getConnection();
+		
+		int result = new WishBookDao().checkWishBook(conn, bName);
 		
 		close(conn);
 		
@@ -39,10 +53,10 @@ public class WishBookService {
 	}
 	
 	// 희망 도서 리스트
-	public List<WishBook> selectWishBookList() {
+	public List<WishBook> wishBookList() {
 		Connection conn= getConnection();
 		
-		List<WishBook> list = new WishBookDao().selectWishBookList(conn);
+		List<WishBook> list = new WishBookDao().wishBookList(conn);
 		
 		close(conn);
 		
@@ -69,6 +83,23 @@ public class WishBookService {
 		return result;
 	}
 
+	
+	// 선택 희망 도서 리스트
+	public List<WishBook> selectWishBookList(String select) {
+		Connection conn = getConnection();
+		
+		List<WishBook> list = new WishBookDao().selectWishBookList(conn, select);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	
+	
+	
+	
+	
 	
 	
 	////////////////// 이하 yw //////////////////////////////////////////////////////////
@@ -115,6 +146,8 @@ public class WishBookService {
 		
 		return listCount;
 	}
+
+	
 
 	
 }

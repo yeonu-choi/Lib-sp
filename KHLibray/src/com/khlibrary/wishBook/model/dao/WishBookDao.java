@@ -58,12 +58,41 @@ public class WishBookDao {
 		return result;
 	}
 	
-	// 희망 도서 중복 체크
-	public int wishBookCheck(Connection conn, String bName) {
+	// 희당 도서 소장 체크
+	public int firstCheckWishBook(Connection conn, String bName) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int result = 0;
-		String sql = query.getProperty("wishBookCheck");
+		String sql = query.getProperty("firstCheckWishBook");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, bName);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	// 희망 도서 중복 체크
+	public int checkWishBook(Connection conn, String bName) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String sql = query.getProperty("checkWishBook");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -88,11 +117,11 @@ public class WishBookDao {
 	}
 	
 	// 희망 도서 리스트
-	public List<WishBook> selectWishBookList(Connection conn) {
+	public List<WishBook> wishBookList(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<WishBook> list = new ArrayList<>();
-		String sql = query.getProperty("selectWishBookList");
+		String sql = query.getProperty("wishBookList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -148,6 +177,65 @@ public class WishBookDao {
 		return result;
 	}
 
+	
+	// 선택 희망 도서 리스트
+	public List<WishBook> selectWishBookList(Connection conn, String select) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<WishBook> list = new ArrayList<>();
+		String sql = "";
+		
+		if(select.equals("전체")) {
+			sql = query.getProperty("wishBookList");
+		} else if (select.equals("입고중")){
+			sql = query.getProperty("selectProcessWishBookList");
+		} else {
+			sql = query.getProperty("selectFinishWishBookList");
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			if(!select.equals("전체")) {
+				pstmt.setString(1, select);
+			}
+			
+			rset = pstmt.executeQuery();
+
+			while(rset.next()) {
+				list.add(new WishBook(rset.getInt("wb_id")
+									, rset.getString("wb_name")
+									, rset.getString("wb_writer")
+									, rset.getString("wb_publisher")
+									, rset.getInt("issue_year")
+									, rset.getDate("request_date")
+									, rset.getString("status")
+									, rset.getString("user_id")
+									, rset.getString("phone")
+									, rset.getString("email")));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -283,5 +371,7 @@ public class WishBookDao {
 
 		return listCount;
 	}
+
 	
+
 }

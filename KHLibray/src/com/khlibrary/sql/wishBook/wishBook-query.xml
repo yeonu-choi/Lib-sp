@@ -30,7 +30,15 @@
 			  , ?
 		)
 	</entry>
-	<entry key="wishBookCheck">
+	<entry key="firstCheckWishBook">
+		SELECT 
+			   COUNT(*)
+		  FROM 
+		  	   BOOK
+		 WHERE 
+		 	   BK_NAME LIKE ?
+	</entry>
+	<entry key="checkWishBook">
 		SELECT 
 			   COUNT(*)
 		  FROM 
@@ -41,7 +49,7 @@
 		       STATUS LIKE '입고중'
 	</entry>
 	
-	<entry key="selectWishBookList">
+	<entry key="wishBookList">
 		SELECT 
 				WB_ID
 			  , WB_NAME
@@ -72,6 +80,49 @@
 		   AND 
 		   	   STATUS LIKE '입고중'
 	</entry>
+	<entry key="selectProcessWishBookList">
+		SELECT 
+				WB_ID
+			  , WB_NAME
+			  , WB_WRITER
+			  , WB_PUBLISHER
+			  , ISSUE_YEAR
+			  , REQUEST_DATE
+			  , STATUS
+			  , USER_ID
+			  , PHONE
+			  , EMAIL
+		  FROM
+		  	   WISHBOOK
+		 WHERE
+		       STATUS LIKE ?
+	  ORDER BY 
+			   REQUEST_DATE
+	</entry>
+	<entry key="selectFinishWishBookList">
+		SELECT 
+				WB_ID
+			  , WB_NAME
+			  , WB_WRITER
+			  , WB_PUBLISHER
+			  , ISSUE_YEAR
+			  , REQUEST_DATE
+			  , STATUS
+			  , USER_ID
+			  , PHONE
+			  , EMAIL
+		  FROM
+		  	   WISHBOOK
+		 WHERE
+		       STATUS LIKE ?
+	  ORDER BY 
+			   REQUEST_DATE DESC
+	</entry>
+
+
+
+	
+
 
 	
 	<!-- ////////////이하 yw /////////////////////////////////////////////// -->

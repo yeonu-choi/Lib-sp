@@ -1,7 +1,7 @@
 package com.khlibrary.wishBook.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,18 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.khlibrary.wishBook.model.service.WishBookService;
+import com.khlibrary.wishBook.model.vo.WishBook;
 
 /**
- * Servlet implementation class WishBookCheckServlet
+ * Servlet implementation class WishBookSelectList
  */
-@WebServlet("/wish/bkCheck")
-public class WishBookCheckServlet extends HttpServlet {
+@WebServlet("/wish/select")
+public class WishBookSelectList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WishBookCheckServlet() {
+    public WishBookSelectList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,23 +31,13 @@ public class WishBookCheckServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String bName = request.getParameter("bName");
+		String select = request.getParameter("select");
 		
-		// DB의 MEMBER 테이블에서 동일 아이디가 있는지 조회하여 숫자로 리턴
-		// 있으면 1 없으면 0
-		int result = new WishBookService().checkWishBook(bName);
+		List<WishBook> list = new WishBookService().selectWishBookList(select);
 		
-		System.out.println("중복 도서 확인 결과 : " + result);
+		request.setAttribute("list", list);
 		
-		
-		PrintWriter out = response.getWriter();
-		if(result > 0) {
-			// 희망 도서 중복
-			out.print("fail");
-		} else {
-			// 희망 도서 중복 X
-			out.print("success");
-		}
+		request.getRequestDispatcher("/views/admin/wishBookManage.jsp").forward(request, response);
 		
 	}
 

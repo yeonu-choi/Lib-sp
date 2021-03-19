@@ -41,10 +41,10 @@ public class WishBookManageServlet extends HttpServlet {
 		int result = new WishBookService().insertWishBook(wbId);
 		
 		if(result > 0) {
-			//request.getSession().setAttribute("msg", wbId.length + "권 입고 처리되었습니다.");
+			request.getSession().setAttribute("msg", wbId.length + "권 입고 처리되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/wish/list");
 		} else {
-			System.out.println("실패");
+			request.getSession().setAttribute("msg", "입고 처리에 실패했습니다.");
 		}
 	
 		

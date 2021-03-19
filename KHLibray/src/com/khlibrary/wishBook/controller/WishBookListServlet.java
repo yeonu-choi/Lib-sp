@@ -31,7 +31,7 @@ public class WishBookListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<WishBook> list = new WishBookService().selectWishBookList();
+		List<WishBook> list = new WishBookService().wishBookList();
 		
 		request.setAttribute("list", list);
 		

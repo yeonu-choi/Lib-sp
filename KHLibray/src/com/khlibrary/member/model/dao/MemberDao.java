@@ -358,4 +358,34 @@ public class MemberDao {
 		return result;
 	}
 
+	public Member loginMember(Connection conn, String user_id) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member m = null;
+		String sql = query.getProperty("loginUser");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, user_id);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+	            m = new Member(rset.getString("user_id"),
+	                              rset.getString("user_name"),
+	                              rset.getString("grade"),
+	                              rset.getInt("user_no"));                           
+	         }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+	}
+
 }

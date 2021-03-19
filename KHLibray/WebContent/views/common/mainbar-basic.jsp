@@ -222,7 +222,7 @@
              			<% if(loginUser!=null && !loginUser.getUser_id().equals("admin")) {%>
                         <li><a href="<%= request.getContextPath() %>/views/myLib/userUpdate.jsp">회원정보수정</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/mylib/wlist">희망도서신청내역</a>&nbsp;&nbsp;&nbsp;</li>
-                        <li><a href="<%= request.getContextPath() %>/views/myLib/loanList.jsp">대출내역</a>&nbsp;&nbsp;&nbsp;</li>
+                        <li><a href="<%= request.getContextPath() %>/mylib/lblist">대출내역</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="<%= request.getContextPath() %>/views/myLib/userleave.jsp">회원탈퇴</a>&nbsp;&nbsp;&nbsp;</li>
                         <% } else if(loginUser!= null && loginUser.getUser_id().equals("admin")) {%>
                         <li><a href="<%= request.getContextPath() %>/views/admin/bookInsert.jsp">도서등록</a>&nbsp;&nbsp;&nbsp;</li>

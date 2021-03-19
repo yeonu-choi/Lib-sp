@@ -15,6 +15,8 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    
     <style>
     	/* 사이드바 부분 */
         body {
@@ -135,17 +137,31 @@
 			padding: 90px 0px 5px 20px;
 		}
 		
-        /* table, button 영역 div */
+        /* select, table, button 영역 div */
         .inner{
-        	width:95%;
+        	width:90%;
         	margin: auto;
-        	margin-top: 60px;
+        	margin-top: 45px;
             text-align: center;
+        }
+        
+        /* 선택 영역 */
+        .selectArea{
+        	width : 100%;
+        	text-align : right;
+        }
+        
+        .selectArea button{
+            height: 30px;
+            text-align: center;
+            margin: 0px 10px 5px 5px;
+            border: rgb(216, 215, 215) 1px solid;
+            border-radius: 5px;
         }
 
         /* table div */
         .tableArea {
-            width: 90%;
+            width: 100%;
             height:100%;
             max-height: 400px;
             /* border-top: 1px rgb(204, 199, 199) solid;   좀 더 진함... */
@@ -203,7 +219,7 @@
     </script>
 </head>
 <body>
-<%@include file="../common/mainbar-admin.jsp" %>
+<%@include file="../common/mainbar-basic.jsp" %>
 	
 	<div class="submArea">
     <div class="bcrumb">
@@ -216,7 +232,7 @@
                 <div id="subTitle">
                     <span>관리자</span>
                 </div>
-                <table id="sideMenu" border="0" style="border-collapse:collapse">
+				<table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/admin/bookInsert.jsp">도서 등록</a></p></td>
                     </tr>
@@ -238,6 +254,18 @@
 	<div class="outer">
         <div><p class="title">희망 도서 확인</p><hr></div>
         <div class="inner">
+        
+       		<form action="<%= request.getContextPath() %>/wish/select" method="get">
+        		<div class="selectArea">
+            	<select name ="select">
+            		<option value="전체">전체</option>
+            		<option value="입고중">입고중</option>
+            		<option value="입고완료">입고완료</option>
+            	</select>
+            	<button type="submit">조회</button>
+            	</div>
+        	</form>
+        
             <form action="<%= request.getContextPath() %>/wish/manage" method="POST">
                 <div class="tableArea">
                     <table>
@@ -297,10 +325,6 @@
     </div>
     
     
-	<script>
-	</script>
-	
-	
 	<%@ include file="../common/footer.jsp" %>
 
 </body>

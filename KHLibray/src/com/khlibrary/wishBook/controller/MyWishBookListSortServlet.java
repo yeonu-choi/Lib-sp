@@ -32,6 +32,7 @@ public class MyWishBookListSortServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		String user_id = (String)request.getSession().getAttribute("login_id");
 		String wstatus = request.getParameter("wstatus");
 		String smonth = request.getParameter("start");
@@ -68,6 +69,10 @@ public class MyWishBookListSortServlet extends HttpServlet {
 
 		endPage = startPage + pageLimit - 1;
 
+		if(maxPage == 0) {
+			maxPage = 1;
+		}
+		
 		if (maxPage < endPage) {
 			endPage = maxPage;
 		}
@@ -78,8 +83,7 @@ public class MyWishBookListSortServlet extends HttpServlet {
 		
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
-		request.setAttribute("smonth2", smonth + "-01");
-		request.setAttribute("emonth2", emonth + "-15");
+
 		request.getRequestDispatcher("/views/myLib/wishBookList.jsp").forward(request, response);
 	}
 

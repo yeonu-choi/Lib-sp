@@ -322,10 +322,46 @@
 		 	   RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<entry key="insertBook">
+	  INSERT 
+	  INTO BOOK
+          (
+             		ISBN
+           	      , BK_NAME
+          	      , WRITER
+           	      , PUBLISHER
+            	      , ISSUE_YEAR
+           	      , R_DATE
+           	      , IMGNAME
+           	      , IMGPATH
+      		  )
+	     VALUES(
+          	        ?
+          	      , ?
+          	      , ?
+           	     , ?
+           	     , ?
+           	     , SYSDATE
+           	     , ?
+           	     , ?
+		)
+	</entry>
 	
+	<entry key="insertBdetail">
+	  INSERT
+	  INTO BDETAIL
+		(
+			           CALL_NUM
+				 , ISBN
+				 , STATUS		
+		)
+		VALUES
+		(
+				   ?
+				 , ?
+				 , DEFAULT		
+		)
 	
-	
-	
-	
+	</entry>
 	
 </properties>

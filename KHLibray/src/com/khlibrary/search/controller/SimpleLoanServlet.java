@@ -11,16 +11,16 @@ import com.khlibrary.member.model.vo.Member;
 import com.khlibrary.search.model.service.BookService;
 
 /**
- * Servlet implementation class DetailLoanServlet
+ * Servlet implementation class SimpleLoanServlet
  */
-@WebServlet("/detail/loan")
-public class DetailLoanServlet extends HttpServlet {
+@WebServlet("/simple/loan")
+public class SimpleLoanServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DetailLoanServlet() {
+    public SimpleLoanServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,39 +28,31 @@ public class DetailLoanServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		request.setCharacterEncoding("UTF-8");
-		String bName = request.getParameter("bName");
-		String bWriter = request.getParameter("bWriter");
-		String bPublisher = request.getParameter("bPublisher");
-		String isbn = request.getParameter("isbn");
-		String tDate = request.getParameter("tDate");
-		String fDate = request.getParameter("fDate");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		
-		System.out.println(bName + ", " + bWriter + ", " +  bPublisher + ", " + isbn + ", " + tDate + ", " + fDate + ", ");
-	
+		String searchSelect = request.getParameter("searchSelect");
+		String search = request.getParameter("search");
+		
+		// System.out.println("BLS" + (String) request.getSession().getAttribute("searchSelect"));
+				
 		String[] chk = request.getParameterValues("checkSelect");
-	
-		// System.out.println(Arrays.toString(chk)); //청구번호 넘어옴... 확인...
-	
+		
 		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUser_id();
-	
+		
 		int result = new BookService().loanBook(chk, userId);
-	
+		
+		
 		if(result > 0) {
-			request.getSession().setAttribute("bName", bName);
-			request.getSession().setAttribute("bWriter", bWriter);
-			request.getSession().setAttribute("bPublisher", bPublisher);
-			request.getSession().setAttribute("isbn", isbn);
-			request.getSession().setAttribute("tDate", tDate);
-			request.getSession().setAttribute("fDate", fDate);
+			request.getSession().setAttribute("searchSelect", searchSelect);
+			request.getSession().setAttribute("search", search);
 			
 			request.getSession().setAttribute("msg", "대출 예약 되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/detail/result");
+			response.sendRedirect(request.getContextPath() + "/simple/result");
 		} else {
-			request.getSession().setAttribute("msg", "대출불가합니다.?");
+			System.out.println("실패");
 			// 수정하기
 		}
-	
 	}
 
 	/**

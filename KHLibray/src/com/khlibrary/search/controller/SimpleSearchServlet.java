@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.khlibrary.search.model.service.BookService;
 import com.khlibrary.search.model.vo.Book;
@@ -33,6 +34,11 @@ public class SimpleSearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// getParameter로 넘어온 값 변수에 저장
+		request.getSession().removeAttribute("searchSelect");
+		request.getSession().removeAttribute("search");
+		
+		// System.out.println("SSS" + (String) request.getSession().getAttribute("searchSelect"));
+		
 		String searchSelect = request.getParameter("searchSelect");
 		String search = request.getParameter("search");
 		
@@ -51,14 +57,10 @@ public class SimpleSearchServlet extends HttpServlet {
 		
 		BookService bService = new BookService();
 		
-		// 게시글 총 갯수 구하기 
 		int listCount = bService.getSearchListCount(searchSelect, search);
 		
-		// 페이징 처리용 변수
 		int pageLimit = 10;
-		
 		int boardLimit = 10;
-		
 		int maxPage =(int)Math.ceil((double)listCount / boardLimit);
 		int startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
 		int endPage = startPage + pageLimit - 1;
@@ -68,9 +70,7 @@ public class SimpleSearchServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		
 		List<Book> list = bService.selectSearchList(pi, searchSelect, search);
-		
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);

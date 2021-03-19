@@ -14,16 +14,16 @@ import com.khlibrary.search.model.vo.Book;
 import com.khlibrary.search.model.vo.PageInfo;
 
 /**
- * Servlet implementation class DetailSearchServlet
+ * Servlet implementation class SimpleLoanResultServlet
  */
-@WebServlet("/detail/search")
-public class DetailSearchServlet extends HttpServlet {
+@WebServlet("/simple/result")
+public class SimpleLoanResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DetailSearchServlet() {
+    public SimpleLoanResultServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,24 +32,11 @@ public class DetailSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().removeAttribute("bName");
-		request.getSession().removeAttribute("bWriter");
-		request.getSession().removeAttribute("bPublisher");
-		request.getSession().removeAttribute("isbn");
-		request.getSession().removeAttribute("tDate");
-		request.getSession().removeAttribute("fDate");
 		
-		System.out.println("BSS" + (String) request.getSession().getAttribute("tDate"));
+		String searchSelect = (String) request.getSession().getAttribute("searchSelect");
+		String search = (String) request.getSession().getAttribute("search");
 		
-		String bName = request.getParameter("bName");
-		String bWriter = request.getParameter("bWriter");
-		String bPublisher = request.getParameter("bPublisher");
-		String isbn = request.getParameter("isbn");
-		String tDate = request.getParameter("tDate");
-		String fDate = request.getParameter("fDate");
-		
-		// isbn varchar/String으로 바꾸면 bk 객체에 담고 Service, Dao, query(To_Number 같은거!), 다 수정하기
-		Book bk = new Book(bName, bWriter, bPublisher);
+		// System.out.println("SLRS" + (String) request.getSession().getAttribute("searchSelect"));
 		
 		int currentPage = 1;
 		
@@ -59,7 +46,7 @@ public class DetailSearchServlet extends HttpServlet {
 		
 		BookService bService = new BookService();
 		
-		int listCount = bService.getSearchListCount(bk, isbn ,tDate, fDate);
+		int listCount = bService.getSearchListCount(searchSelect, search);
 		
 		int pageLimit = 10;
 		int boardLimit = 10;
@@ -72,14 +59,11 @@ public class DetailSearchServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		System.out.println(pi);
-		
-		List<Book> list = bService.selectSearchList(pi, isbn, bk, tDate, fDate);
+		List<Book> list = bService.selectSearchList(pi, searchSelect, search);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
-		request.getRequestDispatcher("/views/search/detailSearchResult.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("/views/search/simpleSearchResult.jsp").forward(request, response);
 	}
 
 	/**

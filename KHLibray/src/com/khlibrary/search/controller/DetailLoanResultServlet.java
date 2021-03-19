@@ -14,16 +14,16 @@ import com.khlibrary.search.model.vo.Book;
 import com.khlibrary.search.model.vo.PageInfo;
 
 /**
- * Servlet implementation class DetailSearchServlet
+ * Servlet implementation class DetailLoanResultServlet
  */
-@WebServlet("/detail/search")
-public class DetailSearchServlet extends HttpServlet {
+@WebServlet("/detail/result")
+public class DetailLoanResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DetailSearchServlet() {
+    public DetailLoanResultServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,21 +32,12 @@ public class DetailSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().removeAttribute("bName");
-		request.getSession().removeAttribute("bWriter");
-		request.getSession().removeAttribute("bPublisher");
-		request.getSession().removeAttribute("isbn");
-		request.getSession().removeAttribute("tDate");
-		request.getSession().removeAttribute("fDate");
-		
-		System.out.println("BSS" + (String) request.getSession().getAttribute("tDate"));
-		
-		String bName = request.getParameter("bName");
-		String bWriter = request.getParameter("bWriter");
-		String bPublisher = request.getParameter("bPublisher");
-		String isbn = request.getParameter("isbn");
-		String tDate = request.getParameter("tDate");
-		String fDate = request.getParameter("fDate");
+		String bName = (String) request.getSession().getAttribute("bName");
+		String bWriter = (String) request.getSession().getAttribute("bWriter");
+		String bPublisher = (String) request.getSession().getAttribute("bPublisher");
+		String isbn = (String) request.getSession().getAttribute("isbn");
+		String tDate = (String) request.getSession().getAttribute("tDate");
+		String fDate = (String) request.getSession().getAttribute("fDate");
 		
 		// isbn varchar/String으로 바꾸면 bk 객체에 담고 Service, Dao, query(To_Number 같은거!), 다 수정하기
 		Book bk = new Book(bName, bWriter, bPublisher);
@@ -79,7 +70,6 @@ public class DetailSearchServlet extends HttpServlet {
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/views/search/detailSearchResult.jsp").forward(request, response);
-		
 	}
 
 	/**

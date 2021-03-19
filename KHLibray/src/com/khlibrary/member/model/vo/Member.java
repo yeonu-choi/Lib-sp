@@ -24,6 +24,13 @@ public class Member {
 		this.user_pwd = user_pwd;
 	}
 
+	public Member(String user_id, String user_name, String grade, int user_no) {
+		super();
+		this.user_id = user_id;
+		this.user_name = user_name;
+		this.grade = grade;
+		this.user_no = user_no;
+	}
 
 	public Member(String user_id, String user_name, String grade, Date enroll_date, int overdue) {
 		super();

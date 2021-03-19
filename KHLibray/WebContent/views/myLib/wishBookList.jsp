@@ -4,8 +4,8 @@
    	ArrayList<WishBook> list = (ArrayList<WishBook>)request.getAttribute("list");
    	PageInfo pi = (PageInfo)request.getAttribute("pi");
    	
-   	String smonth = request.getParameter("smonth2");
-   	String emonth = request.getParameter("emonth2");
+   	String stm = request.getParameter("start");
+   	String enm = request.getParameter("end");
    	String wstatus = request.getParameter("wstatus");
 	String[] wSelected = new String[3];
 	if(wstatus != null){
@@ -250,7 +250,7 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
-                        <td align="center"><p class="subm1"><a href="">회원 정보 수정</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/myLib/userUpdate.jsp">회원 정보 수정</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/mylib/wlist">희망 도서 신청 내역</a></p></td>
@@ -271,8 +271,8 @@
     <div class="modiArea">
         <form action="<%= request.getContextPath() %>/mylib/wsort" method="get">
            <span>신청일 : </span>
-            <input type="month" id="start" name="start"> - 
-            <input type="month" id="end" name="end">
+            <input type="month" id="start" name="start" <% if(stm != null) { %>value="<%= stm %>" <% } %>> - 
+            <input type="month" id="end" name="end" <% if(enm != null) { %>value="<%= enm %>" <% } %>>
             <span> &nbsp;진행상태 선택 : </span>
             <select id="wstatus" name="wstatus">
                 <option value="입고중" <%= wSelected[0] %>>신청중</option>
@@ -309,18 +309,12 @@
 				<% } %>			
         </table>
     </div>
-     
-     <% if(wstatus == null) {%>
+     <% if(stm == null) {%>
      <script>
      document.getElementById('start').value= new Date().toISOString().slice(0, 7);
      document.getElementById('end').value= new Date().toISOString().slice(0, 7);
      </script>
-     <% } else {%>
-     <script>
-     document.getElementById('start').value= new Date('<%= smonth %>').toISOString().slice(0, 7);
-     document.getElementById('end').value= new Date('<%= emonth %>').toISOString().slice(0, 7);
-     </script>
-     <% } %>  
+     <% } %>
      <div id="paging">
         <!-- 맨 처음으로(<<) -->
        		<% if(pi.getCurrentPage() == 1) { %>

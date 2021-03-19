@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="applyWishBook">
+		INSERT 
+		INTO WISHBOOK
+		(
+				WB_ID
+			  , WB_NAME
+			  , WB_WRITER
+			  , WB_PUBLISHER
+			  , ISSUE_YEAR
+			  , REQUEST_DATE
+			  , STATUS
+			  , USER_ID
+			  , PHONE
+			  , EMAIL
+		)
+		VALUES
+		(
+				SEQ_WID.NEXTVAL
+			  , ?
+			  , ?
+			  , ?
+			  , ?
+			  , SYSDATE
+			  , DEFAULT
+			  , ?
+			  , ?
+			  , ?
+		)
+	</entry>
+	<entry key="wishBookCheck">
+		SELECT 
+			   COUNT(*)
+		  FROM 
+		  	   WISHBOOK
+		 WHERE 
+		 	   WB_NAME LIKE ?
+		   AND 
+		       STATUS LIKE '입고중'
+	</entry>
+	
+	<entry key="selectWishBookList">
+		SELECT 
+				WB_ID
+			  , WB_NAME
+			  , WB_WRITER
+			  , WB_PUBLISHER
+			  , ISSUE_YEAR
+			  , REQUEST_DATE
+			  , STATUS
+			  , USER_ID
+			  , PHONE
+			  , EMAIL
+		  FROM
+		  	   WISHBOOK
+		 WHERE
+		       STATUS LIKE '%입고%'
+	  ORDER BY 
+	  		   STATUS DESC
+	  		 , REQUEST_DATE
+	</entry>
+	
+	<entry key="insertWishBook">
+		UPDATE
+			   WISHBOOK
+		   SET 
+		   	   STATUS = '입고완료'
+		 WHERE 
+		 	   WB_ID LIKE ?
+		   AND 
+		   	   STATUS LIKE '입고중'
+	</entry>
+
+	
+	<!-- ////////////이하 yw /////////////////////////////////////////////// -->
+	<entry key="getMyListCount">
+		SELECT 
+			COUNT(*)
+        FROM   
+        	WISHBOOK
+        WHERE 
+        REQUEST_DATE BETWEEN (TO_DATE(TO_CHAR(SYSDATE,'YYYYMM') || '01')) 
+        AND SYSDATE
+        AND USER_ID = ?
+	</entry>
+	<entry key="selectMyList">
+		SELECT WB_ID,
+               WB_NAME,
+               WB_WRITER,
+               REQUEST_DATE,
+               STATUS     
+        FROM
+        	(SELECT
+       			 ROWNUM RNUM,
+            		A.*
+    		FROM
+       			 (
+                SELECT 
+                	WB_ID,
+                    WB_NAME,
+                    WB_WRITER,
+                    REQUEST_DATE,
+                    STATUS
+                FROM   
+                	WISHBOOK
+                WHERE (REQUEST_DATE BETWEEN (TO_DATE(TO_CHAR(SYSDATE,'YYYYMM') || '01')) AND SYSDATE)
+                AND USER_ID = ?) A)
+                WHERE RNUM BETWEEN ? AND ?
+                ORDER BY WB_ID
+	</entry>
+	<entry key="getMySortListCount">
+		SELECT 
+			COUNT(*)   
+        FROM   
+        	WISHBOOK
+        WHERE 
+        	(REQUEST_DATE BETWEEN TO_DATE(TO_CHAR(TO_DATE(?, 'YYYYMM'),'YYYYMM') || '01') 
+        AND TO_DATE(TO_CHAR(LAST_DAY(TO_DATE(?, 'YYYYMM')),'YYYYMMDD')))
+        AND STATUS = ?
+        AND USER_ID = ?
+	</entry>
+	<entry key="selectMySortList">
+		SELECT 
+			WB_ID,
+            WB_NAME,
+            WB_WRITER,
+            REQUEST_DATE,
+            STATUS     
+         FROM
+         	(SELECT
+       			 ROWNUM rnum,
+            		A.*
+    		 FROM
+       			 (
+                	SELECT 
+	              	   	 WB_ID,
+	                     WB_NAME,
+	                     WB_WRITER,
+	                     REQUEST_DATE,
+	                     STATUS
+                	FROM   
+                	 	WISHBOOK
+	                WHERE (REQUEST_DATE BETWEEN TO_DATE(TO_CHAR(TO_DATE(?, 'YYYYMM'),'YYYYMM') || '01') 
+	                AND TO_DATE(TO_CHAR(LAST_DAY(TO_DATE(?, 'YYYYMM')),'YYYYMMDD')))
+	                AND STATUS = ?
+	                AND USER_ID = ?) A)
+	                WHERE RNUM BETWEEN ? AND ?
+	                ORDER BY WB_ID
+	</entry>
+</properties>

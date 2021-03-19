@@ -95,3 +95,11 @@
 21.03.18 mainbar-basic 수정 - ay
 
 21.03.19 18:12 현재 버전으로 재업로드 완료 - yw
+
+21.03.19 BookLoanServlet -> SimpleLoanServlet 이름 수정 , 주소 수정 - /simple/loan - ay
+
+21.03.19 SimpleLoanResultServlet 주소 - /simple/result - ay
+
+21.03.19 SimpleSortServlet 주소 - /simple/sort - ay
+
+21.03.19 DetailLoanResultServlet 주소 - /detail/result -

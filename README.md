@@ -102,4 +102,8 @@
 
 21.03.19 SimpleSortServlet 주소 - /simple/sort - ay
 
-21.03.19 DetailLoanResultServlet 주소 - /detail/result -
+21.03.19 DetailLoanResultServlet 주소 - /detail/result - ay
+
+21.03.19 WishBookSelectListServlet 주소 - /wish/select - ay
+
+21.03.19 WishBookFirstCheckServlet 주소 - /wish/bkFCheck - 

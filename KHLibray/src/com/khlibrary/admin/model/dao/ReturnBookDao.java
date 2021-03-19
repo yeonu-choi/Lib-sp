@@ -140,7 +140,7 @@ public class ReturnBookDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, lid);
+			pstmt.setInt(1, Integer.parseInt(lid));
 
 			result = pstmt.executeUpdate();
 
@@ -161,7 +161,7 @@ public class ReturnBookDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, lid);
+			pstmt.setInt(1, Integer.parseInt(lid));
 
 			result = pstmt.executeUpdate();
 
@@ -182,7 +182,7 @@ public class ReturnBookDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, lid);
+			pstmt.setInt(1, Integer.parseInt(lid));
 
 			result = pstmt.executeUpdate();
 

@@ -82,6 +82,8 @@
 
 21.03.18 DetailLoanServlet 주소 - /detail/loan - ay
 
+21.03.18 BookInsertServlet 주소 - /admin/bookInsert - km
+
 21.03.18 loginServlet 일부 수정 - yw
 
 21.03.18 mainbar-basic 세션 추가 및 수정 - yw

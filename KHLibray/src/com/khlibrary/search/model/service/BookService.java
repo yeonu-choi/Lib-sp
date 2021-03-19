@@ -84,7 +84,7 @@ public class BookService {
 	}
 	
 	// 상세 검색 리스트 카운트
-	public int getSearchListCount(Book bk, String isbn, int tDate, int fDate) {
+	public int getSearchListCount(Book bk, String isbn, String tDate, String fDate) {
 		Connection conn = getConnection();
 		
 		int result = new BookDao().getSearchListCount(conn, isbn, bk, tDate, fDate);
@@ -96,7 +96,7 @@ public class BookService {
 
 	// 상세 검색 리스트
 
-	public List<Book> selectSearchList(PageInfo pi, String isbn, Book bk, int tDate, int fDate) {
+	public List<Book> selectSearchList(PageInfo pi, String isbn, Book bk, String tDate, String fDate) {
 		Connection conn = getConnection();
 		
 		List<Book> list = new BookDao().selectSearchList(conn,  pi, isbn, bk, tDate, fDate);

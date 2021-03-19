@@ -278,11 +278,18 @@ public class BookDao {
 	}
 
 	// 상세 검색 리스트 카운트
-	public int getSearchListCount(Connection conn, String isbn ,Book bk, int tDate, int fDate) {
+	public int getSearchListCount(Connection conn, String isbn ,Book bk, String tDate, String fDate) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int listCount = 0;
 		String sql = query.getProperty("getSearchListCount");
+		
+		if(tDate == "") {
+			tDate = "0";
+		}
+		if(fDate == "") {
+			fDate = "10000";
+		}
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -291,8 +298,8 @@ public class BookDao {
 			pstmt.setString(2, bk.getbWriter());
 			pstmt.setString(3, bk.getbPublisher());
 			pstmt.setString(4, isbn);
-			pstmt.setInt(5, tDate);
-			pstmt.setInt(6, fDate);
+			pstmt.setString(5, tDate);
+			pstmt.setString(6, fDate);
 			
 			rset = pstmt.executeQuery();
 			
@@ -310,14 +317,22 @@ public class BookDao {
 	}
 
 	// 상세 검색 리스트
-	public List<Book> selectSearchList(Connection conn, PageInfo pi, String isbn, Book bk, int tDate, int fDate) {
+	public List<Book> selectSearchList(Connection conn, PageInfo pi, String isbn, Book bk, String tDate, String fDate) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Book> list = new ArrayList<>();
 		String sql = query.getProperty("selectSearchList");
 		
+		if(tDate == "") {
+			tDate = "0";
+		}
+		if(fDate == "") {
+			fDate = "10000";
+		}
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			
 			
 			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 			int endRow = startRow + pi.getBoardLimit() - 1;
@@ -326,8 +341,8 @@ public class BookDao {
 			pstmt.setString(2, bk.getbWriter());
 			pstmt.setString(3, bk.getbPublisher());
 			pstmt.setString(4, isbn);
-			pstmt.setInt(5, tDate);
-			pstmt.setInt(6, fDate);
+			pstmt.setString(5, tDate);
+			pstmt.setString(6, fDate);
 			pstmt.setInt(7, startRow);
 			pstmt.setInt(8, endRow);
 			
@@ -356,6 +371,15 @@ public class BookDao {
 		return list;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 도서 등록
 	
 	public int insertBook(Connection conn, Book book) {				

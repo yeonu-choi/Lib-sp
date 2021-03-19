@@ -244,7 +244,7 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
-                        <td align="center"><p class="subm1"><a href="">도서 등록</a></p></td>
+                       <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/admin/bookInsert.jsp">도서 등록</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/admin/manage">회원 관리</a></p></td>
@@ -253,7 +253,7 @@
                         <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/admin/rblist">반납 처리</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm4"><a href="">희망 도서 확인</a></p></td>
+                        <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/wish/list">희망 도서 확인</a></p></td>
                     </tr>
                 </table>
             </div>
@@ -329,7 +329,6 @@
     		});
     		
     		lidList = lidList.substring(0, lidList.length-1);
- 		
 
     	 location.href="<%= request.getContextPath() %>/admin/return?lidList=" + lidList;
     	

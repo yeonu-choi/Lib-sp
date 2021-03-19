@@ -278,7 +278,7 @@
 		   AND WRITER LIKE '%' || ? || '%'
 		   AND PUBLISHER LIKE '%' || ? || '%'
 		   AND TO_NUMBER(ISBN) LIKE '%' || ? || '%'
-		   AND ISSUE_YEAR BETWEEN ? AND ?
+		   AND TO_NUMBER(ISSUE_YEAR) BETWEEN ? AND ?
 	</entry>
 	
 	<entry key="selectSearchList">
@@ -315,7 +315,7 @@
 		   		   AND WRITER LIKE '%' || ? || '%'
 		   		   AND PUBLISHER LIKE '%' || ? || '%'
 		   		   AND ISBN LIKE '%' || ? || '%'
-		   		   AND ISSUE_YEAR BETWEEN ? AND ?
+		   		   AND TO_NUMBER(ISSUE_YEAR) BETWEEN ? AND ?
 			  ORDER BY ISBN
 			  )
 		 WHERE 

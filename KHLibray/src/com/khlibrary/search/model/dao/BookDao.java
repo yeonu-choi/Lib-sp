@@ -358,14 +358,22 @@ public class BookDao {
 
 	// 도서 등록
 	
-	public int insertBook(Connection conn, Book book) {		
-		int result = 0;
-		
+	public int insertBook(Connection conn, Book book) {				
 		PreparedStatement pstmt = null;
+		int result = 0;
 		String sql = query.getProperty("insertBook");
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
-						
+			
+			pstmt.setLong(1, book.getIsbn());
+			pstmt.setString(2, book.getbName());
+			pstmt.setString(3, book.getbWriter());
+			pstmt.setString(4, book.getbPublisher());
+			pstmt.setInt(5, book.getIssueDate());
+			pstmt.setString(6, book.getImgName());
+			pstmt.setString(7, book.getImgPath());
+
 			result=pstmt.executeUpdate();
 						
 		} catch (SQLException e) {
@@ -373,10 +381,33 @@ public class BookDao {
 		} finally {
 			close(pstmt);
 		}		
-		return result;
-		
-	
+		return result;	
 	}
+
+	// bdetail 등록
+	public int insertBdetail(Connection conn, Book book) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = query.getProperty("insertBdetail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, book.getCallNum());
+			pstmt.setLong(2, book.getIsbn());
+		
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 	
 
 	

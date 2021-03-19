@@ -219,10 +219,17 @@
         
          #paging {
             margin-top: 50px;
-            margin-left: 27%;
+            margin-left: 28%;
             width: 60%;
             text-align: center;
             margin-bottom : 150px;
+        }
+        
+        #paging button {
+        	background-color: white;
+            border: 1px solid gray;
+            color: rgb(73, 73, 73);
+            border-radius : 3px;
         }
     </style>
     <!-- <script>
@@ -256,7 +263,7 @@
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/mylib/wlist">희망 도서 신청 내역</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/myLib/loanList.jsp">대출 내역</a></p></td>
+                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/mylib/lblist">대출 내역</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/views/myLib/userleave.jsp">회원 탈퇴</a></p></td>

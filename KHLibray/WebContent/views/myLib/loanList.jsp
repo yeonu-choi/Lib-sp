@@ -1,5 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.loan.model.vo.*, com.khlibrary.member.model.vo.*,com.khlibrary.common.model.vo.*"%>
+<% 
+   	ArrayList<Loan> list = (ArrayList<Loan>)request.getAttribute("list");
+	Member m = (Member)request.getAttribute("m");
+   	PageInfo pi = (PageInfo)request.getAttribute("pi");
+   	
+   	String dis = "disabled"; 
+   	String rank = request.getParameter("rank");
+   	String[] rankSelected = new String[2];
+   	if(rank != null){
+   		if(rank.equals("asc")){
+   			rankSelected[0] = "selected";
+   		} else {
+   			rankSelected[1] = "selected";
+   		}
+   	}
+   	String viewCondition = request.getParameter("viewCondition");
+	String[] viewSelected = new String[4];
+	if(viewCondition != null){
+		if(viewCondition.equals("rdate"))
+			viewSelected[0] = "selected";
+		else if(viewCondition.equals("lid"))
+			viewSelected[1] = "selected";
+		else if(viewCondition.equals("ldate"))
+			viewSelected[2] = "selected";
+		else
+			viewSelected[3] = "selected";
+	}
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -161,32 +189,30 @@
             height: 350px;
         }
 
-        #subselect {
+         #subselect {
             width: 100%;
-            border-bottom: 2px solid black;
         }
 
-        #subselect td{
-            padding-bottom: 2px;
-        }
-
-        #searchCondition, #rank, #view {
+        #viewCondition, #rank, #view {
             float: right;
         }
-
-        #subselect tr:first-child td:last-child{
-            width: 50px;
+        
+         #viewCondition, #rank {
+        	margin-right : 2px;
+        	margin-top : 2px;
         }
 
         #return {
             background-color: white;
             border: 1px solid gray;
             color: rgb(73, 73, 73);
+            border-radius : 3px;
         }
 
         #loanlist {
             margin-top: 3px;
             width: 100%;
+            text-align : center;
         }
 
         #loanlist th {
@@ -196,25 +222,44 @@
             border-bottom: 2px solid rgb(121, 120, 120);
             color: white;
         }
+        
+        
+        #loanlist tr:last-child{
+            border-bottom: 2px solid rgb(214, 213, 213);
+        }
 
         #blank td {
             height: 250px;
             border-bottom: 2px solid rgb(228, 228, 228);
             background-color: rgb(241, 239, 239);
         }
+        
+        #loanlist td:not(#blank td) {
+        	 height: 50px;
+        	 color: rgb(85, 85, 85);
+        	 background-color: rgb(241, 239, 239);
+        }
 
         #paging {
-            margin-top: 50px;
-            margin-left: 27%;
+            margin-top : 30px;
+            margin-left: 28%;
             width: 60%;
             text-align: center;
             margin-bottom : 100px;
+        }
+        
+        #paging button {
+        	background-color: white;
+            border: 1px solid gray;
+            color: rgb(73, 73, 73);
+            border-radius : 3px;
         }
 
         #view {
             background-color: white;
             border: 1px solid gray;
             color: rgb(73, 73, 73);
+            border-radius : 3px;
         }
     </style>
     <!-- <script>
@@ -248,7 +293,7 @@
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/mylib/wlist">희망 도서 신청 내역</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/myLib/loanList.jsp">대출 내역</a></p></td>
+                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/mylib/lblist">대출 내역</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/views/myLib/userleave.jsp">회원 탈퇴</a></p></td>
@@ -263,50 +308,140 @@
     <div class="userinfo">
         <p class="ititle"><img src="<%=request.getContextPath()%>/resources/image/yw/bicon.png" width="15px">&nbsp;이용자 대출 상태</p>
         <p class="stitle"><img src="<%=request.getContextPath()%>/resources/image/yw/dot-gray.jpg" width="10px">&nbsp; 이용자 이름 : </p>
-        <p id="username" name=username>김코딩</p>
-        <p id="grade" name="grade">(정회원)</p><br>
+        <p id="username" name=username><%= m.getUser_name() %></p>
+        <p id="grade" name="grade">(<%= m.getGrade() %>)</p><br>
         <p class="stitle"><img src="<%=request.getContextPath()%>/resources/image/yw/dot-gray.jpg" width="10px">&nbsp; 이용자 번호 : </p>
-        <p id="userno" name=userno></p><br>
+        <p id="userno" name=userno><%= m.getUser_no() %></p><br>
         <p class="stitle"><img src="<%=request.getContextPath()%>/resources/image/yw/dot-gray.jpg" width="10px">&nbsp; 회원 상태 : </p>
-        <p id="userstat" name=userstat>정상</p><br>
+        <% if(m.getGrade().equals("블랙")) {%>
+        <p id="userstat1" name=userstat>대출정지</p><br>
+        <% } else { %>
+        <p id="userstat2" name=userstat>정상</p><br>
+        <% } %>
     </div>
     <div class=loanList>
         <table id=subselect style="border-collapse: collapse;">
             <tr>
                 <td><button id="return" name="return">반납신청</button></td>
                 <td>
-                <select id="searchCondition">
-                    <option>반납예정일</option>
-                    <option>대출번호</option>
-                    <option>대출일</option>
-                    <option>상태</option>
+                <form action="<%= request.getContextPath() %>/mylib/lsort" method="get">
+                <button id="view" type="submit">보기</button>
+                <select id="rank" name="rank">
+                    <option value="desc" <%= rankSelected[1] %>>내림차순</option>
+                    <option value="asc" <%= rankSelected[0] %>>오름차순</option>
                 </select>
-                <select id="rank">
-                    <option>내림차순</option>
-                    <option>오름차순</option>
+                <select id="viewCondition" name="viewCondition">
+                    <option value="rdate" <%= viewSelected[0] %>>반납예정일</option>
+                    <option value="lid" <%= viewSelected[1] %>>대출번호</option>
+                    <option value="ldate" <%= viewSelected[2] %>>대출일</option>
+                    <option value="status" <%= viewSelected[3] %>>상태</option>
                 </select>
-            </td>
-            <td><button id="view">보기</button></td>
+                </form>
+                </td>
             </tr>
         </table>
         <table id="loanlist" style="border-collapse: collapse;">
             <tr>
-                <th><input type="checkbox" name="returnChk"></th>
-                <th>대출번호</th>
-                <th>도서명</th>
-                <th>저자명</th>
-                <th>출판사</th>
-                <th>대출일</th>
-                <th>반납예정일</th>
-                <th>상태</th>
+                <th width="5%"><input type="checkbox" id="chkAll" name="chkAll"></th>
+                <th width="10%">대출번호</th>
+                <th width="30%">도서명</th>
+                <th width="10%">저자명</th>
+                <th width="15%">출판사</th>
+                <th width="10%">대출일</th>
+                <th width="10%">반납예정일</th>
+                <th width="10%">상태</th>
             </tr>
+             <% if(list.isEmpty()) { %>
             <tr id="blank">
                 <td colspan="8" align="center">대출 내역이 없습니다.</td>
             </tr>
+            <% } else {%>
+					<% for(Loan l : list) { %>
+					<tr>
+						<td><input type="checkbox" name="returnChk" class="returnChk"
+						<% if(l.getStatus().equals("반납신청") || l.getStatus().equals("반납완료")) { %> <%= dis %> <% } %> ></td>
+						<td><%= l.getLid() %></td>
+						<td><%= l.getBk_name() %></td>
+						<td><%= l.getWriter() %></td>
+						<td><%= l.getPublisher() %></td>
+						<td><%= l.getLoan_date() %></td>
+						<td><%= l.getReturn_date() %></td>
+						<td><%= l.getStatus() %></td>
+					</tr>
+					<% } %>
+				<% } %>			
         </table>
     </div>
+    
+    <script>
+    	$("#chkAll").click(function(){
+			$(".returnChk:enabled").prop('checked', this.checked);
+		});
+    	
+    	$("#return").click(function(){
+			var lidList = "";
+			
+			var chk = $(".returnChk:checked");
+    		
+    		chk.each(function(i){
+    			var tr = chk.parent().parent().eq(i);
+    			var td = tr.children();
+    			
+    			var lid = td.eq(1).text();
+    			
+    			lidList += lid + "/";
+    		});
+    		
+    		lidList = lidList.substring(0, lidList.length-1);
+
+    	 location.href="<%= request.getContextPath() %>/mylib/myreturn?lidList=" + lidList;
+    	
+    	});
+    </script>
+    
     <div id="paging">
-        <button onclick="">1</button>
+        <!-- 맨 처음으로(<<) -->
+       		<% if(pi.getCurrentPage() == 1) { %>
+			<button disabled> &lt;&lt; </button>
+			<%} else if(viewCondition == null) { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/mylib/lblist?currentPage=1'"> &lt;&lt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/mylib/lsort?currentPage=1&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &lt;&lt; </button>
+			<% } %>
+			<!-- 이전 페이지로(<) -->
+			<% if(pi.getCurrentPage() == 1) { %>
+			<button disabled> &lt; </button>
+			<% } else if(viewCondition == null){ %>
+			<button onclick="location.href='<%= request.getContextPath() %>/mylib/lblist?currentPage=<%= pi.getCurrentPage() -1 %>'"> &lt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%= request.getContextPath() %>/mylib/lsort?currentPage=<%= pi.getCurrentPage() -1 %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &lt; </button>
+			<% } %>
+			<!-- 숫자로 된 페이지 목록 (최대 10개) -->
+			<% for(int p = pi.getStartPage(); p<= pi.getEndPage(); p++) { %>
+				<% if(p == pi.getCurrentPage()) { %>
+				<button style="background:#ececec;" disabled> <%= p %></button>
+				<% } else if(viewCondition == null) { %>
+				<button onclick="location.href='<%=request.getContextPath()%>/mylib/lblist?currentPage=<%= p %>'"><%= p %></button>
+				<% } else { %>
+				<button onclick="location.href='<%= request.getContextPath() %>/mylib/lsort?currentPage=<%= p %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"><%= p %></button>
+				<% } %>
+			<% } %>
+			<!--  다음 페이지로(>) -->
+			<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+			<button disabled> &gt; </button>
+			<% } else if(viewCondition == null) { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/mylib/lblist?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/mylib/lsort?currentPage=<%= pi.getCurrentPage() + 1 %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &gt; </button>
+			<% } %>
+			<!-- 맨 끝으로(>>) -->
+			<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+			<button disabled> &gt;&gt; </button>
+			<% } else if(viewCondition == null) { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/mylib/lblist?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
+			<% } else { %>
+			<button onclick="location.href='<%=request.getContextPath()%>/mylib/lsort?currentPage=<%= pi.getMaxPage() %>&rank=<%=rank%>&viewCondition=<%=viewCondition%>'"> &gt;&gt; </button>
+			<% } %>
     </div>
 <%@ include file="../common/footer.jsp" %>
 </body>

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="getMyListCount">
+		SELECT 
+			COUNT(*)
+        FROM 
+        	LOAN
+        WHERE 
+        	USER_ID = ?
+	</entry>
+	<entry key="selectMyList">
+		SELECT 
+			LID,
+			BK_NAME,
+			WRITER,
+			PUBLISHER,
+			LOAN_DATE,
+			RETURN_DATE,
+			STATUS
+        FROM
+            (SELECT
+       			 ROWNUM rnum,
+            		A.*
+    		 FROM
+       			 (
+           			 SELECT 
+           			 		L.LID, 
+           			 		K.BK_NAME, 
+           			 		K.WRITER, 
+           			 		K.PUBLISHER, 
+           			 		A.LOAN_DATE, 
+           			 		A.RETURN_DATE, 
+           			 		A.STATUS
+            		FROM 
+            				LDETAIL L, 
+            				LOAN A, 
+            				BOOK K, 
+            				BDETAIL B 
+           		   WHERE 
+			 				L.LID = A.LID
+			 			AND L.CALL_NUM = B.CALL_NUM
+			 			AND B.ISBN = K.ISBN
+                		AND A.USER_ID = ?) A)
+           	 WHERE RNUM BETWEEN ? AND ?
+           	 ORDER BY LID DESC
+	</entry>
+	<entry key="selectRdateAsc">
+	SELECT  
+                LID,
+                BK_NAME,
+                WRITER,
+                PUBLISHER,
+                LOAN_DATE,
+                RETURN_DATE,
+                STATUS
+            FROM
+            (SELECT
+       			 ROWNUM rnum,
+            		A.*
+    		 FROM
+       			 (
+            SELECT 
+                L.LID, 
+                K.BK_NAME,
+                K.WRITER, 
+                K.PUBLISHER, 
+                A.LOAN_DATE, 
+                A.RETURN_DATE, 
+                A.STATUS
+            FROM 
+                LDETAIL L, 
+                LOAN A, 
+                BOOK K, 
+                BDETAIL B 
+            WHERE 
+			 	L.LID = A.LID
+			 	AND L.CALL_NUM = B.CALL_NUM
+			 	AND B.ISBN = K.ISBN
+                AND A.USER_ID = ?) A)
+                WHERE 
+                    RNUM BETWEEN ? AND ?
+                ORDER BY RETURN_DATE ASC
+	</entry>
+	<entry key="selectRdateDesc">
+	SELECT  
+                LID,
+                BK_NAME,
+                WRITER,
+                PUBLISHER,
+                LOAN_DATE,
+                RETURN_DATE,
+                STATUS
+            FROM
+            (SELECT
+       			 ROWNUM rnum,
+            		A.*
+    		 FROM
+       			 (
+            SELECT 
+                L.LID, 
+                K.BK_NAME,
+                K.WRITER, 
+                K.PUBLISHER, 
+                A.LOAN_DATE, 
+                A.RETURN_DATE, 
+                A.STATUS
+            FROM 
+                LDETAIL L, 
+                LOAN A, 
+                BOOK K, 
+                BDETAIL B 
+            WHERE 
+			 	L.LID = A.LID
+			 	AND L.CALL_NUM = B.CALL_NUM
+			 	AND B.ISBN = K.ISBN
+                AND A.USER_ID = ?) A)
+                WHERE 
+                    RNUM BETWEEN ? AND ?
+                ORDER BY RETURN_DATE DESC
+	</entry>
+	<entry key="selectLidAsc">
+	SELECT  
+                LID,
+                BK_NAME,
+                WRITER,
+                PUBLISHER,
+                LOAN_DATE,
+                RETURN_DATE,
+                STATUS
+            FROM
+            (SELECT
+       			 ROWNUM rnum,
+            		A.*
+    		 FROM
+       			 (
+            SELECT 
+                L.LID, 
+                K.BK_NAME,
+                K.WRITER, 
+                K.PUBLISHER, 
+                A.LOAN_DATE, 
+                A.RETURN_DATE, 
+                A.STATUS
+            FROM 
+                LDETAIL L, 
+                LOAN A, 
+                BOOK K, 
+                BDETAIL B 
+            WHERE 
+			 	L.LID = A.LID
+			 	AND L.CALL_NUM = B.CALL_NUM
+			 	AND B.ISBN = K.ISBN
+                AND A.USER_ID = ?) A)
+                WHERE 
+                    RNUM BETWEEN ? AND ?
+                ORDER BY LID ASC
+	</entry>
+	<entry key="selectLidDesc">
+	SELECT  
+                LID,
+                BK_NAME,
+                WRITER,
+                PUBLISHER,
+                LOAN_DATE,
+                RETURN_DATE,
+                STATUS
+            FROM
+            (SELECT
+       			 ROWNUM rnum,
+            		A.*
+    		 FROM
+       			 (
+            SELECT 
+                L.LID, 
+                K.BK_NAME,
+                K.WRITER, 
+                K.PUBLISHER, 
+                A.LOAN_DATE, 
+                A.RETURN_DATE, 
+                A.STATUS
+            FROM 
+                LDETAIL L, 
+                LOAN A, 
+                BOOK K, 
+                BDETAIL B 
+            WHERE 
+			 	L.LID = A.LID
+			 	AND L.CALL_NUM = B.CALL_NUM
+			 	AND B.ISBN = K.ISBN
+                AND A.USER_ID = ?) A)
+                WHERE 
+                    RNUM BETWEEN ? AND ?
+                ORDER BY LID DESC
+	</entry>
+	<entry key="selectLdateAsc">
+	SELECT  
+                LID,
+                BK_NAME,
+                WRITER,
+                PUBLISHER,
+                LOAN_DATE,
+                RETURN_DATE,
+                STATUS
+            FROM
+            (SELECT
+       			 ROWNUM rnum,
+            		A.*
+    		 FROM
+       			 (
+            SELECT 
+                L.LID, 
+                K.BK_NAME,
+                K.WRITER, 
+                K.PUBLISHER, 
+                A.LOAN_DATE, 
+                A.RETURN_DATE, 
+                A.STATUS
+            FROM 
+                LDETAIL L, 
+                LOAN A, 
+                BOOK K, 
+                BDETAIL B 
+            WHERE 
+			 	L.LID = A.LID
+			 	AND L.CALL_NUM = B.CALL_NUM
+			 	AND B.ISBN = K.ISBN
+                AND A.USER_ID = ?) A)
+                WHERE 
+                    RNUM BETWEEN ? AND ?
+                ORDER BY LOAN_DATE ASC
+	</entry>
+	<entry key="selectLdateDesc">
+	SELECT  
+                LID,
+                BK_NAME,
+                WRITER,
+                PUBLISHER,
+                LOAN_DATE,
+                RETURN_DATE,
+                STATUS
+            FROM
+            (SELECT
+       			 ROWNUM rnum,
+            		A.*
+    		 FROM
+       			 (
+            SELECT 
+                L.LID, 
+                K.BK_NAME,
+                K.WRITER, 
+                K.PUBLISHER, 
+                A.LOAN_DATE, 
+                A.RETURN_DATE, 
+                A.STATUS
+            FROM 
+                LDETAIL L, 
+                LOAN A, 
+                BOOK K, 
+                BDETAIL B 
+            WHERE 
+			 	L.LID = A.LID
+			 	AND L.CALL_NUM = B.CALL_NUM
+			 	AND B.ISBN = K.ISBN
+                AND A.USER_ID = ?) A)
+                WHERE 
+                    RNUM BETWEEN ? AND ?
+                ORDER BY LOAN_DATE DESC
+	</entry>
+	<entry key="selectStatusAsc">
+	SELECT  
+                LID,
+                BK_NAME,
+                WRITER,
+                PUBLISHER,
+                LOAN_DATE,
+                RETURN_DATE,
+                STATUS
+            FROM
+            (SELECT
+       			 ROWNUM rnum,
+            		A.*
+    		 FROM
+       			 (
+            SELECT 
+                L.LID, 
+                K.BK_NAME,
+                K.WRITER, 
+                K.PUBLISHER, 
+                A.LOAN_DATE, 
+                A.RETURN_DATE, 
+                A.STATUS
+            FROM 
+                LDETAIL L, 
+                LOAN A, 
+                BOOK K, 
+                BDETAIL B 
+            WHERE 
+			 	L.LID = A.LID
+			 	AND L.CALL_NUM = B.CALL_NUM
+			 	AND B.ISBN = K.ISBN
+                AND A.USER_ID = ?) A)
+                WHERE 
+                    RNUM BETWEEN ? AND ?
+                ORDER BY STATUS ASC
+	</entry>
+	<entry key="selectStatusDesc">
+	SELECT  
+                LID,
+                BK_NAME,
+                WRITER,
+                PUBLISHER,
+                LOAN_DATE,
+                RETURN_DATE,
+                STATUS
+            FROM
+            (SELECT
+       			 ROWNUM rnum,
+            		A.*
+    		 FROM
+       			 (
+            SELECT 
+                L.LID, 
+                K.BK_NAME,
+                K.WRITER, 
+                K.PUBLISHER, 
+                A.LOAN_DATE, 
+                A.RETURN_DATE, 
+                A.STATUS
+            FROM 
+                LDETAIL L, 
+                LOAN A, 
+                BOOK K, 
+                BDETAIL B 
+            WHERE 
+			 	L.LID = A.LID
+			 	AND L.CALL_NUM = B.CALL_NUM
+			 	AND B.ISBN = K.ISBN
+                AND A.USER_ID = ?) A)
+                WHERE 
+                    RNUM BETWEEN ? AND ?
+                ORDER BY STATUS DESC
+	</entry>
+	<entry key="returnRequest">
+		UPDATE 
+			LOAN
+        SET 
+        	STATUS = '반납신청'
+        WHERE 
+        	LID = ?
+	</entry>
+</properties>

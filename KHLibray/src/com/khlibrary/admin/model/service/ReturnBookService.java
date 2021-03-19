@@ -45,12 +45,11 @@ public class ReturnBookService {
 	public int returnBook(String lid) {
 		Connection conn = getConnection();
 		int result = 0;
-		
 		int result1 = new ReturnBookDao().changeBstatus(conn,lid);
 		int result2 = new ReturnBookDao().changeLstatus(conn,lid);
 		int result3 = new ReturnBookDao().increaseOverdue(conn,lid);
 		
-		if(result1 + result2 + result3 > 2) {
+		if(result1 + result2 + result3 >= 2) {
 			commit(conn);
 			result = 1;
 		} else {
@@ -58,7 +57,7 @@ public class ReturnBookService {
 			result = 0;
 		}
 		
-		return result;
+		return result ;
 	}
 
 }

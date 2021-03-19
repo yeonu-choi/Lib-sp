@@ -353,4 +353,15 @@
 		WHERE
 		 	USER_ID = ?
 	</entry>
+	<entry key="loginUser">
+	SELECT
+             USER_ID
+           , USER_NAME
+           , GRADE
+           , USER_NO
+        FROM
+             MEMBER
+       WHERE
+            USER_ID = ?
+	</entry>
 </properties>

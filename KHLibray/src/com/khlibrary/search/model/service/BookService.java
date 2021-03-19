@@ -109,12 +109,18 @@ public class BookService {
 
 	// 도서 등록 
 	
-	public int insertBook(Book book) {
-		
+	public int insertBook(Book book) {		
 		Connection conn = getConnection();
-		int result = new BookDao().insertBook(conn, book);
 		
-		if(result> 0) {
+		BookDao bDao = new BookDao();
+		
+		int result1 = bDao.insertBook(conn, book);
+		int result2 = bDao.insertBdetail(conn, book);
+		
+		int result = 0;
+		
+		if(result1 > 0 && result2 > 0) {
+			result = 1;
 			commit(conn);
 		} else {
 			rollback(conn);
@@ -124,6 +130,7 @@ public class BookService {
 		return result;
 	
 	}
+
 
 
 }

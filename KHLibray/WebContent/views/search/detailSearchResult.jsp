@@ -4,12 +4,12 @@
 	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
-	String bName = (String)request.getAttribute("bName") != null ? request.getParameter("bName") : "";
-	String bWriter = (String)request.getAttribute("bWriter") != null ? request.getParameter("bWriter") : "";
-	String bPublisher = (String)request.getAttribute("bPublisher") != null ? request.getParameter("bWriter") : "";
-	String isbn = request.getAttribute("isbn") != null ? request.getParameter("isbn") : "";
-	String tDate = request.getAttribute("tDate") != null ? request.getParameter("tDate") : "";
-	String fDate = request.getAttribute("fDate") != null ? request.getParameter("fDate") : "";	
+	String bName = (String)request.getParameter("bName") != null ? request.getParameter("bName") : "";
+	String bWriter = (String)request.getParameter("bWriter") != null ? request.getParameter("bWriter") : "";
+	String bPublisher = (String)request.getParameter("bPublisher") != null ? request.getParameter("bWriter") : "";
+	String isbn = request.getParameter("isbn") != null ? request.getParameter("isbn") : "";
+	String tDate = request.getParameter("tDate") != null ? request.getParameter("tDate") : "";
+	String fDate = request.getParameter("fDate") != null ? request.getParameter("fDate") : "";	
 
 //int tDate = request.getAttribute("tDate") != "" ? Integer.parseInt(request.getParameter("tDate")) : "";
 //int fDate = request.getAttribute("fDate") != "" ? Integer.parseInt(request.getParameter("fDate")) : "";
@@ -358,26 +358,19 @@
                     	<% int i = 0; %>
                    		<% for(Book bk : list) { %>
                     	<div class="resultBook" >
-                        	<input type="hidden" name="bName" value="<%=bName%>">
-                        	<input type="hidden" name="bWriter" value="<%=bWriter%>">
-                        	<input type="hidden" name="bPublisher" value="<%=bPublisher%>">
-                        	<input type="hidden" name="isbn" value="<%=isbn%>">
-                        	<input type="hidden" name="tDate" value="<%=tDate%>">
-                        	<input type="hidden" name="fDate" value="<%=fDate%>">
-                        	<input type="hidden" name="bName" value="<%=bName%>">
                         	
                         	<div class="bookImg"><img src="<%= request.getContextPath() %><%= bk.getImgPath()%><%= bk.getImgName() %>"></img></div>
                         	<div class="book">
-                            		<div class="bName"><%= bk.getbName() %></div>
+                            		<div class="bName" id="bName<%= i %>"><%= bk.getbName() %></div>
                             		<div><span>저자 : <%= bk.getbWriter() %>  지음 | </span>
                                 		<span>발행처 : <%= bk.getbPublisher() %> | </span>
                                 		<span>발행연도 : <%= bk.getIssueDate() %> 년</span></div>
                             		<div><span>ISBN : <%= bk.getIsbn() %> | </span>
                                 		<span>청구 기호 : <%= bk.getCallNum() %></span></div>
-                            		<div>재고 여부 : <%= bk.getStatus() %></div>
+                            		<div>재고 여부 : <span id="bks<%= i %>"><%= bk.getStatus() %></span></div>
                         	</div>
-                        	<span class="chk"><input type="checkbox" value=<%= bk.getCallNum() %> name="checkSelect" id="checkSelect<%=i%>"></span>
-                        		<input type="hidden" value="">
+                        	<span class="chk"><input type="checkbox" value=<%= bk.getCallNum() %>  name="checkSelect" id="checkSelect<%=i%>"></span>
+                        		
                         	<% i++; %>
                     	</div>
  						<% }%>
@@ -387,7 +380,7 @@
                 <div class="pageArea">
                     <% if(pi.getCurrentPage() == 1) {%>
                     <a href="#;"><i class="bi bi-chevron-double-left"></i></a>						
-                    	<a href="#;"><i class="bi bi-chevron-compact-left"></i></a>					<!--  http://localhost:8800/khlib/detail/search?bName=1&bWriter=1&bPublisher=1&isbn=1&tDate=2007&fDate= -->
+                    	<a href="#;"><i class="bi bi-chevron-compact-left"></i></a>					
                     	<% } else {%>
                     	<a href="<%= request.getContextPath() %>/detail/search?currentPage=1&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-double-left"></i></a>
                     	<a href="<%= request.getContextPath() %>/detail/search?currentPage=<%= pi.getCurrentPage()- 1 %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-compact-left"></i></a>
@@ -445,44 +438,33 @@
 	<script>
 		const modalbody = document.getElementById("modal-body");
 		
-		
-		$("#loansBtn").click(function(){
-			//if(){ 로그인 유저 확인 -  로그인 아닐 시 alert 창 , 5개 이상 대출시 불가능
-			const arr = [];
-			<% for(int i = 0; i < list.size(); i++){ %>
-			
-				if($('#checkSelect' + <%= i %>).is(":checked") == true){
-					// console.log('체크된 상태');
-					arr.push('<%= list.get(i).getbName() %>');
-				}
-			<% } %>
-			// console.log(arr);
-			modalbody.innerHTML = arr.join('<br>');
+    	$("#loansBtn").click(function(){
+    		const arr = [];
+    		$(".book").each(function(i){
+    			if($('#checkSelect' + i ).is(":checked") == true){
+    				arr.push($("#bName" + i).text());
+    			}
+    		});
+    		modalbody.innerHTML = arr.join('<br>');
 		});
-		
 		
 				
 		$("#yesBtn").click(function(){
 			// 로그인 유저만 가능
 			<% if(loginUser != null) { %>
-			
-			<% for(int i = 0; i < list.size(); i++){ %>
-				if($('#checkSelect' + <%= i %>).is(":checked") == true){
-					// console.log('체크된 상태');
-					<% if( list.get(i).getStatus().equals("대출가능")) { %>
-						$("#loansForm").submit();
-					<% } else { %>
+				$(".book").each(function(i){
+					if($('#checkSelect' + i ).is(":checked") == true){
+						if($("#bks" + i).text() == "대출가능") {
+							$("#loansForm").submit();
+						} else {
 						alert("해당 도서는 대출 불가능합니다.")
-						
-					<% } %>
+						}
 					}
-				<% } %>
-				
+				});
 			<% } else {%>
 				alert("로그인 후 이용이 가능합니다.")
 				location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"
 			<% }%>
-			
 		});
 		
 

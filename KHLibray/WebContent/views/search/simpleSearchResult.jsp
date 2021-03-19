@@ -429,16 +429,15 @@
                     	<div class="resultBook" >
                         	<div class="bookImg"><img src="<%= request.getContextPath() %><%= bk.getImgPath()%><%= bk.getImgName() %>"></img></div>
                         	<div class="book">
-                            	<div class="bName"><%= bk.getbName() %></div>
+                            	<div class="bName" id="bName<%= i %>"><%= bk.getbName() %></div>
                             	<div><span>저자 : <%= bk.getbWriter() %>  지음 | </span>
                                 	<span>발행처 : <%= bk.getbPublisher() %> | </span>
                                 	<span>발행연도 : <%= bk.getIssueDate() %> 년</span></div>
                             	<div><span>ISBN : <%= bk.getIsbn() %> | </span>
                                 	<span>청구 기호 : <%= bk.getCallNum() %></span></div>
-                            	<div>재고 여부 : <%= bk.getStatus() %></div>
+                            	<div>재고 여부 : <span id="bks<%= i %>"><%= bk.getStatus() %></span></div>
                         	</div>
-                        	<span class="chk"><input type="checkbox" value=<%= bk.getCallNum() %> name="checkSelect" id="checkSelect<%=i%>"></span>
-                        	<input type="hidden" value="">
+                        	<span class="chk"><input type="checkbox" value=<%= bk.getCallNum() %>  name="checkSelect" id="checkSelect<%=i%>"></span>
                         	<% i++; %>
                     	</div>
                     	<% }%>
@@ -509,45 +508,35 @@
 	<script>
 		const modalbody = document.getElementById("modal-body");
 		
-		
 		$("#loansBtn").click(function(){
-			//if(){ 로그인 유저 확인 -  로그인 아닐 시 alert 창 , 5개 이상 대출시 불가능
 			const arr = [];
-			<% for(int i = 0; i < list.size(); i++){ %>
-				if($('#checkSelect' + <%= i %>).is(":checked") == true){
-					// console.log('체크된 상태');
-					arr.push('<%= list.get(i).getbName() %>');
+			$(".book").each(function(i){
+				if($('#checkSelect' + i ).is(":checked") == true){
+					arr.push($("#bName" + i).text());
 				}
-			<% } %>
-			// console.log(arr);
+			});
 			modalbody.innerHTML = arr.join('<br>');
 		});
-		
 		
 				
 		$("#yesBtn").click(function(){
 			// 로그인 유저만 가능
 			<% if(loginUser != null) { %>
-			
-			<% for(int i = 0; i < list.size(); i++){ %>
-				if($('#checkSelect' + <%= i %>).is(":checked") == true){
-					// console.log('체크된 상태');
-					<% if( list.get(i).getStatus().equals("대출가능")) { %>
-						$("#loansForm").submit();
-					<% } else { %>
+				$(".book").each(function(i){
+					if($('#checkSelect' + i ).is(":checked") == true){
+						if($("#bks" + i).text() == "대출가능") {
+							$("#loansForm").submit();
+						} else {
 						alert("해당 도서는 대출 불가능합니다.")
-					<% } %>
+						}
 					}
-				<% } %>
-				
+				});
 			<% } else {%>
 				alert("로그인 후 이용이 가능합니다.")
 				location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"
 			<% }%>
-			
 		});
-		
-		
+	
 
 	</script>
     <%-- 푸터 --%>

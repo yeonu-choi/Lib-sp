@@ -239,7 +239,7 @@
 			   SEQ_LID.NEXTVAL
 			 , SYSDATE
 			 , DEFAULT
-			 , DEFAULT
+			 , '대출중'
 			 , ?
 		)
 	</entry>

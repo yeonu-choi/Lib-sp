@@ -4,15 +4,32 @@
 	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
-	String bName = (String)request.getParameter("bName") != null ? request.getParameter("bName") : "";
-	String bWriter = (String)request.getParameter("bWriter") != null ? request.getParameter("bWriter") : "";
-	String bPublisher = (String)request.getParameter("bPublisher") != null ? request.getParameter("bWriter") : "";
-	String isbn = request.getParameter("isbn") != null ? request.getParameter("isbn") : "";
-	String tDate = request.getParameter("tDate") != null ? request.getParameter("tDate") : "";
-	String fDate = request.getParameter("fDate") != null ? request.getParameter("fDate") : "";	
+	String bName =  (String)request.getSession().getAttribute("bName");
+	String bWriter = (String)request.getSession().getAttribute("bWriter");
+	String bPublisher = (String)request.getSession().getAttribute("bPublisher");
+	String isbn = (String)request.getSession().getAttribute("isbn");
+	String tDate = (String)request.getSession().getAttribute("tDate");
+	String fDate = (String)request.getSession().getAttribute("fDate");
+	
+	if(bName == null){
+		bName = (String)request.getParameter("bName") != null ? request.getParameter("bName") : "";;
+	} 
+	if(bWriter == null){
+		bWriter = (String)request.getParameter("bWriter") != null ? request.getParameter("bWriter") : "";
+	} 
+	if(bPublisher == null){
+		bPublisher = (String)request.getParameter("bPublisher") != null ? request.getParameter("bPublisher") : "";
+	} 	
+	if(isbn == null){
+		isbn = (String)request.getParameter("isbn") != null ? request.getParameter("isbn") : "";
+	} 
+	if(tDate == null){
+		tDate = (String)request.getParameter("tDate") != null ? request.getParameter("tDate") : "";
+	} 
+	if(fDate == null){
+		fDate = (String)request.getParameter("fDate") != null ? request.getParameter("fDate") : "";
+	} 
 
-//int tDate = request.getAttribute("tDate") != "" ? Integer.parseInt(request.getParameter("tDate")) : "";
-//int fDate = request.getAttribute("fDate") != "" ? Integer.parseInt(request.getParameter("fDate")) : "";
  %>
     
 <!DOCTYPE html>
@@ -205,7 +222,11 @@
             border-bottom: 1px rgb(194, 192, 192) solid;
             padding: 5px;
         }
-
+	
+		.resultBook p {
+        	text-align : center;
+        	padding: 70px 0px;
+        }
 
         .bookImg {
         	width : 20%;
@@ -368,6 +389,13 @@
                             		<div><span>ISBN : <%= bk.getIsbn() %> | </span>
                                 		<span>청구 기호 : <%= bk.getCallNum() %></span></div>
                             		<div>재고 여부 : <span id="bks<%= i %>"><%= bk.getStatus() %></span></div>
+                            		<input type="hidden" value="<%=bName%>" name="bName">
+                            		<input type="hidden" value="<%=bWriter%>" name="bWriter">
+                            		<input type="hidden" value="<%=bPublisher%>" name="bPublisher">
+                            		<input type="hidden" value="<%=isbn%>" name="isbn">
+                            		<input type="hidden" value="<%=tDate%>" name="tDate">
+                            		<input type="hidden" value="<%=fDate%>" name="fDate">
+                            		
                         	</div>
                         	<span class="chk"><input type="checkbox" value=<%= bk.getCallNum() %>  name="checkSelect" id="checkSelect<%=i%>"></span>
                         		

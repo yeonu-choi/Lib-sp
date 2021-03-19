@@ -348,29 +348,52 @@
 	   $(function(){
 		
 		var bName = $(".bookTable input[name=bName]");
-		   
-			$.ajax({
-				url : "<%= request.getContextPath() %>/wish/bkCheck",
-				type : "post",
-				data : { bName : bName.val() },
-				asyan: false,
-				success : function(data){
-					console.log(data);
+		
+		$.ajax({
+			url : "<%= request.getContextPath() %>/wish/bkFCheck",
+			type : "post",
+			data : { bName : bName.val() },
+			asyan: false,
+			success : function(data){
+				console.log(data);
+				
+				if(data == "fail"){
+					//flag="false";
+					alert("해당 도서는 현재 도서관에 소장 중인 도서입니다.");
+					bName.focus();
 					
-					if(data == "fail"){
-						//flag="false";
-						alert("해당 도서는 이미 희망 도서 신청 상태입니다.");
-						bName.focus();
-						
-					} else {
-						//flag = "true";
-						$("#wishBookForm").submit();
-					}
-				},
-				error : function(e){
-					console.log(e);
+				} else {
+					
+					$.ajax({
+						url : "<%= request.getContextPath() %>/wish/bkCheck",
+						type : "post",
+						data : { bName : bName.val() },
+						asyan: false,
+						success : function(data){
+							console.log(data);
+							
+							if(data == "fail"){
+								//flag="false";
+								alert("해당 도서는 이미 희망 도서 신청 상태입니다.");
+								bName.focus();
+								
+							} else {
+								//flag = "true";
+								$("#wishBookForm").submit();
+							}
+						},
+						error : function(e){
+							console.log(e);
+						}
+					});
+					
 				}
-			});
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+			
 			//console.log(flag);
 			
 	   });

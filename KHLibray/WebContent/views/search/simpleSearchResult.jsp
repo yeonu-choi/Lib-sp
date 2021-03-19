@@ -3,9 +3,16 @@
 <%
 	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-
-	String searchSelect = request.getParameter("searchSelect") != null ? request.getParameter("searchSelect") : "";
-	String search = request.getParameter("search")!= null ? request.getParameter("search") : "";
+	
+	String searchSelect =(String)request.getSession().getAttribute("searchSelect");
+	String search = (String)request.getSession().getAttribute("search");
+	
+	if(searchSelect == null){
+		searchSelect = request.getParameter("searchSelect") != null ? request.getParameter("searchSelect") : "";
+	} 
+	if(search == null){
+		search = request.getParameter("search")!= null ? request.getParameter("search") : "";
+	} 
 
 	String select[] = new String[4];
 
@@ -211,7 +218,7 @@
             font-size : 15px;
             margin: auto;
             padding: 10px 10px 10px 10px;
-            border-bottom: 1px rgb(194, 192, 192) solid;
+           /* border-bottom: 1px rgb(194, 192, 192) solid; */
         }
         
         .select {
@@ -219,9 +226,16 @@
             margin: auto;
             text-align: right;
             font-size : 15px;
-            padding: 0px 20px 10px 20px;
+            padding: 0px 0px 10px 0px;
             border-bottom: 1px rgb(194, 192, 192) solid;
-            
+        }
+        
+        .select button{
+            height: 30px;
+            text-align: center;
+            margin: 0px 10px 5px 5px;
+            border: rgb(216, 215, 215) 1px solid;
+            border-radius: 5px;
         }
 
         .resultArea {
@@ -386,26 +400,28 @@
 
             <div class="listArea"><p>요청하신 <%= searchSelect %> : <%= search %>에 대한 자료 검색 결과이며 총 <%= pi.getListCount() %>건이 검색되었습니다.</p></div>
 	
-	        
-	        <!-- <div class="select">
+	        <form action="<%= request.getContextPath() %>/simple/sort" method="get">
+	         <div class="select">
                 <span>
                     <select name="sortSelect" id="sortSelect">
-                    <option value="sName">서명순</option>
-                    <option value="sWriter">저자순</option>
-                    <option value="sLatest">최신순</option>
+                    <option value="서명순">서명순</option>
+                    <option value="저자순">저자순</option>
+                    <option value="최신순">최신순</option>
                     </select>
                 </span>
                 <span>
                     <select name="numSelect" id="numSelect">
-                        <option value="ten">10개</option>
-                        <option value="twenty">20개</option>
-                        <option value="thirty">30개</option>
+                        <option value="10">10개</option>
+                        <option value="20">20개</option>
+                        <option value="20">30개</option>
                     </select>
+                    <button type="submit">조회</button>
                 </span>
-            </div> -->
+            </div> 
+			</form>
+			
 	
-	
-            <form action="<%= request.getContextPath() %>/book/loan" method="POST" id="loansForm">
+            <form action="<%= request.getContextPath() %>/simple/loan" method="POST" id="loansForm">
                 <div class="resultArea">
                 	<% if(list.isEmpty()) {%>
                     		<div class="resultBook"><p>조회 된 도서가 없습니다.</p></div>
@@ -436,6 +452,8 @@
                             	<div><span>ISBN : <%= bk.getIsbn() %> | </span>
                                 	<span>청구 기호 : <%= bk.getCallNum() %></span></div>
                             	<div>재고 여부 : <span id="bks<%= i %>"><%= bk.getStatus() %></span></div>
+                            	<input type="hidden" value="<%=searchSelect%>" name="searchSelect">
+                            	<input type="hidden" value="<%=search%>" name="search">
                         	</div>
                         	<span class="chk"><input type="checkbox" value=<%= bk.getCallNum() %>  name="checkSelect" id="checkSelect<%=i%>"></span>
                         	<% i++; %>

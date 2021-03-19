@@ -156,5 +156,15 @@ public class MemberService {
 		}
 		return result;
 	}
+
+	public Member loginMember(String user_id) {
+		Connection conn = getConnection();
+		
+		Member m = new MemberDao().loginMember(conn, user_id); 
+		
+		close(conn);
+		
+		return m;
+	}
 	
 }

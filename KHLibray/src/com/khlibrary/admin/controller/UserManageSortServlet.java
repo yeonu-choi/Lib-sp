@@ -55,6 +55,10 @@ public class UserManageSortServlet extends HttpServlet {
 
 		endPage = startPage + pageLimit - 1;
 
+		if(maxPage == 0) {
+			maxPage = 1;
+		}
+		
 		if (maxPage < endPage) {
 			endPage = maxPage;
 		}

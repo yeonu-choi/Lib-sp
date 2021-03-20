@@ -117,3 +117,11 @@
 21.03.20 MyLoanSortListServlet 주소 -/mylidb/lsort - yw
 
 21.03.20 ReturnRequestServlet 주소 - /mylib/myreturn - yw
+
+21.03.20 NoticeDeleteServlet 주소 - /notice/delete - doo
+
+21.03.20 NoticeUpdateServlet 주소 - /notice/update - doo
+
+21.03.20 NoticeUpdatingServlet 주소 - /notice/updating - doo
+
+21.03.20 NoticeSearchServlet 주소 - /notice/search - doo

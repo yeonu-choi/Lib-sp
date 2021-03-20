@@ -113,4 +113,45 @@
 		 WHERE
 		 		STATUS = 'Y'
 	</entry>
+	<entry key="getSearchListCount">
+		SELECT 
+    		   COUNT(*)
+		  FROM 
+    		   NOTICE 
+		 WHERE
+		   AND STATUS = 'Y'
+		   AND NTITLE LIKE '%' || ? || '%'	
+	</entry>
+	<entry key="selectSearchList">
+		SELECT 
+		       RNUM
+		     , NNO
+		     , NTITLE
+		     , NCONTENT
+		     , NCOUNT
+		     , C_DATE
+		     , STATUS
+          FROM 
+               (SELECT 
+                       ROWNUM RNUM
+                     , A.* 
+                  FROM
+                       (SELECT 
+                               NNO
+                             , NTITLE
+                             , NCONTENT
+                             , NCOUNT
+                             , C_DATE
+                             , STATUS
+                          FROM 
+                               NOTICE
+                         WHERE 
+                           	   STATUS = 'Y'
+                           AND NTITLE LIKE '%' || ? || '%'
+                      ORDER BY 
+                              NNO DESC) 
+                       A)
+    	 WHERE 
+    	       RNUM BETWEEN ? AND ?	
+	</entry>
 </properties>

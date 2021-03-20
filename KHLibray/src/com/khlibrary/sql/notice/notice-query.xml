@@ -119,7 +119,7 @@
 		  FROM 
     		   NOTICE 
 		 WHERE
-		   AND STATUS = 'Y'
+		   	  STATUS = 'Y'
 		   AND NTITLE LIKE '%' || ? || '%'	
 	</entry>
 	<entry key="selectSearchList">

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.khlibrary.board.model.vo.Notice" %>
+    pageEncoding="UTF-8" import="com.khlibrary.board.model.vo.Notice"%>
 <%
 	Notice n = (Notice)request.getAttribute("notice");
 %>
@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
        <style>
+       /* side bar style */
         body {
             margin: 0;
             padding: 0;
@@ -112,26 +113,28 @@
        		text-decoration: none;
        		color: black;
     	}
-    	       
-        #wrap {
+    	
+    	/* 본문 style */
+       #wrap {
        		width: 65%;
             height: 80%;
             margin-top: 60px;
             margin-bottom: 30px;
             float : left;          
         }
-       
+
+
         #content {
             width: 100%;
+            margin-left : 100px;
             margin-right: 200px;
-            padding-left: 80px;
             padding-right: 127px;
-            display: inline-block;
+            overflow: visible;
+            
+
         }
 
-
-        #boardtitle {
-            
+        #boardtitle {           
             width: 1150px;
             font-size: 30px;
             margin-top: 40px;
@@ -141,100 +144,110 @@
             margin-bottom: 15px;
         }
 
-        hr {
-            float: left;
-            width: 93%;
+        #boardtitle hr {
+            width: 90%;
             margin: 0;
             opacity: 0.5;        
         }
 
         #top_empty {
             display: inline-block;
-            width: 800px;
+            width: 100%;
             height: 50px;
         }
 
-        #top_info {
-            border-top: solid 1px #b8b8b8;
+        #b_area {
+            border-top: 2px solid #b8b8b8;
+            padding-top : 30px;
+      	}      
+        
+        dl[class="b_title"]{
+        	width: 100%;
+        }
+
+			
+        dt[class="b_title"]{
+			text-align: center;
+			line-height: 35px;
+			width: 20%;
+            height: 35px;
+            float: left;
+            background: #F6F6F6 ;
+            font-size: 20px;
+        }
+        
+        dd[class="b_title"]{
+        	margin: 0;
+        	padding-left: 10px;
+        	float: left;
+            width: 80%;
+        }
+        
+        dd[class="b_title"] input {
+            font-size: 20px;
             width: 100%;
-          
+        }
+
+        dt[class="b_content"]{
+        	text-align: center;
+			line-height: 35px;
+        	float:left;
+            width: 20%;
+            height: 35px;
+            background: #F6F6F6 ;
+            font-size: 20px;
+        }
+
+
+
+        dd[class="b_content"] {
+        	magin: 0;
+            padding: 5px 0 2px 10px;
+            width: 80%;
+            float: left;
         }
         
-        #top_info dl {
-            border-bottom: solid 1px #b8b8b8;
-            margin: 0px;
-            height: 44px;
-			overflow: hidden;
-           
-        }
-              
-        dl[class="info_2"] {
-        	margin-top: -5px;
-        }
-        
-        #top_info dt {
-        	float: left;
-        	width: 180px;
-            height: 42px;
-            font-size: 18px;
-            background: #F6F6F6;
-            text-align: center;
-			line-height: 43px;       
-        }
-              
-        dd[class="info_1"] {
-        	float: left;
-            margin: 0;        
+
+
+        dd[class="b_content"] textarea {
             font-size: 20px;
-            padding:  8px 0 0px 20px;
+            width: 100%;
+            height: 300px;
+            resize: none;
         }
 
-        dd[class="info_2"]{
-            margin: 0;
-            float: left;
-            font-size: 20px;
-            padding: 7px 20px 0px 20px;
-
+        #upload {
+            margin-left: 230px;
+            margin-top: 5px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 5px;
+            border: 1px solid #b8b8b8;
+            width: 760px;
+            border-radius: 5px;
         }
 
-        dd[class="info_2_1"]{
-            margin: 0;
-            float: left;
-            font-size: 20px;
-            padding: 7px 30px 0px 30px;
-
-        }
-        
-         dd[class="info_2_2"]{
-            margin: 0;
-            float: left;
-            font-size: 20px;
-            padding: 7px 30px 0px 30px;
-
-        }
-
-        #main_content {
-            padding: 30px;
-            min-height: 200px;
-            border-bottom: solid 1px #b8b8b8;
-        }
-        #tolist {
-            padding: 40px;
-        }
-
-        #tolist button {
+        #bsubmit {
+            margin-left: 50%;
+            margin-top: 30px;
+            margin-right: 10px;
             height: 30px;
-            margin-right: 20px;
+            width: 50px;
+            
         }
-        
-        #tolist button[id="modify"] {
-           margin-left: 360px;        
-        }
+
+        #bcancel {
+            height: 30px;
+            width: 50px;
+        }    	
+    	
     </style>
 </head>
 <body>
-
+	<!-- main bar include -->
 	<%@ include file="../common/mainbar-basic.jsp" %>
+	
+	<!-- side bar HTML-->
 	<div class="submArea">
     	<div class="bcrumb">
         	<span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
@@ -261,64 +274,43 @@
                     </tr>
                 </table>
             </div>
-    </div>
-</div>
-    <div id="wrap">
+    	</div>
+	</div>
+	
+	<!-- 본문-->
+	<div id="wrap">
             <div id="content">
                 <div id="boardtitle">
                     <h3>공지사항</h3>
-                   <div><hr></div>
+                    <hr>                   
                 </div>
                 <div id="top_empty"></div>
-                <div id="top_info">
-                    <dl class="info_1">
-                        <dt class="info_1">제 목</dt>
-                        <dd class="info_1"><%= n.getnTitle() %></dd>
+                <!-- 수정해서 넘길  form -->
+                <form id="b_area" action="<%= request.getContextPath() %>/notice/updating" method="POST">            
+                	<!-- hidden으로 nno, c_date 값 -->
+   					<input type="hidden" name="nno" value="<%= n.getnNo() %>">
+   					<input type="hidden" name="c_date" value="<%= n.getC_Date() %>">
+   					<!-- 원 제목, 내용 나오게 -->
+                    <dl class="b_title">
+                        <dt class="b_title">제 목</dt>
+                        <dd class="b_title"><input type="text" name="title" value="<%= n.getnTitle() %>" required></dd>
                     </dl>
-                    <dl class="info_2">
-                        <dt class="info_2">작성일</dt>
-                        <dd class="info_2"><%= n.getC_Date() %></dd>
-                        <dt class="info_2_1">조회수</dt>
-                        <dd class="info_2_1"><%= n.getnCount() %></dd>
-                        <dt class="info_2_2">첨부파일</dt>
-                        <dd class="info_2_2"></dd>
+                    
+                    <dl class="b_content">
+                        <dt class="b_content">내 용</dt>
+                        <dd class="b_content"><textarea name="content"><%= n.getnContent() %></textarea></dd>
                     </dl>
-                </div>
-                <div id="main_content"><%= n.getnContent() %></div>
-     
-                <div id="tolist">
-                	
-                    <button id="modify">수정하기</button>
-                    <button id="list_b" onclick="location.href='<%= request.getContextPath()%>/notice'">목록으로</button>
-                    <button id="delete">삭제하기</button>
-                    <form id="nnoForm" method="POST">
-                    	<input type="hidden" name="nno" value="<%= n.getnNo() %>">
-                    </form>
                     
+                    <input type="file" id="upload">
                     
-                    <script>
-                    	/* 수정 버튼 클릭 시 */
-                    	const updateBtn = document.getElementById('modify');
-                    	updateBtn.addEventListener('click', function(){
-                    		$("#nnoForm").attr("action", "<%= request.getContextPath() %>/notice/update");
-                    		$("#nnoForm").submit();
-                    	});
-                    	
-                    	/* 삭제 버튼 클릭 시 */
-                    	const deleteBtn = document.getElementById('delete');
-                    	deleteBtn.addEventListener('click', function(){
-                    		$("#nnoForm").attr("action", "<%= request.getContextPath() %>/notice/delete");
-                    		$("#nnoForm").submit();
-                    	});
-                    </script>
-                    
-                </div>
+                        <button type="submit" id="bsubmit">수정</button>
+                        <button type="button" id="bcancel" onclick="javascript:history.back();">취소</button>
+                </form>
             </div>
-    </div>   
- 
- 
- 
- 
-<%@ include file="../common/footer.jsp" %>
+    </div>
+	
+	
+	<!-- footer include -->
+	<%@ include file="../common/footer.jsp" %>	
 </body>
 </html>

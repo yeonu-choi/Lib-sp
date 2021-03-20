@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.board.model.vo.Notice"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.board.model.vo.*"%>
 <%
 	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String search = request.getParameter("search") != null ? request.getParameter("search") : "";
+
 %>
 <!DOCTYPE html>
 <html>
@@ -112,18 +115,14 @@
        }
 
         #wrap {
-        	display: block;
             width: 65%;
-            height: 80%;	
             margin-top: 60px;
             margin-bottom: 30px;
             float : left;
-            overflow : hidden;
         }
 
         #content {
             width: 100%;
-            display: block;
         }
 
         #boardtitle {  
@@ -131,10 +130,11 @@
         }
 
         #boardtitle h3 {
-            margin-bottom: 15px;
+        	margin-top: 30px;
+            margin-bottom: 30px;
         }
 
-        hr {
+        #boardtitle hr {
             float: left;
             width: 100%;
             margin: 0;
@@ -150,8 +150,9 @@
         #search{
             position: relative;
             float : right;
-            height: 25px;
-            width: 215px;
+            right: 120px;
+            height: 30px;
+            width: 240px;
             margin-bottom: 25px;
             border: 1px solid #b8b8b8;
             border-radius: 7px;
@@ -160,6 +161,7 @@
 
         #search input[type="search"] {
             display: inline-block;
+            line-height: 30px;
             width: 90%;
             border: 0;
         }
@@ -167,27 +169,29 @@
         #search button {
             border: 0px;
             position: absolute;
-            display: inline-block;
-            height: 20px;
+            display: inline-block;			
+            height: 30px;
             width: 40px;
-            top: 5px;
+            top: 3px;
             right: 9px;
             border-radius: 7px;
         }
 
         #boardlist {
-            width: 100%;
+            width: 80%;
             border-top: 2px solid #3b414d; 
             border-bottom: 1px solid #b8b8b8; 
             border-collapse: collapse;
+            margin: auto;
         }
 
         .b_num {
-            border-left: none;
+        	width: 10%;
         }
 
         .b_count {
-            border-right: none;
+        	width: 12%;
+            
         }
 
         .b_num, .b_count, .b_date {
@@ -200,23 +204,44 @@
             border-bottom: 1px solid #b8b8b8; 
         }
 
-       #wrap th, #wrap td {
+        #wrap th, #wrap td {
             padding : 12px;
         }
 
         #wrap th {
             border: #b8b8b8 solid 1px;
-
             background: #fcfcfc;
-            color: #313131;
+        }
+        
+        #wrap th:first-child {
+            border-left: none;
+        }
+        
+        #wrap th:last-child {
+            border-right: none;
+        }
+        
+        #t_b .b_num,
+        #t_b .b_date,
+        #t_b .b_count {
+        	border: #b8b8b8 solid 1px;
+        }
+        
+        #t_b .b_title {
+        	width: 55%;
+        	margin-left: 30px;
+        	padding-left: 30px;
+        	border: #b8b8b8 solid 1px;
         }
 
-        #wrap td {
-            border: #b8b8b8 solid 1px;
-
-            color: #5d5d5d;
+        #wrap td:first-child {
+            border-left: none;
         }
-
+        
+        #wrap td:last-child {
+            border-right: none;
+        }
+        
         #paging {
             padding-top: 30px;
             text-align:center;
@@ -228,10 +253,9 @@
             width: 30px;
         }
         
-        
-
         #writeb{
         	float:right;
+        	margin-right: 130px;
         }
         
         #write{
@@ -278,12 +302,12 @@
             <div id="content">
                 <div id="boardtitle">
                     <h3>공지사항</h3>
-                   <div><hr></div>
+                    <hr>
                 </div>
                 <div id="top_empty"></div>
                 <fieldset id="search">
-                	<form>
-                    	<input type="search" id="search_box" placeholder="검색어를 입력하세요">
+                	<form action="<%= request.getContextPath() %>/notice/search" method="get" onsubmit="return checkSearchBox();">
+                    	<input type="search" id="search_box" name="search" placeholder="검색어를 입력하세요" value="<%=search%>">
                     	<button type="submit">검색</button>
                     </form>
                 </fieldset>
@@ -315,12 +339,25 @@
                     </tbody>
                 </table>
                 <div id="paging">
-                    <button>&lt;&lt;</button>
-                    <button>&lt;</button>
-                    <button>1</button>
-                    <button>&gt;</button>
-                    <button>&gt;&gt;</button>
-                 
+                    <button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=1'">&lt;&lt;</button>
+                    <% if(pi.getCurrentPage() == 1) { %>
+                    <button disabled>&lt;</button>
+                    <% } else { %>
+                    <button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= pi.getCurrentPage() - 1%>'">&lt;</button>
+                    <% } %>
+ 					<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+ 						<%if(p == pi.getCurrentPage()) { %>
+ 						<button style="background:#7b767a; color:white;" disabled> <%= p %></button>
+ 						<% } else { %>
+ 						<button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= p %>'"><%= p %></button>
+ 						<% } %>
+ 					<% } %>
+ 					<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+ 					<button disabled>&gt;</button>
+ 					<% } else { %>
+ 					<button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= pi.getCurrentPage() + 1 %>'">&gt;</button>
+ 					<% } %>
+                    <button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= pi.getMaxPage() %>'">&gt;&gt;</button>         
                 </div>
                     <form id="writeb">
                     	<input id="write" type="button" value="글쓰기" onclick="location.href='noticeInsert.jsp'">
@@ -331,7 +368,16 @@
                     		});
                     		
                     	</script>
-                    </form>                
+                    </form> 
+                    
+                    <script>
+                    	function checkSearchBox(){
+                    		if($("#search_box").val() == ''){
+                    			return false;
+                    		}
+                    		return true;
+                    	}
+                    </script>                                   
             </div>
     </div>
     <script>
@@ -346,8 +392,6 @@
     			});
     		});
     </script>
-    
-    
-	<%@ include file="../common/footer.jsp" %>
+<%@ include file="../common/footer.jsp" %>	
 </body>
 </html>

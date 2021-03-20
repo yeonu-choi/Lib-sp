@@ -41,23 +41,8 @@ public class MemberService {
 			
 			return result;
 		}
-		// 3. 회원 탈퇴용 서비스 메서드
-		public int deleteMember(String user_id) {
-			Connection conn = getConnection();
-			
-			int result = new MemberDao().deleteMember(conn, user_id);
-			
-			if(result > 0) {
-				commit(conn);
-			} else {
-				rollback(conn);
-			}
-					close(conn);
-					
-			return result;
-		}
 
-		// 4. 회원 정보 수정용 서비스 메서드
+		// 3. 회원 정보 수정용 서비스 메서드
 		public Member updateMember(Member m) {
 			Connection conn = getConnection();
 			// 1. update 수행
@@ -165,6 +150,22 @@ public class MemberService {
 		close(conn);
 		
 		return m;
+	}
+
+	public int deleteMember(String user_id, String user_pwd) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().deleteMember(conn, user_id, user_pwd);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
 	}
 	
 }

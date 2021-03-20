@@ -228,7 +228,10 @@ public class MemberDao {
 	
 	
 	
+	
+	
 	/////////////////아래부터 yw //////////////////////////////////////////////////////
+	
 	public int getListCount(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -386,6 +389,28 @@ public class MemberDao {
 		}
 		
 		return m;
+	}
+
+	public int deleteMember(Connection conn, String user_id, String user_pwd) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = query.getProperty("deleteMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, user_pwd);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }

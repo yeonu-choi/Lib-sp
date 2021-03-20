@@ -52,8 +52,19 @@ public class LoanService {
 			rollback(conn);
 		}
 		
+		close(conn);
+		
 		return result;
 	}
 
+	public int onLoanCount(String user_id) {
+		Connection conn = getConnection();
+		
+		int lcount = new LoanDao().onLoanCount(conn, user_id);
+		
+		close(conn);
+		
+		return lcount;
+	}
 
 }

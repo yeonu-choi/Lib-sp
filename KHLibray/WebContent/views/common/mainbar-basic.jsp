@@ -53,25 +53,25 @@
             height: 130px;
             width: 100%;
         }
+       
         #top-logo {
-            margin: auto;
             float: left;
             height: 100%;
-            width: 20%;
+            width: 21%;
             position: relative;
         }
   
         #logo {
-        position: absolute;
-            top: 20px;
+        	position: absolute;
+			top : 25px;
             bottom: 0;
             left: 50px;
             right: 0;
-            margin: auto; 
         }
+        
         #MenuArea {
             position: relative;
-            width: 80%;
+            width: 70%;
             float: left;
             height: 100%;
         }
@@ -181,7 +181,7 @@
     </div>
     <div id="top-main">
         <div id="top-logo">
-            <a id="logo" href="<%= request.getContextPath() %>"><img src="<%=request.getContextPath() %>/resources/image/yw/logo1.jpg" width="80%" height="80%"></a>
+            <a id="logo" href="<%= request.getContextPath() %>"><img src="<%=request.getContextPath() %>/resources/image/yw/logo2.jpg" width="80%" height="80%"></a>
         </div>
         <div id="MenuArea">
             <ul class="mainMenu">

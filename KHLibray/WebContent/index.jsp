@@ -51,7 +51,7 @@
             position: absolute;
             top: 20%;
             bottom: 0;
-            left: 27%;
+            left: 28%;
             right: 0;
         }
 
@@ -100,7 +100,12 @@
             text-align: center;
         }
         
-        #search:focus {outline:none;}
+        #search:focus {
+        	outline:none;
+            font-size: 18px;
+            font-weight: 600;
+        	background-color: rgb(224, 209, 193);
+        }
 
         #msbtn {
             background: url(<%=request.getContextPath() %>/resources/image/yw/searchbtn.png) no-repeat;
@@ -124,7 +129,7 @@
         }
 
         .notice {
-            width: 400px;
+            width: 23%;
             height: 350px;
             float: left;
             margin-top: 30px;
@@ -158,21 +163,21 @@
         }
 
         .quickMenu {
-            width: 330px;
+            width: 20%;
             height: 350px;
             float: left;
             margin-top: 20px;
-            margin-left: 100px;
+            margin-left: 7%;
             border: 2px solid pink;
             border-radius: 10px;
         }
 
         .imgNews {
-            width: 400px;
+            width: 23%;
             height: 350px;
             float: left;
             margin-top: 20px;
-            margin-left: 100px;
+            margin-left: 7%;
             margin-right: 6%;
             border: 2px solid pink;
             border-radius: 10px;
@@ -191,7 +196,7 @@
         }
 
         .schedule {
-            width: 400px;
+            width: 23%;
             height: 300px;
             float: left;
             margin-top: 30px;
@@ -199,18 +204,18 @@
         }
 
         .sInner {
-            width: 400px;
+            width: 100%;
             height: 250px;
             float: left;
             padding: 5px;
         }
 
         .newBook {
-            width: 830px;
+            width: 50%;
             height: 450px;
             float: left;
             margin-top: 30px;
-            margin-left: 100px;
+            margin-left: 7%;
         }
         
         .bimg{
@@ -233,15 +238,16 @@
         <img src="<%=request.getContextPath() %>/resources/image/yw/mainbanner2.png" >
     </div>
     <div class="mainSearch">
-        <form>
+        <form action="<%=request.getContextPath() %>/simple/search" method="get">
+        	<input type="hidden" name="searchSelect" value="total">
             <div class="label">
             <p>통합검색</p>
             </div>
             <div id="msearch">
-            <input type="search" id="search" name="search" value="" placeholder="검색어를 입력해주세요">
+            <input type="search" id="search" name="search" placeholder="검색어를 입력해주세요">
             </div>
             <div id="mainbtn">
-            <input type="button" id="msbtn">
+            <button type="submit" id="msbtn"></button>
             </div>
         </form>      
     </div>

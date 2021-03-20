@@ -3,18 +3,29 @@
 <properties>
 	<entry key="selectList">
 		SELECT
-				NNO
+				ROWNUM
+			  , NNO
+			  , NTITLE
+			  , NCONTENT
+			  , NCOUNT
+			  , C_DATE
+			  , STATUS
+	
+		FROM   	(SELECT
+				ROWNUM RNUM
+			  , NNO
 			  , NTITLE
 			  , NCONTENT
 			  , NCOUNT
 			  , C_DATE
 			  , STATUS
 		  FROM
-		  		NOTICE
+		  		NOTICE N
 		 WHERE
 		 		STATUS = 'Y'
 		 ORDER BY
-		 		NNO DESC			  
+		 		NNO DESC)
+		 WHERE RNUM BETWEEN ? AND ?		  
 	</entry>
 	<entry key="insertNotice">
 		INSERT
@@ -60,5 +71,46 @@
 		 WHERE	
 		 		NNO = ?
 		   AND	STATUS = 'Y'			  
+	</entry>
+	<entry key="updateNotice">
+		UPDATE
+				NOTICE
+		   SET
+		   		NTITLE = ?
+		   	  ,	NCONTENT = ?
+		 WHERE
+		 		NNO = ?		
+	</entry>
+	<entry key="deleteNotice">
+		UPDATE
+				NOTICE
+		   SET
+		   		STATUS = 'N'
+		 WHERE
+		 		NNO = ?
+	</entry>
+	<entry key="selectSearchTitle">
+		SELECT
+			  	NNO
+			  , NTITLE
+			  , NCONTENT
+			  , NCOUNT
+			  , C_DATE
+			  , STATUS
+	      FROM
+	      		NOTICE
+	     WHERE
+	     		STATUS = 'Y'
+	       AND  NTITLE LIKE '%' || ? || '%'
+	  ORDER BY
+	  			NNO DESC
+	</entry>
+	<entry key="getListCount">
+		SELECT
+				COUNT(*)
+		  FROM
+		  		NOTICE
+		 WHERE
+		 		STATUS = 'Y'
 	</entry>
 </properties>

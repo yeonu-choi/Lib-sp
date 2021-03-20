@@ -6,11 +6,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import static com.khlibrary.common.JDBCTemplate.close;
 import com.khlibrary.board.model.vo.Notice;
+import com.khlibrary.board.model.vo.PageInfo;
 
 public class NoticeDao {
 	private Properties query = new Properties();
@@ -26,7 +28,7 @@ public class NoticeDao {
 		
 	}
 
-	public List<Notice> selectList(Connection conn) {
+	public List<Notice> selectList(Connection conn, PageInfo pi) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Notice> list = new ArrayList<>();
@@ -35,6 +37,12 @@ public class NoticeDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getNoticeLimit() + 1;
+			int endRow = startRow + pi.getNoticeLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -134,6 +142,107 @@ public class NoticeDao {
 		}
 		
 		return n;
+	}
+
+	public int updateNotice(Connection conn, Notice n) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = query.getProperty("updateNotice");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, n.getnTitle());
+			pstmt.setString(2, n.getnContent());
+			pstmt.setInt(3, n.getnNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteNotice(Connection conn, int nno) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = query.getProperty("deleteNotice");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, nno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public List<Notice> selectList(Connection conn, String search) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Notice> list = new ArrayList<>();
+		String sql = query.getProperty("selectSearchTitle");
+				
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Notice(rset.getInt("nno"),
+									rset.getString("ntitle"),
+									rset.getString("ncontent"),
+									rset.getInt("ncount"),
+									rset.getDate("c_date"),
+									rset.getString("status")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+				
+		return list;
+	}
+
+	public int getListCount(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		String sql = query.getProperty("getListCount");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return listCount;
 	}
 
 }

@@ -8,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.khlibrary.board.model.service.NoticeService;
-import com.khlibrary.board.model.vo.Notice;
 
 /**
- * Servlet implementation class NoticeUpdateServlet
+ * Servlet implementation class NoticeDeleteServlet
  */
-@WebServlet("/notice/update")
-public class NoticeUpdateServlet extends HttpServlet {
+@WebServlet("/notice/delete")
+public class NoticeDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeUpdateServlet() {
+    public NoticeDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,20 +29,16 @@ public class NoticeUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int nno = Integer.parseInt(request.getParameter("nno"));
-	
-		// 가져온 nno로 Notice 조회
-		Notice notice = new NoticeService().selectNotice(nno);
 		
-		String page="";
-		if(notice != null) {
-			request.setAttribute("notice", notice);
-			page = "/views/board/noticeUpdate.jsp";
+		int result = new NoticeService().deleteNotice(nno);
+		
+		if(result > 0) {
+			request.getSession().setAttribute("msg", "공지사항 삭제가 완료 되었습니다.");
+			response.sendRedirect(request.getContextPath() + "/notice");
 		} else {
-			request.setAttribute("msg", "공지사항 수정 화면을 불러오는데 실패했습니다.");
-			page = "/views/common/errorPage.jsp";
+			request.setAttribute("msg", "공지사항 삭제에 실패하였습니다.");
+			request.getRequestDispatcher("/views/common.errorPage.jsp").forward(request, response);
 		}
-		
-		request.getRequestDispatcher(page).forward(request, response);
 		
 	}
 

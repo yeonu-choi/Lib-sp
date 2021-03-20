@@ -11,16 +11,16 @@ import com.khlibrary.board.model.service.NoticeService;
 import com.khlibrary.board.model.vo.Notice;
 
 /**
- * Servlet implementation class NoticeUpdateServlet
+ * Servlet implementation class NoticeUpdatingServlet
  */
-@WebServlet("/notice/update")
-public class NoticeUpdateServlet extends HttpServlet {
+@WebServlet("/notice/updating")
+public class NoticeUpdatingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeUpdateServlet() {
+    public NoticeUpdatingServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,21 +29,28 @@ public class NoticeUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int nno = Integer.parseInt(request.getParameter("nno"));
-	
-		// 가져온 nno로 Notice 조회
-		Notice notice = new NoticeService().selectNotice(nno);
+		request.setCharacterEncoding("UTF-8");
 		
-		String page="";
-		if(notice != null) {
-			request.setAttribute("notice", notice);
-			page = "/views/board/noticeUpdate.jsp";
+		int nno = Integer.parseInt(request.getParameter("nno"));
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		
+		Notice n = new Notice();
+		n.setnNo(nno);
+		n.setnTitle(title);
+		n.setnContent(content);
+		
+		int result = new NoticeService().updateNotice(n);
+		
+		if(result > 0) {
+			request.getSession().setAttribute("msg", "공지사항이 수정이 완료 되었습니다.");
+			response.sendRedirect(request.getContextPath() + "/notice/detail?nno="+ nno);
+			
 		} else {
-			request.setAttribute("msg", "공지사항 수정 화면을 불러오는데 실패했습니다.");
-			page = "/views/common/errorPage.jsp";
+			request.setAttribute("msg", "공지사항 수정에 실패하였습니다.");
+			request.getRequestDispatcher("/views/common/errorPage.jsp").forward(request, response);
 		}
 		
-		request.getRequestDispatcher(page).forward(request, response);
 		
 	}
 

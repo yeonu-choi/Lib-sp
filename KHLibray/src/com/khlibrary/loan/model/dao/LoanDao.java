@@ -170,4 +170,31 @@ public class LoanDao {
 		return result;
 	}
 
+	public int onLoanCount(Connection conn, String user_id) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int lCount = 0;
+		String sql = query.getProperty("onLoanCount");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, user_id);
+			
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				lCount = rset.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return lCount;
+	}
+
 }

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% 
+	String error = (String)request.getAttribute("error");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -131,7 +134,7 @@
             margin-top: 50px;
             margin-left: 28%;
             width: 60%;
-            height: 100px;
+            height: 125px;
             background-color: rgb(180, 180, 180);
             overflow: hidden;
             border: 1px solid rgb(126, 125, 125);
@@ -231,21 +234,43 @@
     <div class="leave">
         <p><img src="<%=request.getContextPath()%>/resources/image/yw/warning.png" width="15px" height="15px">&nbsp; 회원 탈퇴를 하시면 아이디를 포함한 모든 개인정보가 영구적으로 삭제되어 복구되지 않습니다.<br>
             <img src="<%=request.getContextPath()%>/resources/image/yw/warning.png" width="15px" height="15px">&nbsp; 탈퇴 후에는 자료대출, 홈페이지 이용 등 모든 도서관 서비스를 이용하실 수 없습니다.<br>
-            <img src="<%=request.getContextPath()%>/resources/image/yw/warning.png" width="15px" height="15px">&nbsp; 회원님의 정보를 안전하게 보호하기 위해 한번 더 비밀번호를 입력해 주시기 바랍니다.</p>
+            <img src="<%=request.getContextPath()%>/resources/image/yw/warning.png" width="15px" height="15px">&nbsp; 대출 중인 책이 있을 경우에는 탈퇴가 불가능합니다. 반납을 먼저 진행해시길 바랍니다.<br>
+            <img src="<%=request.getContextPath()%>/resources/image/yw/warning.png" width="15px" height="15px">&nbsp; 회원님의 정보를 안전하게 보호하기 위해 한번 더 비밀번호를 입력해 주십시오.</p>
     </div>
     <div class="passchk">
-        <form class="passout">
+        <form id="passout" action="<%=request.getContextPath() %>/mylib/leave" method="post">
         <table id="passchk" style="border-collapse: collapse;">
             <tr>
                 <th width="20%">비밀번호(<span class="empa">*</span>)</th>
-                <td><input type="password" name="passchk"></td>
+                <td><input type="password" id="pchk" name="pchk"></td>
             </tr>
         </table>
         <div class="btns">
-        <button type="submit" class="btn btn-dark">탈퇴</button>
+        <button id="leavebtn" type="submit" class="btn btn-dark">탈퇴</button>
         </div>
     </form>
     </div>
+    
+    <script>
+    $("#leavebtn").click(function(){
+    	if($("#pchk").val().length == 0){
+    		alert('비밀번호를 입력하세요');
+    		$("#pchk").focus();
+    		return false;
+    	} else {
+    		if(confirm('정말 탈퇴하시겠습니까?')){
+        		$("#passout").submit();
+        	}
+    	}
+    })
+    </script>
+    
+    <% if(error != null) { %>
+	<script>
+	alert('<%= error %>');
+	</script>
+	<% } %>
+	
     <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

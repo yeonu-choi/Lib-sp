@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.util.List;
 import static com.khlibrary.common.JDBCTemplate.*;
 
+
 import com.khlibrary.board.model.dao.NoticeDao;
 import com.khlibrary.board.model.vo.Notice;
 import com.khlibrary.board.model.vo.PageInfo;
+
+
 
 public class NoticeService {
 
@@ -106,6 +109,29 @@ public class NoticeService {
 		
 		return listCount;
 	}
+
+	public int getSearchListCount(String search) {
+		Connection conn = getConnection();
+		
+		int listCount = new NoticeDao().getSearchListCount(conn, search);
+		
+		close(conn);
+		
+		return listCount;
+	}
+
+	public List<Notice> selectSearchList(String search, PageInfo pi) {
+		Connection conn = getConnection();
+		
+		List<Notice> list = new NoticeDao().selectSearchList(conn, pi, search);
+		
+		close(conn);
+		
+		return list;
+		
+	}
+
+
 
 
 }

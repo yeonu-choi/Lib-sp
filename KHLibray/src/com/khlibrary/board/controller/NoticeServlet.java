@@ -34,8 +34,7 @@ public class NoticeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		NoticeService nService = new NoticeService();
-		
-		
+			
 		/* 페이징 */
 		int currentPage = 1;
 		

@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import static com.khlibrary.common.JDBCTemplate.close;
+
 import com.khlibrary.board.model.vo.Notice;
 import com.khlibrary.board.model.vo.PageInfo;
+
 
 public class NoticeDao {
 	private Properties query = new Properties();
@@ -243,6 +245,71 @@ public class NoticeDao {
 		}
 		
 		return listCount;
+	}
+
+	public int getSearchListCount(Connection conn, String search) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = query.getProperty("getSearchListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+
+	public List<Notice> selectSearchList(Connection conn, PageInfo pi, String search) {
+		List<Notice> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = query.getProperty("selectSearchList");
+			
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getNoticeLimit() + 1;
+			int endRow = startRow + pi.getNoticeLimit() - 1;
+			
+			pstmt.setString(1, search);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Notice(rset.getInt("nno"),
+								   rset.getString("ntitle"),
+								   rset.getString("ncontent"),
+								   rset.getInt("ncount"),
+								   rset.getDate("c_date"),
+								   rset.getString("status")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 
 }

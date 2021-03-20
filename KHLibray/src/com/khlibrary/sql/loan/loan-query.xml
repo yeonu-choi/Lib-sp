@@ -349,4 +349,13 @@
         WHERE 
         	LID = ?
 	</entry>
+	<entry key="onLoanCount">
+		SELECT 
+			COUNT(*)
+        FROM 
+        	LOAN
+        WHERE 
+        	USER_ID = ?
+        AND STATUS LIKE '%대출중%'
+	</entry>
 </properties>

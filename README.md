@@ -125,3 +125,14 @@
 21.03.20 NoticeUpdatingServlet 주소 - /notice/updating - doo
 
 21.03.20 NoticeSearchServlet 주소 - /notice/search - doo
+
+21.03.21 resources image yw 폴더 이미지 추가 - yw
+
+21.03.21 mainbar-basic 수정 - yw
+
+21.03.21 index.jsp 검색부 연결 및 전체 정렬 수정 - yw
+
+21.03.21 Member dao, service, query 수정 - yw
+
+21.03.21 UserLeaveServlet 주소 - /mylib/leave - yw
+

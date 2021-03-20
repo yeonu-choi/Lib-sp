@@ -66,6 +66,10 @@
             font-weight: 600;
 			transition:0.1s;
         }
+        
+        .current-tab a:hover {
+        	color: white;
+        }
 
 		.tab li:not(.current-tab) a {
 			display: inline-block;

@@ -32,20 +32,25 @@ public class WishBookCheckServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String bName = request.getParameter("bName");
 		
-		// DB의 MEMBER 테이블에서 동일 아이디가 있는지 조회하여 숫자로 리턴
-		// 있으면 1 없으면 0
-		int result = new WishBookService().checkWishBook(bName);
+		int result = new WishBookService().firstCheckWishBook(bName);
+		int result2 = new WishBookService().checkWishBook(bName);
 		
-		System.out.println("중복 도서 확인 결과 : " + result);
+		System.out.println("소장 도서 확인 결과 : " + result);
+		
+		System.out.println("중복 도서 확인 결과 : " + result2);
 		
 		
 		PrintWriter out = response.getWriter();
+		
 		if(result > 0) {
+			// 소장 도서 
+			out.print("fail1");
+		} else if(result2 > 0) {
 			// 희망 도서 중복
-			out.print("fail");
+			out.print("fail2");
 		} else {
-			// 희망 도서 중복 X
 			out.print("success");
+			// 희망 도서 중복 X
 		}
 		
 	}

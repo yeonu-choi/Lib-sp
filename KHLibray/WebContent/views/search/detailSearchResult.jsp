@@ -65,7 +65,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>KH도서관</title>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
@@ -359,13 +359,7 @@
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세 검색</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3">
-                        <% if(loginUser != null) {%>
-                        <a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망 도서 신청</a>
-                        <% } else { %>
-                        <a href="#" onClick="alert('로그인 후 이용이 가능합니다.')">희망 도서 신청</a>
-                        <% }%>
-                        </p></td>
+                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/wishBookInfo.jsp">희망 도서 신청</a></p></td>
                     </tr>
                 </table>
             </div>
@@ -438,12 +432,7 @@
                     	<script>
                     		$(document).ready(function() {
                     			if(confirm("희망 도서를 신청하시겠습니까?")) {
-                    				<% if(loginUser != null) {%>
-                    				location.href = "<%=  request.getContextPath() %>/views/search/wishBook.jsp";
-                    				<% } else { %>
-                    				alert("로그인 후 이용이 가능합니다.")
-                    				location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"
-                    				<% } %>
+                    				location.href = "<%=  request.getContextPath() %>/views/search/wishBookInfo.jsp";
                     			}
                     		});
                     	</script>

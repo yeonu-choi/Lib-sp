@@ -235,13 +235,7 @@
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/detailSearch.jsp">상세 검색</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3">
-                        <% if(loginUser != null) {%>
-                        <a href="<%= request.getContextPath() %>/views/search/wishBook.jsp">희망 도서 신청</a>
-                        <% } else { %>
-                        <a href="#" onClick="alert('로그인 후 이용이 가능합니다.')">희망 도서 신청</a>
-                        <% }%>
-                        </p></td>
+                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/search/wishBookInfo.jsp">희망 도서 신청</a></p></td>
                     </tr>
                 </table>
             </div>

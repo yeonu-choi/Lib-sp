@@ -64,8 +64,8 @@
         	height: 32px;
         }
         
-        #bName {
-        	font-size: 20px;
+        label {
+        	font-size: 18px;
         	padding : 0px 10px;
         }
         
@@ -150,7 +150,7 @@
 		<form action="<%= request.getContextPath() %>/wish/search" method="get" >
 			<div class="searchArea">
 				<div class="selectArea">
-					<label id ="bName">서명</label>
+					<label>검색어</label>
 				</div>
 					<div class="textArea">
 					<input type="text" name="search" id="search" placeholder="내용을 입력해주세요" value="<%= search %>">

@@ -147,3 +147,5 @@
 21.03.21 DetailSortServlet 주소 - /detail/sort - ay
 
 21.03.21 mainbar-basic 경로 수정 - ay
+
+21.03.21 search.model.vo.Book.Java 생성자 추가 - 

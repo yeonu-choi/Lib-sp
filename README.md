@@ -144,4 +144,6 @@
 
 21.03.21 AutoBookServlet 주소 - /book/auto - ay
 
-21.03.21 DetailSortServlet 주소 - /detail/sort - 
+21.03.21 DetailSortServlet 주소 - /detail/sort - ay
+
+

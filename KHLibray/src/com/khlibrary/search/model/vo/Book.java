@@ -16,7 +16,10 @@ public class Book {
 	
 	public Book() {}
 	
-	
+	public Book(String bName) {
+		super();
+		this.bName = bName;
+	}
 
 	public Book(String bName, String bWriter, String bPublisher) {
 		super();

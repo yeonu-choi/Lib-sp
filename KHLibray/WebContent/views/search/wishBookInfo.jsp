@@ -243,5 +243,8 @@
     }
     </script>
     
+	
+	<%-- 푸터 --%>
+    <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

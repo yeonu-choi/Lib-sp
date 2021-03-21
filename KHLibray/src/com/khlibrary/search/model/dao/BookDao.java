@@ -263,7 +263,7 @@ public class BookDao {
 		return list;
 	}
 	
-	// 
+	// 최신순
 	public List<Book> searchLatestSortList(Connection conn, PageInfo pi, String searchSelect, String search) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -601,8 +601,36 @@ public class BookDao {
 		return list;
 	}
 	
+	// 자동 완성
+	public List<String> autoBookNameSearch(Connection conn, String val) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	List<String> list = new ArrayList<>();
+	String sql = query.getProperty("autoBookNameSearch");
 	
 	
+	try {
+		pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, val);
+		
+		rset = pstmt.executeQuery();
+		
+		while(rset.next()) {
+			list.add(rset.getString("bk_name"));
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+
+	return list;
+	
+}
+
 	
 	
 	
@@ -660,44 +688,5 @@ public class BookDao {
 	}
 
 
-	public List<String> autoBookNameSearch(Connection conn, String val) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		List<String> list = new ArrayList<>();
-		String sql = query.getProperty("autoBookNameSearch");
-		
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1, val);
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				list.add(rset.getString("bk_name"));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-
-		return list;
-		
-	}
-
-
-
-
-	
-
-
-	
-	
-
-	
 	
 }

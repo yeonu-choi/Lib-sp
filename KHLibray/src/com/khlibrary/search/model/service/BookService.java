@@ -151,6 +151,17 @@ public class BookService {
 		return list;
 	}
 	
+	// 자동 완성
+	public List<String> autoBookNameSearch(String val) {
+		Connection conn = getConnection();
+		
+		List<String> list = new BookDao().autoBookNameSearch(conn,  val);
+		
+		close(conn);
+		
+		return list;
+	}
+	
 	
 	
 	
@@ -183,15 +194,7 @@ public class BookService {
 	
 	
 
-	public List<String> autoBookNameSearch(String val) {
-		Connection conn = getConnection();
-		
-		List<String> list = new BookDao().autoBookNameSearch(conn,  val);
-		
-		close(conn);
-		
-		return list;
-	}
+	
 
 
 

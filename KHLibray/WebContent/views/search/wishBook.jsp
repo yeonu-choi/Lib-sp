@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String bTitle = (String)request.getAttribute("bTitle") != null ? (String)request.getAttribute("bTitle") : "";	
+	String bWriter = (String)request.getAttribute("bWriter") != null ? (String)request.getAttribute("bWriter") : "";
+	String bPublisher = (String)request.getAttribute("bPublisher") != null ? (String)request.getAttribute("bPublisher") : "";	
+	String issueDate = (String)request.getAttribute("issueDate") != null ? (String)request.getAttribute("issueDate") : "";
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -163,14 +170,20 @@
             border-bottom: 1px rgb(218, 215, 215) solid;
         }
 
-        .inner input {
+        .inner input , 
+        .searchBtn button{
         	height: 26px;
             border: 1px rgb(216, 211, 211) solid;
             padding-left: 5px;
         }
-		
-        .inner td label, input {
+        
+        .inner td label, input{
             margin-left: 5px;
+        }
+        
+        .searchBtn button {
+        	margin : 0px 10px;
+        	width : 12%
         }
         
         
@@ -273,15 +286,16 @@
                             <th><label>희망 도서명 * </label></th>
                             <td>
                                 <span class="input_area">
-                                <input type="text" name="bName" class="iCheck" required>
+                                <input type="text" name="bName" value="<%=bTitle %>"class="iCheck" required>
                                 </span>
+                                <span class="searchBtn"><button type="button" id="searchBtn">검색</button></span>
                             </td>
                         </tr>
                         <tr>
                             <th><label>저자 * </label></th>
                             <td>
                                 <span class="input_area">
-                                <input type="text" name="bWriter" class="iCheck" required>
+                                <input type="text" name="bWriter" value="<%= bWriter%>" class="iCheck" required>
                                 </span>
                             </td>
                         </tr>
@@ -289,7 +303,7 @@
                             <th><label>발행처* </label></th>
                             <td>
                                 <span class="input_area">
-                                <input type="text" name="bPublisher" class="iCheck" required>
+                                <input type="text" name="bPublisher" value="<%= bPublisher%>" class="iCheck" required>
                                 </span>
                             </td>
                         </tr>
@@ -297,7 +311,7 @@
                             <th><label>발행연도 </label></th>
                             <td>
                                 <span class="input_area">
-                                <input type="text" name="issueDate" maxlength="4" > <span> ※ 숫자만 입력 (ex. 2021)</span> 
+                                <input type="text" name="issueDate" value="<%= issueDate%>"maxlength="4" > <span> ※ 숫자만 입력 (ex. 2021)</span> 
                                 </span>
                             </td>
                         </tr>
@@ -343,12 +357,8 @@
 		   
 	   }
 	   
-	   //var flag = "";   
-	   
 	   $(function(){
-		
 		var bName = $(".bookTable input[name=bName]");
-		
 		$.ajax({
 			url : "<%= request.getContextPath() %>/wish/bkFCheck",
 			type : "post",
@@ -361,9 +371,7 @@
 					//flag="false";
 					alert("해당 도서는 현재 도서관에 소장 중인 도서입니다.");
 					bName.focus();
-					
 				} else {
-					
 					$.ajax({
 						url : "<%= request.getContextPath() %>/wish/bkCheck",
 						type : "post",
@@ -371,12 +379,10 @@
 						asyan: false,
 						success : function(data){
 							console.log(data);
-							
 							if(data == "fail"){
 								//flag="false";
 								alert("해당 도서는 이미 희망 도서 신청 상태입니다.");
 								bName.focus();
-								
 							} else {
 								//flag = "true";
 								$("#wishBookForm").submit();
@@ -386,20 +392,20 @@
 							console.log(e);
 						}
 					});
-					
 				}
 			},
 			error : function(e){
 				console.log(e);
 			}
 		});
-			
-			//console.log(flag);
-			
 	   });
-	   
-   }
-			
+   	}
+   
+   
+   	const searchBtn = document.getElementById('searchBtn');
+   		searchBtn.addEventListener('click', function(){
+		window.open("naverSearchBook.jsp", "naverSearch", "width=1000, height=800");
+	})
 
    
    </script>

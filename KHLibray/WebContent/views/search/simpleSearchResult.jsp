@@ -4,15 +4,15 @@
 	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
-	String searchSelect =(String)request.getSession().getAttribute("searchSelect");
-	String search = (String)request.getSession().getAttribute("search");
+	String searchSelect = request.getParameter("searchSelect") != null ? request.getParameter("searchSelect") : "";		//=(String)request.getSession().getAttribute("searchSelect");
+	String search = request.getParameter("search")!= null ? request.getParameter("search") : ""; 						//(String)request.getSession().getAttribute("search");
 	
-	if(searchSelect == null){
-		searchSelect = request.getParameter("searchSelect") != null ? request.getParameter("searchSelect") : "";
-	} 
-	if(search == null){
-		search = request.getParameter("search")!= null ? request.getParameter("search") : "";
-	} 
+	//if(searchSelect == null){
+	//	searchSelect = request.getParameter("searchSelect") != null ? request.getParameter("searchSelect") : "";
+	//} 
+	//if(search == null){
+	//	search = request.getParameter("search")!= null ? request.getParameter("search") : "";
+	//} 
 
 	String select[] = new String[4];
 
@@ -30,6 +30,35 @@
 		}
 	}
 	
+	String sortSelect = request.getParameter("sortSelect") != null ? request.getParameter("sortSelect") : "";
+	String numSelect = request.getParameter("numSelect") != null ? request.getParameter("numSelect") : "";
+	
+	String sort[] = new String[3];
+	if(sortSelect == ""){
+		sort[0] = "selected";
+	} else {
+		if(sortSelect.equals("서명순")){
+			sort[0] = "selected";
+		} else if(sortSelect.equals("저자순")){
+			sort[1] = "selected";
+		} else {
+			sort[2] = "selected";
+		}
+	}
+	
+	String num[] = new String[3];
+	if(numSelect == ""){
+		num[0] = "selected";
+	} else {
+		if(numSelect.equals("10")){
+			num[0] = "selected";
+		} else if(numSelect.equals("20")) {
+			num[1] = "selected";
+		}else {
+			num[2] = "selected";
+		}
+	}
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -41,7 +70,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 
-    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
     <style>
     	/* 사이드바 부분*/
         body {
@@ -386,42 +417,78 @@
                 
             </form>
             
+            
 			<script>
 				function searchCheck(){
 					if($("#search").val().trim().length == 0){
 						alert("검색어를 입력하세요");
 						return false;
+					} else if($("#reSearch").is(":checked") == true){
+						// 재검색 어케해......미친.......ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ sort를 구분했어야했낰ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ미친...........
+						console.log("얍");
+					} else {
+						return true;
 					}
-					return true;
 				}
+				
+				var val= $("#search").val();
+				console.log(val);
+				
+				$(document).ready(function(){
+					$("#search").autocomplete({
+						minLength: 1,
+						source:function(request, response) {
+							$.ajax({
+								url : "<%= request.getContextPath() %>/book/auto",
+								type : "get",
+								data : { val : request.term },
+								success : function(data){
+									console.log(data);
+									response( 
+										data.slice(0,5)
+									)
+								},
+								error : function(e){
+								console.log(e);
+								}
+							});
+					  	}
+					});
+				});
+				
 			</script>
             
 			<br>
 
             <div class="listArea"><p>요청하신 <%= searchSelect %> : <%= search %>에 대한 자료 검색 결과이며 총 <%= pi.getListCount() %>건이 검색되었습니다.</p></div>
-	
-	        <form action="<%= request.getContextPath() %>/simple/sort" method="get">
-	         <div class="select">
+			
+			
+			<form action="<%= request.getContextPath() %>/simple/sort" method="get">
+			<div class="select">
                 <span>
                     <select name="sortSelect" id="sortSelect">
-                    <option value="서명순">서명순</option>
-                    <option value="저자순">저자순</option>
-                    <option value="최신순">최신순</option>
+                    <option value="서명순" <%= sort[0] %>>서명순</option>
+                    <option value="저자순" <%= sort[1] %>>저자순</option>
+                    <option value="최신순" <%= sort[2] %>>최신순</option>
                     </select>
                 </span>
                 <span>
                     <select name="numSelect" id="numSelect">
-                        <option value="10">10개</option>
-                        <option value="20">20개</option>
-                        <option value="20">30개</option>
+                        <option value="10" <%= num[0] %>>10개</option>
+                        <option value="20" <%= num[1] %>>20개</option>
+                        <option value="30" <%= num[2] %>>30개</option>
                     </select>
-                    <button type="submit">조회</button>
+                    <input type="hidden" value="<%=searchSelect%>" name="searchSelect">
+                    <input type="hidden" value="<%=search%>" name="search">
+                    <button type="submit" id="sortbtn">조회</button>
                 </span>
             </div> 
 			</form>
 			
-	
+			
+			
             <form action="<%= request.getContextPath() %>/simple/loan" method="POST" id="loansForm">
+            
                 <div class="resultArea">
                 	<% if(list.isEmpty()) {%>
                     		<div class="resultBook"><p>조회 된 도서가 없습니다.</p></div>
@@ -465,29 +532,35 @@
                 <div class="pageArea">
                     <% if(pi.getCurrentPage() == 1) {%>
                     <a href="#;"><i class="bi bi-chevron-double-left"></i></a>
-                    	<a href="#;"><i class="bi bi-chevron-compact-left"></i></a>
-                    	<% } else {%>
-                    	<a href="<%= request.getContextPath() %>/simple/search?currentPage=1&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-left"></i></a>
-                    	<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getCurrentPage()- 1 %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-compact-left"></i></a>
-                    	
-					<% } %>
-	
+                    <a href="#;"><i class="bi bi-chevron-compact-left"></i></a>
+                    <% } else if(sortSelect.equals("") && numSelect.equals("")){%>
+                    <a href="<%= request.getContextPath() %>/simple/search?currentPage=1&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-left"></i></a>
+                    <a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getCurrentPage()- 1 %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-compact-left"></i></a>
+					<% } else {%>
+					<a href="<%= request.getContextPath() %>/simple/sort?currentPage=1&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-left"></i></a>
+                    <a href="<%= request.getContextPath() %>/simple/sort?currentPage=<%= pi.getCurrentPage()- 1 %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-compact-left"></i></a>
+					<% } %>	
                     <% for(int i = pi.getStartPage(); i <= pi.getEndPage(); i++) { %>
                     	<% if(i == pi.getCurrentPage()) { %>
                     		<a href="#;" style="background:rgb(216, 215, 215)"><%= i %></a>
-                    	<% } else { %>
+                    	<% } else if(sortSelect.equals("") && numSelect.equals("")) { %>
                     		<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= i %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><%= i %></a>
-                    	<% } %>
+                    	<% } else {%>
+							<a href="<%= request.getContextPath() %>/simple/sort?currentPage=<%= i %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><%= i %></a>
+						<% } %>	
                     <% } %>
                     
                     <% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
                     	<a href="#;"><i class="bi bi-chevron-right"></i></a>
                     	<a href="#;"><i class="bi bi-chevron-double-right"></i></a>
-                    <% } else {%>
+                    <% } else if(sortSelect.equals("") && numSelect.equals("")) { %>
                     	<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getCurrentPage() + 1 %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-right"></i></a>
                     	<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getMaxPage() %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-right"></i></a>
-                    <% } %>
-                </div>
+                    <% }  else {%>
+						<a href="<%= request.getContextPath() %>/simple/sort?currentPage=<%= pi.getCurrentPage() + 1 %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-right"></i></a>
+                    	<a href="<%= request.getContextPath() %>/simple/sort?currentPage=<%= pi.getMaxPage() %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-right"></i></a>
+					<% } %>	
+					</div>
 
                 <div class="loansArea">
                 
@@ -524,31 +597,38 @@
 
 
 	<script>
+		
 		const modalbody = document.getElementById("modal-body");
+		var sArr = [];
 		
 		$("#loansBtn").click(function(){
-			const arr = [];
+			const arr = [];	// 클릭할때마다 비워주기!
+			sArr = [];  	// 클릭할때마다 비워주기!
 			$(".book").each(function(i){
 				if($('#checkSelect' + i ).is(":checked") == true){
 					arr.push($("#bName" + i).text());
+					sArr.push($("#bks" + i).text());
 				}
 			});
 			modalbody.innerHTML = arr.join('<br>');
 		});
 		
-				
+		
 		$("#yesBtn").click(function(){
-			// 로그인 유저만 가능
+			console.log(sArr);
+			
 			<% if(loginUser != null) { %>
-				$(".book").each(function(i){
-					if($('#checkSelect' + i ).is(":checked") == true){
-						if($("#bks" + i).text() == "대출가능") {
-							$("#loansForm").submit();
-						} else {
-						alert("해당 도서는 대출 불가능합니다.")
+				
+				if(sArr.includes("대출불가능[대출중]")){
+					alert("대출 불가능한 도서가 있습니다.")
+				} else {
+					$(".book").each(function(i){
+						if($('#checkSelect' + i ).is(":checked") == true){
+							$("#loansForm").submit()
 						}
-					}
-				});
+					});
+				}
+				
 			<% } else {%>
 				alert("로그인 후 이용이 가능합니다.")
 				location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"

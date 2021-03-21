@@ -4,32 +4,61 @@
 	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
-	String bName =  (String)request.getSession().getAttribute("bName");
-	String bWriter = (String)request.getSession().getAttribute("bWriter");
-	String bPublisher = (String)request.getSession().getAttribute("bPublisher");
-	String isbn = (String)request.getSession().getAttribute("isbn");
-	String tDate = (String)request.getSession().getAttribute("tDate");
-	String fDate = (String)request.getSession().getAttribute("fDate");
+	//String bName =  (String)request.getSession().getAttribute("bName");
+	//String bWriter = (String)request.getSession().getAttribute("bWriter");
+	//String bPublisher = (String)request.getSession().getAttribute("bPublisher");
+	//String isbn = (String)request.getSession().getAttribute("isbn");
+	//String tDate = (String)request.getSession().getAttribute("tDate");
+	//String fDate = (String)request.getSession().getAttribute("fDate");
 	
-	if(bName == null){
-		bName = (String)request.getParameter("bName") != null ? request.getParameter("bName") : "";;
-	} 
-	if(bWriter == null){
-		bWriter = (String)request.getParameter("bWriter") != null ? request.getParameter("bWriter") : "";
-	} 
-	if(bPublisher == null){
-		bPublisher = (String)request.getParameter("bPublisher") != null ? request.getParameter("bPublisher") : "";
-	} 	
-	if(isbn == null){
-		isbn = (String)request.getParameter("isbn") != null ? request.getParameter("isbn") : "";
-	} 
-	if(tDate == null){
-		tDate = (String)request.getParameter("tDate") != null ? request.getParameter("tDate") : "";
-	} 
-	if(fDate == null){
-		fDate = (String)request.getParameter("fDate") != null ? request.getParameter("fDate") : "";
-	} 
+	//if(bName == null){
+	String bName = (String)request.getParameter("bName") != null ? request.getParameter("bName") : "";;
+	//} 
+	//if(bWriter == null){
+	String bWriter = (String)request.getParameter("bWriter") != null ? request.getParameter("bWriter") : "";
+	//} 
+	//if(bPublisher == null){
+	String bPublisher = (String)request.getParameter("bPublisher") != null ? request.getParameter("bPublisher") : "";
+	//} 	
+	//if(isbn == null){
+	String isbn = (String)request.getParameter("isbn") != null ? request.getParameter("isbn") : "";
+	//} 
+	//if(tDate == null){
+	String tDate = (String)request.getParameter("tDate") != null ? request.getParameter("tDate") : "";
+	//} 
+	//if(fDate == null){
+	String fDate = (String)request.getParameter("fDate") != null ? request.getParameter("fDate") : "";
+	//} 
 
+	String sortSelect = request.getParameter("sortSelect") != null ? request.getParameter("sortSelect") : "";
+	String numSelect = request.getParameter("numSelect") != null ? request.getParameter("numSelect") : "";
+	
+	String sort[] = new String[3];
+	if(sortSelect == ""){
+		sort[0] = "selected";
+	} else {
+		if(sortSelect.equals("서명순")){
+			sort[0] = "selected";
+		} else if(sortSelect.equals("저자순")){
+			sort[1] = "selected";
+		} else {
+			sort[2] = "selected";
+		}
+	}
+	
+	String num[] = new String[3];
+	if(numSelect == ""){
+		num[0] = "selected";
+	} else {
+		if(numSelect.equals("10")){
+			num[0] = "selected";
+		} else if(numSelect.equals("20")) {
+			num[1] = "selected";
+		}else {
+			num[2] = "selected";
+		}
+	}
+	
  %>
     
 <!DOCTYPE html>
@@ -206,7 +235,23 @@
             font-size : 15px;
             margin: auto;
             padding: 10px 10px 0px 10px;
+        }
+	
+		.select {
+            width :80%;
+            margin: auto;
+            text-align: right;
+            font-size : 15px;
+            padding: 0px 0px 10px 0px;
             border-bottom: 1px rgb(194, 192, 192) solid;
+        }
+        
+        .select button{
+            height: 30px;
+            text-align: center;
+            margin: 0px 10px 5px 5px;
+            border: rgb(216, 215, 215) 1px solid;
+            border-radius: 5px;
         }
 
         .resultArea {
@@ -357,6 +402,34 @@
 
             <div class="listArea"><p>요청하신 에 대한 자료 검색 결과이며 총 <%= pi.getListCount() %> 건이 검색되었습니다.</p></div>
 	
+			<form action="<%= request.getContextPath() %>/detail/sort" method="get">
+			<div class="select">
+                <span>
+                    <select name="sortSelect" id="sortSelect">
+                    <option value="서명순" <%= sort[0] %>>서명순</option>
+                    <option value="저자순" <%= sort[1] %>>저자순</option>
+                    <option value="최신순" <%= sort[2] %>>최신순</option>
+                    </select>
+                </span>
+                <span>
+                    <select name="numSelect" id="numSelect">
+                        <option value="10" <%= num[0] %>>10개</option>
+                        <option value="20" <%= num[1] %>>20개</option>
+                        <option value="30" <%= num[2] %>>30개</option>
+                    </select>
+                    <input type="hidden" value="<%=bName%>" name="bName">
+                    <input type="hidden" value="<%=bWriter%>" name="bWriter">
+                    <input type="hidden" value="<%=bPublisher%>" name="bPublisher">
+                    <input type="hidden" value="<%=isbn%>" name="isbn">
+                    <input type="hidden" value="<%=tDate%>" name="tDate">
+                    <input type="hidden" value="<%=fDate%>" name="fDate">
+                    <button type="submit" id="sortbtn">조회</button>
+                </span>
+            </div> 
+			</form>
+	
+	
+	
             <form action="<%= request.getContextPath() %>/detail/loan" method="POST" id="loansForm">
                 <div class="resultArea">
                      <% if(list.isEmpty()) {%>
@@ -409,26 +482,35 @@
                     <% if(pi.getCurrentPage() == 1) {%>
                     <a href="#;"><i class="bi bi-chevron-double-left"></i></a>						
                     	<a href="#;"><i class="bi bi-chevron-compact-left"></i></a>					
-                    	<% } else {%>
+                    	<% } else if(sortSelect.equals("") && numSelect.equals("")) {%>
                     	<a href="<%= request.getContextPath() %>/detail/search?currentPage=1&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-double-left"></i></a>
                     	<a href="<%= request.getContextPath() %>/detail/search?currentPage=<%= pi.getCurrentPage()- 1 %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-compact-left"></i></a>
+                    	<% } else { %>
+                    	<a href="<%= request.getContextPath() %>/detail/sort?currentPage=1&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-double-left"></i></a>
+                    	<a href="<%= request.getContextPath() %>/detail/sort?currentPage=<%= pi.getCurrentPage()- 1 %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-compact-left"></i></a>
                     	
 					<% } %>
 	
                     <% for(int i = pi.getStartPage(); i <= pi.getEndPage(); i++) { %>
                     	<% if(i == pi.getCurrentPage()) { %>
                     		<a href="#;" style="background:rgb(216, 215, 215)"><%= i %></a>
-                    	<% } else { %>
+                    	<% } else if(sortSelect.equals("") && numSelect.equals("")) {%>
                     		<a href="<%= request.getContextPath() %>/detail/search?currentPage=<%= i %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><%= i %></a>
+                    	<% } else {%>
+                    		<a href="<%= request.getContextPath() %>/detail/sort?currentPage=<%= i %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><%= i %></a>
                     	<% } %>
                     <% } %>
                     
                     <% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
                     	<a href="#;"><i class="bi bi-chevron-right"></i></a>
                     	<a href="#;"><i class="bi bi-chevron-double-right"></i></a>
-                    <% } else {%>
+                    <% } else if(sortSelect.equals("") && numSelect.equals("")) {%>
                     	<a href="<%= request.getContextPath() %>/detail/search?currentPage=<%= pi.getCurrentPage() + 1 %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-right"></i></a>
                     	<a href="<%= request.getContextPath() %>/detail/search?currentPage=<%= pi.getMaxPage() %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-double-right"></i></a>
+                    <% } else { %>
+                    	<a href="<%= request.getContextPath() %>/detail/sort?currentPage=<%= pi.getCurrentPage() + 1 %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-right"></i></a>
+                    	<a href="<%= request.getContextPath() %>/detail/sort?currentPage=<%= pi.getMaxPage() %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&bName=<%= bName %>&bWriter=<%= bWriter %>&bPublisher=<%= bPublisher %>&isbn=<%= isbn %>&tDate=<%= tDate %>&fDate=<%= fDate %>"><i class="bi bi-chevron-double-right"></i></a>
+                    
                     <% } %>
                 </div>
 
@@ -464,38 +546,42 @@
 
 
 	<script>
-		const modalbody = document.getElementById("modal-body");
-		
-    	$("#loansBtn").click(function(){
-    		const arr = [];
-    		$(".book").each(function(i){
-    			if($('#checkSelect' + i ).is(":checked") == true){
-    				arr.push($("#bName" + i).text());
-    			}
-    		});
-    		modalbody.innerHTML = arr.join('<br>');
+	
+	const modalbody = document.getElementById("modal-body");
+	var sArr = [];
+	
+	$("#loansBtn").click(function(){
+		const arr = [];	// 클릭할때마다 비워주기!
+		sArr = [];  	// 클릭할때마다 비워주기!
+		$(".book").each(function(i){
+			if($('#checkSelect' + i ).is(":checked") == true){
+				arr.push($("#bName" + i).text());
+				sArr.push($("#bks" + i).text());
+			}
 		});
+		modalbody.innerHTML = arr.join('<br>');
+	});
+	
+	
+	$("#yesBtn").click(function(){
+		console.log(sArr);
 		
-				
-		$("#yesBtn").click(function(){
-			// 로그인 유저만 가능
-			<% if(loginUser != null) { %>
+		<% if(loginUser != null) { %>
+			if(sArr.includes("대출불가능[대출중]")){
+				alert("대출 불가능한 도서가 있습니다.")
+			} else {
 				$(".book").each(function(i){
 					if($('#checkSelect' + i ).is(":checked") == true){
-						if($("#bks" + i).text() == "대출가능") {
-							$("#loansForm").submit();
-						} else {
-						alert("해당 도서는 대출 불가능합니다.")
-						}
+						$("#loansForm").submit()
 					}
 				});
-			<% } else {%>
-				alert("로그인 후 이용이 가능합니다.")
-				location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"
-			<% }%>
-		});
+			}
+		<% } else {%>
+			alert("로그인 후 이용이 가능합니다.")
+			location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"
+		<% }%>
+	});
 		
-
 	</script>
     <%-- 푸터 --%>
     <%@ include file="../common/footer.jsp" %>

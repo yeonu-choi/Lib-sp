@@ -10,6 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
     
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <style>
     	/* 사이드바 부분*/
         body {
@@ -156,6 +159,8 @@
             width: 10%;
             margin-right: 3%;
         }
+        
+        
 
         #searchSelect, #search, #searchBtn {
         	width : 100%;
@@ -227,6 +232,7 @@
 					<div class="btnArea">
 						<button id="searchBtn" type="submit"><i class="bi bi-search"></i></button>
 					</div>
+					
 				</div>
 			</form>
 			
@@ -238,6 +244,32 @@
 				}
 				return true;
 			}
+			
+			var val= $("#search").val();
+			console.log(val);
+			
+			$(document).ready(function(){
+				$("#search").autocomplete({
+					minLength: 1,
+					source:function(request, response) {
+						$.ajax({
+							url : "<%= request.getContextPath() %>/book/auto",
+							type : "get",
+							data : { val : request.term },
+							success : function(data){
+								console.log(data);
+								response( 
+									data.slice(0,7)
+								)
+							},
+							error : function(e){
+							console.log(e);
+							}
+						});
+				  	}
+				});
+			});
+			
 			</script>
 		</div>
 	</div>

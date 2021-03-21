@@ -4,7 +4,6 @@
 	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	String search = request.getParameter("search") != null ? request.getParameter("search") : "";
-
 %>
 <!DOCTYPE html>
 <html>
@@ -358,18 +357,20 @@
  					<button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= pi.getCurrentPage() + 1 %>'">&gt;</button>
  					<% } %>
                     <button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= pi.getMaxPage() %>'">&gt;&gt;</button>         
-                </div>
+                </div>             	
                     <form id="writeb">
+                    <% if(loginId != null && loginId.equals("admin")) { %>  
                     	<input id="write" type="button" value="글쓰기" onclick="location.href='noticeInsert.jsp'">
-                    	<script>
+                    <% } else { %> 
+                    	<input id="write" type="hidden" value="글쓰기" onclick="location.href='noticeInsert.jsp'">
+                    <% } %>
+                    </form>                  
+                    <script>
                     		const write = document.getElementById('write');
                     		write.addEventListener('click', function(){
                     			location.href='<%= request.getContextPath() %>/views/board/noticeInsert.jsp';
-                    		});
-                    		
-                    	</script>
-                    </form> 
-                    
+                    		});                    		
+                    </script>
                     <script>
                     	function checkSearchBox(){
                     		if($("#search_box").val() == ''){

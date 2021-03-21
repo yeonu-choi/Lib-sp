@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.board.model.vo.*, com.khlibrary.search.model.vo.*"%>
+<%
+	ArrayList<Notice> nlist = (ArrayList<Notice>)request.getAttribute("nlist");
+	ArrayList<Book> blist = (ArrayList<Book>)request.getAttribute("blist");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -149,12 +153,13 @@
         }
 
         .ntitle {
-            width: 330px;
+        	display: block;
+            width: 250px;
             font-size: 15px;
         }
 
         .ndate {
-            width: 50px;
+            width: 100px;
             font-size: 15px;
         }
 
@@ -227,10 +232,20 @@
             font-weight: 550;
             color: rgb(80, 80, 80);
         }
-
+		
+		.nno {
+			display : none;
+		}
     </style>
 </head>
 <body>
+	<% if(nlist == null){ %>
+	<script>
+	window.onload=function(){
+	    location.href="<%= request.getContextPath() %>/main";
+	}
+	</script>
+	<% } %>
 	<%@ include file="views/common/mainbar-basic.jsp" %>
 	
 	<div id="mainContent">
@@ -257,55 +272,58 @@
                 <tr class="line1">
                     <td>공지사항</td>
                     <td class="moreView" align="right">
-                    <a href="">
+                    <a href="<%= request.getContextPath() %>/notice">
                         <img src="<%=request.getContextPath() %>/resources/image/yw/plus3.png" width="17px" height="15px">
                     </a>
                     </td>
                 </tr>
+                <% if(nlist != null) {%>
+                <% for(Notice n : nlist) { %>
                 <tr>
-                    <td class="ntitle">KH도서관 축소 운영 안내</td>
-                    <td class="ndate" align="center">2021.03.04</td>
+                	<td class="nno"><%= n.getnNo() %></td>
+                    <td class="ntitle" style="white-space: nowrap; overflow:hidden; text-overflow:ellipsis"><%= n.getnTitle() %></td>
+                    <td class="ndate" align="center"><%= n.getC_Date() %></td>
                 </tr>
-                <tr>
-                    <td class="ntitle">테스트 공지사항 1</td>
-                    <td class="ndate" align="center">2021.02.10</td>
-                </tr>
-                <tr>
-                    <td class="ntitle">테스트 공지사항 2</td>
-                    <td class="ndate" align="center">2021.01.28</td>
-                </tr>
-                <tr>
-                    <td class="ntitle">테스트 공지사항 3</td>
-                    <td class="ndate" align="center">2020.12.09</td>
-                </tr>
-                <tr>
-                    <td class="ntitle">테스트 공지사항 4</td>
-                    <td class="ndate" align="center">2020.07.13</td>
-                </tr>
-                <tr>
-                    <td class="ntitle">테스트 공지사항 5</td>
-                    <td class="ndate" align="center">2020.05.27</td>
-                </tr>
-                <tr>
-                    <td class="ntitle">테스트 공지사항 6</td>
-                    <td class="ndate" align="center">2020.02.06</td>
-                </tr>
+                <% } %>
+                <% } %>
             </table> 
         </div>
+        <script>
+        	$(".ntitle").click(function(){
+        		var td = $(this).parent();
+        		var nno = td.children().eq(0).text();
+        		location.href="<%=request.getContextPath() %>/notice/detail?nno=" + nno;
+        	});
+        </script>     
         <div class="quickMenu">
             <table id="quickMenu" border="0" width="100%" style="border-collapse:collapse">
+            <% if(loginUser!=null && !loginUser.getUser_id().equals("admin")) {%>
             <tr>
-                <td  align="center"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/qm1.jpg" width="110px" height="110px"></a></td>
-                <td align="center"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/qm2.jpg" width="110px" height="110px"></a></td>
+                <td align="center"><a href="<%= request.getContextPath() %>/mylib/lblist"><img src="<%=request.getContextPath() %>/resources/image/yw/qm1.jpg" width="110px" height="110px"></a></td>
+                <td align="center"><a href="<%= request.getContextPath() %>/views/search/wishBookInfo.jsp"><img src="<%=request.getContextPath() %>/resources/image/yw/qm2.jpg" width="110px" height="110px"></a></td>
             </tr>
             <tr>
-                <td align="center"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/qm3.jpg" width="110px" height="110px"></a></td>
-                <td align="center"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/qm4.jpg" width="110px" height="110px"></a></td>
+                <td align="center"><a href="<%= request.getContextPath() %>/views/board/faq.jsp"><img src="<%=request.getContextPath() %>/resources/image/yw/qm3.jpg" width="110px" height="110px"></a></td>
+                <td align="center"><a href="<%= request.getContextPath() %>/mylib/lblist"><img src="<%=request.getContextPath() %>/resources/image/yw/qm4.jpg" width="110px" height="110px"></a></td>
             </tr>
             <tr>
-                <td align="center"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/qm5.jpg" width="110px" height="110px"></a></td>
-                <td align="center"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/qm6.jpg" width="110px" height="110px"></a></td>
+                <td align="center"><a href="<%= request.getContextPath() %>/views/libInfo/libMap.jsp"><img src="<%=request.getContextPath() %>/resources/image/yw/qm5.jpg" width="110px" height="110px"></a></td>
+                <td align="center"><a href="<%= request.getContextPath() %>/views/board/qna.jsp"><img src="<%=request.getContextPath() %>/resources/image/yw/qm6.jpg" width="110px" height="110px"></a></td>
             </tr>
+            <% } else { %>
+            <tr>
+                <td align="center"><a href="javascript:alert('접근 권한이 없습니다. 로그인 해주세요.');" onfocus="this.blur()"><img src="<%=request.getContextPath() %>/resources/image/yw/qm1.jpg" width="110px" height="110px"></a></td>
+                <td align="center"><a href="<%= request.getContextPath() %>/views/search/wishBookInfo.jsp"><img src="<%=request.getContextPath() %>/resources/image/yw/qm2.jpg" width="110px" height="110px"></a></td>
+            </tr>
+            <tr>
+                <td align="center"><a href="<%= request.getContextPath() %>/views/board/faq.jsp"><img src="<%=request.getContextPath() %>/resources/image/yw/qm3.jpg" width="110px" height="110px"></a></td>
+                <td align="center"><a href="javascript:alert('접근 권한이 없습니다. 로그인 해주세요.');" onfocus="this.blur()"><img src="<%=request.getContextPath() %>/resources/image/yw/qm4.jpg" width="110px" height="110px"></a></td>
+            </tr>
+            <tr>
+                <td align="center"><a href="<%= request.getContextPath() %>/views/libInfo/libMap.jsp"><img src="<%=request.getContextPath() %>/resources/image/yw/qm5.jpg" width="110px" height="110px"></a></td>
+                <td align="center"><a href="<%= request.getContextPath() %>/views/board/qna.jsp"><img src="<%=request.getContextPath() %>/resources/image/yw/qm6.jpg" width="110px" height="110px"></a></td>
+            </tr>
+            <% } %>
             </table>
         </div>
         <div class="imgNews">
@@ -373,29 +391,29 @@
                 <tr class="line1">
                     <td>이달의 신간</td>
                     <td class="moreView" align="right">
-                    <a href="">
+                    <a href="<%= request.getContextPath() %>/newbooks">
                         <img src="<%=request.getContextPath() %>/resources/image/yw/plus3.png" width="17px" height="15px">
                     </a>
                     </td>
                 </tr>
             </table>
             <table id="newBook2" border="0" width="100%" style="border-collapse:collapse">
+            	<% if(blist != null) {%>
                 <tr>
-                    <td class="bimg"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/b1.jpg" width="100px" height="150px"></a></td>
-                    <td class="bimg"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/b2.jpg" width="100px" height="150px"></a></td>
-                    <td class="bimg"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/b3.jpg" width="100px" height="150px"></a></td>
-                    <td class="bimg"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/b4.jpg" width="100px" height="150px"></a></td>
-                    <td class="bimg"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/b5.jpg" width="100px" height="150px"></a></td>
-                    <td class="bimg"><a href=""><img src="<%=request.getContextPath() %>/resources/image/yw/b6.jpg" width="100px" height="150px"></a></td>
+                 <% for(Book b : blist) { %>
+                    <td class="bimg"><a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= b.getbName() %>"><img src="<%=request.getContextPath() %>/<%= b.getImgPath() %>/<%= b.getImgName() %>" width="100px" height="150px"></a></td>
+               	 <% } %>
                 </tr>
                 <tr>
-                    <td class="btitle" align="center">달러구트 꿈 백..</td>
-                    <td class="btitle" align="center">아몬드</td>
-                    <td class="btitle" align="center">시선으로부터</td>
-                    <td class="btitle" align="center">심판</td>
-                    <td class="btitle" align="center">끝까지 남겨두는..</td>
-                    <td class="btitle" align="center">순서 파괴</td>
-                </tr>
+                <% for(Book b : blist) { %>
+                	<% if(b.getbName().length() < 9) { %>
+                    <td class="btitle" name="btitle" align="center"><%= b.getbName() %></td>
+                    <% } else { %>
+                    <td class="btitle" name="btitle" align="center"><%= b.getbName().substring(0,9) %>...</td>
+                    <% } %>
+                <% } %>
+                </tr> 
+                <% } %>
              </table>
         </div>
     </div>

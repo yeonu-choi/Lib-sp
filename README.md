@@ -106,7 +106,7 @@
 
 21.03.19 WishBookSelectListServlet 주소 - /wish/select - ay
 
-21.03.19 WishBookFirstCheckServlet 주소 - /wish/bkFCheck - 
+21.03.19 WishBookFirstCheckServlet 주소 - /wish/bkFCheck - ay
 
 21.03.20 mainbar-basic 수정 - yw
 
@@ -136,3 +136,4 @@
 
 21.03.21 UserLeaveServlet 주소 - /mylib/leave - yw
 
+21.03.21 mainbar-basic 수정 - ay

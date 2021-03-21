@@ -57,6 +57,28 @@ public class BookService {
 		return list;
 	}
 	
+	// 작가순
+	public List<Book> searchWriterSortList(PageInfo pi, String searchSelect, String search) {
+		Connection conn = getConnection();
+		
+		List<Book> list = new BookDao().searchWriterSortList(conn,  pi, searchSelect, search);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	// 최신순
+	public List<Book> searchLatestSortList(PageInfo pi, String searchSelect, String search) {
+		Connection conn = getConnection();
+		
+		List<Book> list = new BookDao().searchLatestSortList(conn,  pi, searchSelect, search);
+		
+		close(conn);
+		
+		return list;
+	}
+	
 	
 	// 대출
 	public int loanBook(String[] chk, String userId) {
@@ -95,7 +117,6 @@ public class BookService {
 	}
 
 	// 상세 검색 리스트
-
 	public List<Book> selectSearchList(PageInfo pi, String isbn, Book bk, String tDate, String fDate) {
 		Connection conn = getConnection();
 		
@@ -107,6 +128,32 @@ public class BookService {
 		
 	}
 
+	// 작가순
+	public List<Book> searchWriterSortList(PageInfo pi, String isbn, Book bk, String tDate, String fDate) {
+		Connection conn = getConnection();
+		
+		List<Book> list = new BookDao().searchWriterSortList(conn,  pi, isbn, bk, tDate, fDate);
+		
+		close(conn);
+		
+		return list;
+		
+	}
+
+	// 최신순
+	public List<Book> searchLatestSortList(PageInfo pi, String isbn, Book bk, String tDate, String fDate) {
+		Connection conn = getConnection();
+		
+		List<Book> list = new BookDao().searchLatestSortList(conn,  pi, isbn, bk, tDate, fDate);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	
+	
+	
 	// 도서 등록 
 	
 	public int insertBook(Book book) {		
@@ -130,6 +177,29 @@ public class BookService {
 		return result;
 	
 	}
+
+	
+	
+	
+	
+
+	public List<String> autoBookNameSearch(String val) {
+		Connection conn = getConnection();
+		
+		List<String> list = new BookDao().autoBookNameSearch(conn,  val);
+		
+		close(conn);
+		
+		return list;
+	}
+
+
+
+
+
+
+
+
 
 
 }

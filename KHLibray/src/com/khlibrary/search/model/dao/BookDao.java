@@ -59,7 +59,7 @@ public class BookDao {
 	}
 
 	
-	
+	// 전체 목록
 	public List<Book> selectBookList(Connection conn, PageInfo pi) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -161,6 +161,123 @@ public class BookDao {
 			sql = query.getProperty("selectSearchPublisherList");
 		}
 		
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+				int endRow = startRow + pi.getBoardLimit() - 1;
+				
+				pstmt.setString(1, search);
+				
+				if(searchSelect.equals("total")) {
+					pstmt.setString(2, search);
+					pstmt.setString(3, search);
+					pstmt.setInt(4, startRow);
+					pstmt.setInt(5, endRow);
+				} else {
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+				}
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Book(rset.getLong("isbn")
+									, rset.getString("bk_name")
+									, rset.getString("writer")
+									, rset.getString("publisher")
+									, rset.getInt("issue_year")
+									, rset.getDate("r_date")
+									, rset.getString("imgname")
+									, rset.getString("imgpath")
+									, rset.getString("call_num")
+									, rset.getString("status")));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+
+		return list;
+	}
+	
+	// 작가순
+	public List<Book> searchWriterSortList(Connection conn, PageInfo pi, String searchSelect, String search) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Book> list = new ArrayList<>();
+		String sql = "";
+		
+		if(searchSelect.equals("total")) {
+			sql = query.getProperty("totalWriterSortList");
+		} else if(searchSelect.equals("name")) {
+			sql = query.getProperty("nameWriterSortList");
+		} else if(searchSelect.equals("writer")) {
+			sql = query.getProperty("writerWriterSortList");
+		} else {
+			sql = query.getProperty("publisherWriterSortList");
+		}
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+				int endRow = startRow + pi.getBoardLimit() - 1;
+				
+				pstmt.setString(1, search);
+				
+				if(searchSelect.equals("total")) {
+					pstmt.setString(2, search);
+					pstmt.setString(3, search);
+					pstmt.setInt(4, startRow);
+					pstmt.setInt(5, endRow);
+				} else {
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+				}
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(new Book(rset.getLong("isbn")
+									, rset.getString("bk_name")
+									, rset.getString("writer")
+									, rset.getString("publisher")
+									, rset.getInt("issue_year")
+									, rset.getDate("r_date")
+									, rset.getString("imgname")
+									, rset.getString("imgpath")
+									, rset.getString("call_num")
+									, rset.getString("status")));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+
+		return list;
+	}
+		
+	public List<Book> searchLatestSortList(Connection conn, PageInfo pi, String searchSelect, String search) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Book> list = new ArrayList<>();
+		String sql = "";
+		
+		if(searchSelect.equals("total")) {
+			sql = query.getProperty("totalLatestSortList");
+		} else if(searchSelect.equals("name")) {
+			sql = query.getProperty("nameLatestSortList");
+		} else if(searchSelect.equals("writer")) {
+			sql = query.getProperty("writerLatestSortList");
+		} else {
+			sql = query.getProperty("publisherLatestSortList");
+		}
 			try {
 				pstmt = conn.prepareStatement(sql);
 				
@@ -371,8 +488,116 @@ public class BookDao {
 		return list;
 	}
 
+	// 작가순
+	public List<Book> searchWriterSortList(Connection conn, PageInfo pi, String isbn, Book bk, String tDate,
+			String fDate) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Book> list = new ArrayList<>();
+		String sql = query.getProperty("searchWriterSortList");
+		
+		if(tDate == "") {
+			tDate = "0";
+		}
+		if(fDate == "") {
+			fDate = "10000";
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, bk.getbName());
+			pstmt.setString(2, bk.getbWriter());
+			pstmt.setString(3, bk.getbPublisher());
+			pstmt.setString(4, isbn);
+			pstmt.setString(5, tDate);
+			pstmt.setString(6, fDate);
+			pstmt.setInt(7, startRow);
+			pstmt.setInt(8, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Book((rset.getLong("to_number(isbn)"))
+								, rset.getString("bk_name")
+								, rset.getString("writer")
+								, rset.getString("publisher")
+								, rset.getInt("issue_year")
+								, rset.getDate("r_date")
+								, rset.getString("imgname")
+								, rset.getString("imgpath")
+								, rset.getString("call_num")
+								, rset.getString("status")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 	
-	
+	// 최신순
+	public List<Book> searchLatestSortList(Connection conn, PageInfo pi, String isbn, Book bk, String tDate,
+			String fDate) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Book> list = new ArrayList<>();
+		String sql = query.getProperty("searchLatestSortList");
+		
+		if(tDate == "") {
+			tDate = "0";
+		}
+		if(fDate == "") {
+			fDate = "10000";
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, bk.getbName());
+			pstmt.setString(2, bk.getbWriter());
+			pstmt.setString(3, bk.getbPublisher());
+			pstmt.setString(4, isbn);
+			pstmt.setString(5, tDate);
+			pstmt.setString(6, fDate);
+			pstmt.setInt(7, startRow);
+			pstmt.setInt(8, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Book((rset.getLong("to_number(isbn)"))
+								, rset.getString("bk_name")
+								, rset.getString("writer")
+								, rset.getString("publisher")
+								, rset.getInt("issue_year")
+								, rset.getDate("r_date")
+								, rset.getString("imgname")
+								, rset.getString("imgpath")
+								, rset.getString("call_num")
+								, rset.getString("status")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 	
 	
 	
@@ -431,6 +656,44 @@ public class BookDao {
 		
 		return result;
 	}
+
+
+	public List<String> autoBookNameSearch(Connection conn, String val) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<String> list = new ArrayList<>();
+		String sql = query.getProperty("autoBookNameSearch");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, val);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(rset.getString("bk_name"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+		
+	}
+
+
+
+
+	
+
+
+	
 	
 
 	

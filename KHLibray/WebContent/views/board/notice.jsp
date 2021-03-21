@@ -340,25 +340,25 @@
                     </tbody>
                 </table>
                 <div id="paging">
-                    <button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=1'">&lt;&lt;</button>
+                    <button onclick="location.href='<%= request.getContextPath() %>/notice/search?currentPage=1&search=<%= search %>'">&lt;&lt;</button>
                     <% if(pi.getCurrentPage() == 1) { %>
                     <button disabled>&lt;</button>
                     <% } else { %>
-                    <button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= pi.getCurrentPage() - 1%>'">&lt;</button>
+                    <button onclick="location.href='<%= request.getContextPath() %>/notice/search?currentPage=<%= pi.getCurrentPage() - 1%>&search=<%= search %>'">&lt;</button>
                     <% } %>
  					<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
  						<%if(p == pi.getCurrentPage()) { %>
  						<button style="background:#7b767a; color:white;" disabled> <%= p %></button>
  						<% } else { %>
- 						<button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= p %>'"><%= p %></button>
+ 						<button onclick="location.href='<%= request.getContextPath() %>/notice/search?currentPage=<%= p %>&search=<%= search %>'"><%= p %></button>
  						<% } %>
  					<% } %>
  					<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
  					<button disabled>&gt;</button>
  					<% } else { %>
- 					<button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= pi.getCurrentPage() + 1 %>'">&gt;</button>
+ 					<button onclick="location.href='<%= request.getContextPath() %>/notice/search?currentPage=<%= pi.getCurrentPage() + 1 %>&search=<%= search %>'">&gt;</button>
  					<% } %>
-                    <button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= pi.getMaxPage() %>'">&gt;&gt;</button>         
+                    <button onclick="location.href='<%= request.getContextPath() %>/notice/search?currentPage=<%= pi.getMaxPage() %>&search=<%= search %>'">&gt;&gt;</button>         
                 </div>
                 	<br>        	
                     <form id="writeb">

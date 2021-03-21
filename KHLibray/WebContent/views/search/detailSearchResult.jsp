@@ -394,7 +394,7 @@
             
 			<br>
 
-            <div class="listArea"><p>요청하신 에 대한 자료 검색 결과이며 총 <%= pi.getListCount() %> 건이 검색되었습니다.</p></div>
+            <div class="listArea"><p>요청하신 서명 : <%= bName%> 저자 : <%= bWriter %> 발행처 : <%= bPublisher %> ISBN : <%= isbn %> 발행연도 : <%= tDate%> - <%= fDate %>에 대한 자료 검색 결과이며 총 <%= pi.getListCount() %> 건이 검색되었습니다.</p></div>
 	
 			<form action="<%= request.getContextPath() %>/detail/sort" method="get">
 			<div class="select">

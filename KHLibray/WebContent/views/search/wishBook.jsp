@@ -378,13 +378,15 @@
 				}
 			});
 	   });
-   }
+    }
    
+   	
    	const searchBtn = document.getElementById('searchBtn');
    		searchBtn.addEventListener('click', function(){
-		window.open("naverSearchBook.jsp", "naverSearch", "width=1000, height=800");
+		window.open("<%= request.getContextPath()%>/views/search/naverSearchBook.jsp" , "naverSearch", "width=1000, height=800");
 	})
 
+   
    
    </script>
     

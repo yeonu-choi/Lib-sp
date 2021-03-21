@@ -385,7 +385,7 @@
     <div class="outer">
         <div><p class="title">간략 검색</p><hr></div>
         <div class="inner">
-            <form action="<%= request.getContextPath() %>/simple/search" method="get" onsubmit="return searchCheck();">
+            <form action="<%= request.getContextPath() %>/simple/search" method="get" onsubmit="return searchCheck();" id="searchForm">
                 <div class="searchArea">
                     <div class="selectArea">
                     	<select name="searchSelect" id="searchSelect">
@@ -407,6 +407,9 @@
                         <input type="checkbox" name="reSearch" id="reSearch">
                         <label>결과내재검색</label>
                     </div>
+                    <input type="hidden" value="<%=searchSelect%>" name="preSearchSelect">
+                    <input type="hidden" value="<%=search%>" name="preSearch">
+                    
                 </div>
                 
             </form>
@@ -414,13 +417,16 @@
             
 			<script>
 				function searchCheck(){
+					
 					if($("#search").val().trim().length == 0){
 						alert("검색어를 입력하세요");
 						return false;
 					} else if($("#reSearch").is(":checked") == true){
-						// 재검색 어케해......미친.......ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ sort를 구분했어야했낰ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ미친...........
+						$("#searchForm").attr("action", "<%= request.getContextPath()%>/simple/reSearch");
+						
 						console.log("얍");
 					} else {
+						
 						return true;
 					}
 				}
@@ -551,7 +557,6 @@
 					</div>
 
                 <div class="loansArea">
-                
                     <button type="button" id="loansBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">대출 예약</button>
                     <button type="button" onclick="location.reload()">선택 취소</button>
                 </div>
@@ -560,8 +565,6 @@
             
         </div>
     </div>
-    
-
     
     <!-- 모달창 -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -581,7 +584,6 @@
     		</div>
   		</div>
 	</div>
-
 
 
 	<script>

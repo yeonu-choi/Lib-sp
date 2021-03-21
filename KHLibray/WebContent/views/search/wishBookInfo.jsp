@@ -120,15 +120,15 @@
             margin-left : 25%
         }
         
-	.title {
+	    .title {
         	font-weight: 600;
-		font-size: 28px;
-		padding: 90px 0px 5px 20px;
+			font-size: 28px;
+			padding: 90px 0px 5px 20px;
 		}
 
         .inner {
             margin: auto;
-		margin-top: 20px;
+			margin-top: 20px;
             padding: 40px;
         }   
 
@@ -139,8 +139,8 @@
 
         .inner li {
             font-size:16px;
-            color: rgb(71, 71, 71);
-		line-height: 1.7em;       
+            color: rgb(71, 71, 71); 
+            line-height: 1.7em;       
         }
 
         .btnArea {
@@ -205,13 +205,13 @@
             <ul>
                 <li>우리도서관 소장도서, 정리중인 도서, 구입중인 도서</li>
                 <li>타회원과 중복 신청 도서</li>
-                <li>서지사항(서명, 저자, 출판사)이 불분명한 도서</li>
+                <li>서지사항(서명, 저자, 발행처)이 불분명한 도서</li>
                 <li>품절, 절판 도서</li>
                 <li>최신성이 떨어지는 도서(당해년도 포함 5년이내 도서만 가능)</li>
                 <li>5만원을 초과하는 고가도서(자료선정위원회 심의 후 구입여부 결정)</li>
                 <li>교과서, 대학교재, 참고서, 문제집, 수험서, 워크북 등</li>
                 <li>대중서점에서 구입하기 어려운 특수전문도서</li>
-                <li>특정 종교의 선전 및 정치색이 귿단성을 띤 편파적인 자료</li>
+                <li>특정 종교의 선전 및 정치색이 극단성을 띤 편파적인 자료</li>
                 <li>영리(저자 및 출판사 관계자) 또는 정치적인 홍보 목적의 신청자료</li>
                 <li>기타 우리도서관의 세부 자료선정 기준에 맞지 않는 도서</li>
             </ul>
@@ -243,8 +243,7 @@
     }
     </script>
     
-	
-	<%-- 푸터 --%>
+    <%-- 푸터 --%>
     <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

@@ -140,6 +140,7 @@
         .inner li {
             font-size:16px;
             color: rgb(71, 71, 71);
+		line-height: 1.7em;       
         }
 
         .btnArea {

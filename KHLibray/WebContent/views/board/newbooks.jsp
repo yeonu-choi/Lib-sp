@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.search.model.vo.*, java.util.Calendar" %>
+<%
+	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
+	Calendar cal = Calendar.getInstance();
+	int year = cal.get(Calendar.YEAR);
+	int month = cal.get(Calendar.MONTH) + 1;
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -125,16 +131,17 @@
     		display: inline-block;;
     		margin: 0px;
     		text-decoration: none;
+    		color: black;
     	}
     	
-
-    	
+  	
     	#line2 a{
     		width: 240px;
     		float: left;
     		display: inline-block;;
     		margin: 0px;
     		text-decoration: none;
+    		color: black;
     	}
     	
     	#thismonth img {
@@ -160,13 +167,7 @@
  		
  		#selectmonth {
  			width: 70%;
- 			padding: 30px 0px 30px 900px;
- 			
- 		}
- 		
- 		#selectmonth select{
- 			width: 130px;
- 			height: 30px;
+ 			padding: 50px 0px 50px 10px;
  			
  		}
  		
@@ -175,9 +176,7 @@
 		}
 		
 		#btns{
-			float: left;
-			margin: 50px 0 50px 800px;
-			
+			margin: 0 0 50px 700px;			
 		}
 		
 		#btns button{
@@ -204,7 +203,7 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/board/notice.jsp">공지사항</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/notice">공지사항</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/board/faq.jsp">FAQ</a></p></td>
@@ -213,7 +212,7 @@
                         <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/board/qna.jsp">Q&A</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/views/board/newbooks.jsp">이달의신간</a></p></td>
+                        <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/newbooks">이달의신간</a></p></td>
                     </tr>
                 </table>
             </div>
@@ -225,32 +224,25 @@
         </div>
         <div id="boardcontent">
         	<div id="selectmonth">
-                <form action="" method="GET">
-                    <select>
-                        <option value="2101">2021-01</option>
-                        <option value="2102">2021-02</option>
-                        <option value="2102" selected>2021-03</option>
-                    </select>
-                </form>
+					<h4><%= year %>년 <%= month %>월 신간</h4>               
             </div>
             <div id="thismonth">
             	<div id="line1">
-	                <a href="" id="newbook1"><img src="../../resources/image/doo/ref1.jpeg"><pre><br>죽고 싶지만 떡볶이는 먹고 싶어</pre></a>
-	                <a href="" id="newbook2"><img src="../../resources/image/doo/ref2.jpeg""><pre><br>말장난</pre></a>
-	                <a href="" id="newbook3"><img src="../../resources/image/doo/ref3.jpeg""><pre><br>보람따위 됐으니 야근수당</pre></a>
-	                <a href="" id="newbook4"><img src="../../resources/image/doo/ref4.jpeg""><pre><br>하마터면 열심히 살뻔했다</pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(0).getbName() %>" id="newbook1"><img src="<%= request.getContextPath() %>/<%= list.get(0).getImgPath()%>/<%=list.get(0).getImgName()%>"><pre><br><%= list.get(0).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(1).getbName() %>" id="newbook2"><img src="<%= request.getContextPath() %>/<%= list.get(1).getImgPath()%>/<%=list.get(1).getImgName()%>"><pre><br><%= list.get(1).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(2).getbName() %>" id="newbook3"><img src="<%= request.getContextPath() %>/<%= list.get(2).getImgPath()%>/<%=list.get(2).getImgName()%>"><pre><br><%= list.get(2).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(3).getbName() %>" id="newbook4"><img src="<%= request.getContextPath() %>/<%= list.get(3).getImgPath()%>/<%=list.get(3).getImgName()%>"><pre><br><%= list.get(3).getbName() %></pre></a>
 
             	</div>
 
             	<div id="line2">
-	                <a href="" id="newbook5"><img src="../../resources/image/doo/ref4.jpeg""><pre><br>하마터면 열심히 살뻔했다</pre></a>
-	                <a href="" id="newbook6"><img src="../../resources/image/doo/ref3.jpeg""><pre><br>보람따위 됐으니 야근수당</pre></a>
-	                <a href="" id="newbook7"><img src="../../resources/image/doo/ref2.jpeg""><pre><br>말장난</pre></a>
-	                <a href="" id="newbook8"><img src="../../resources/image/doo/ref1.jpeg""><pre><br>죽고 싶지만 떡볶이는 먹고 싶어</pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(4).getbName() %>" id="newbook5"><img src="<%= request.getContextPath() %>/<%= list.get(4).getImgPath()%>/<%=list.get(4).getImgName()%>"><pre><br><%= list.get(4).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(5).getbName() %>" id="newbook6"><img src="<%= request.getContextPath() %>/<%= list.get(5).getImgPath()%>/<%=list.get(5).getImgName()%>"><pre><br><%= list.get(5).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(6).getbName() %>" id="newbook7"><img src="<%= request.getContextPath() %>/<%= list.get(6).getImgPath()%>/<%=list.get(6).getImgName()%>"><pre><br><%= list.get(6).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(7).getbName() %>" id="newbook8"><img src="<%= request.getContextPath() %>/<%= list.get(7).getImgPath()%>/<%=list.get(7).getImgName()%>"><pre><br><%= list.get(7).getbName() %></pre></a>
              	</div>
              	<div id="btns">
-             	<button id="add">리스트 추가</button>
-                <button id="more" onclick="location.href=''">더보기</button>
+                <button id="more" onclick="location.href='<%= request.getContextPath() %>/views/search/detailSearch.jsp'">더보기</button>
                 </div>
             </div>
             

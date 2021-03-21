@@ -216,17 +216,6 @@
             resize: none;
         }
 
-        #upload {
-            margin-left: 230px;
-            margin-top: 5px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            padding-left: 5px;
-            border: 1px solid #b8b8b8;
-            width: 760px;
-            border-radius: 5px;
-        }
-
         #bsubmit {
             margin-left: 50%;
             margin-top: 30px;
@@ -261,7 +250,7 @@
                 </div>
                 <table id="sideMenu" border="0" style="border-collapse:collapse">
                    <tr>
-                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/views/board/notice.jsp">공지사항</a></p></td>
+                        <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/notice">공지사항</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/board/faq.jsp">FAQ</a></p></td>
@@ -270,7 +259,7 @@
                         <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/board/qna.jsp">Q&A</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/views/board/newbooks.jsp">이달의신간</a></p></td>
+                        <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/newbooks">이달의신간</a></p></td>
                     </tr>
                 </table>
             </div>
@@ -300,9 +289,7 @@
                         <dt class="b_content">내 용</dt>
                         <dd class="b_content"><textarea name="content"><%= n.getnContent() %></textarea></dd>
                     </dl>
-                    
-                    <input type="file" id="upload">
-                    
+                                  
                         <button type="submit" id="bsubmit">수정</button>
                         <button type="button" id="bcancel" onclick="javascript:history.back();">취소</button>
                 </form>

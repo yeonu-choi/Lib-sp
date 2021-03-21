@@ -146,4 +146,4 @@
 
 21.03.21 DetailSortServlet 주소 - /detail/sort - ay
 
-
+21.03.21 mainbar-basic 경로 수정 - ay

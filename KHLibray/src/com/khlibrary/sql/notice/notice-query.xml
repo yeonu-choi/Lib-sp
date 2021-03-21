@@ -154,4 +154,31 @@
     	 WHERE 
     	       RNUM BETWEEN ? AND ?	
 	</entry>
+	
+	
+	<!-- //////////////////// yw 메인용 ////////////////////////////// -->
+	<entry key="selectMainList">
+		SELECT 
+			NNO, 
+			NTITLE, 
+			C_DATE
+        FROM
+            (SELECT
+       			 ROWNUM RNUM,
+            	 A.*
+    		 FROM
+       			 (
+                    SELECT 
+                    	NNO, 
+                    	NTITLE, 
+                    	C_DATE
+                    FROM 
+                    	NOTICE
+                    WHERE 
+                    	STATUS = 'Y'
+                    ORDER BY 
+                    	C_DATE DESC) A)
+            WHERE 
+            	RNUM BETWEEN 1 AND 7
+	</entry>
 </properties>

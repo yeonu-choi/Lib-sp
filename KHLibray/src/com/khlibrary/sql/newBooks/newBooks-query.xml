@@ -19,4 +19,26 @@
 	  		ROWNUM 	&lt;= 8
 </entry>
 
+	<!-- /////////// yw 메인용 ////////////////////////////////////// -->
+
+	<entry key="selectMainList">
+		SELECT 
+			BK_NAME,
+			IMGNAME,
+			IMGPATH
+        FROM 
+            (SELECT
+       			 ROWNUM RNUM,
+            		A.*
+    		 FROM
+       			 (
+                  SELECT 
+                    	BK_NAME,
+                    	IMGNAME,
+                    	IMGPATH
+                  FROM 
+                  		BOOK
+                  ORDER BY R_DATE DESC) A)
+        WHERE RNUM BETWEEN 1 AND 6
+	</entry>
 </properties>

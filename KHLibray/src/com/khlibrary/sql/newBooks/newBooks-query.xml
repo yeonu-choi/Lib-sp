@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="selectList">
+	SELECT *
+	  FROM 
+	  		(SELECT 
+			  		 ISBN
+			  	   , BK_NAME
+			  	   , R_DATE
+			  	   , IMGNAME
+			  	   , IMGPATH
+	  	       FROM 
+	  	       	 	BOOK 
+	  	       WHERE 
+	  	       		EXTRACT(MONTH FROM R_DATE) = EXTRACT(MONTH FROM SYSDATE) 
+	  	       ORDER BY DBMS_RANDOM.VALUE) 
+	  WHERE 
+	  		ROWNUM 	&lt;= 8
+</entry>
+
+</properties>

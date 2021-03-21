@@ -7,7 +7,7 @@
 	      FROM
 	           BOOK
 	</entry>
-		<entry key="selectBookList">
+	<entry key="selectBookList">
 		SELECT
 			   ISBN
 			 , BK_NAME
@@ -224,6 +224,284 @@
 	    WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+		<entry key="totalWriterSortList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	           		   BK_NAME LIKE '%' || ? || '%'
+	        	    OR WRITER LIKE '%' || ? || '%'
+	        		OR PUBLISHER LIKE '%' || ? || '%'
+	          ORDER BY WRITER)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="nameWriterSortList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	           		   BK_NAME LIKE '%' || ? || '%'
+	          ORDER BY WRITER)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="writerWriterSortList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	        	       WRITER LIKE '%' || ? || '%'
+	          ORDER BY WRITER)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="publisherWriterSortList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	        	       PUBLISHER LIKE '%' || ? || '%'
+	          ORDER BY WRITER)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="totalLatestSortList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	           		   BK_NAME LIKE '%' || ? || '%'
+	        	    OR WRITER LIKE '%' || ? || '%'
+	        		OR PUBLISHER LIKE '%' || ? || '%'
+	          ORDER BY ISSUE_YEAR DESC)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="nameLatestSortList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	           		   BK_NAME LIKE '%' || ? || '%'
+	          ORDER BY ISSUE_YEAR DESC)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="writerLatestSortList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	        	       WRITER LIKE '%' || ? || '%'
+	          ORDER BY ISSUE_YEAR DESC)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="publisherLatestSortList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+	      FROM
+	           (SELECT
+			   		   ROWNUM RNUM 
+			   		 , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 		 , PUBLISHER
+			 		 , ISSUE_YEAR
+			 		 , R_DATE
+			 		 , IMGNAME
+			 		 , IMGPATH
+			 		 , CALL_NUM
+			 		 , STATUS
+	              FROM
+	                   BOOK
+	      		  JOIN
+	           		   BDETAIL USING (ISBN)
+	     		 WHERE
+	        	       PUBLISHER LIKE '%' || ? || '%'
+	          ORDER BY ISSUE_YEAR DESC)
+	    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
 	<entry key="insertLoanInfo">
 		INSERT 
 		INTO LOAN
@@ -316,11 +594,110 @@
 		   		   AND PUBLISHER LIKE '%' || ? || '%'
 		   		   AND ISBN LIKE '%' || ? || '%'
 		   		   AND TO_NUMBER(ISSUE_YEAR) BETWEEN ? AND ?
-			  ORDER BY ISBN
+			  ORDER BY BK_NAME
 			  )
 		 WHERE 
 		 	   RNUM BETWEEN ? AND ?
 	</entry>
+	<entry key="searchWriterSortList">
+		SELECT 
+			   TO_NUMBER(ISBN)
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+		  FROM 
+			   (SELECT 
+			 		   ROWNUM RNUM
+			 	     , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 	     , PUBLISHER
+			 	     , ISSUE_YEAR
+			 	     , R_DATE
+			 	     , IMGNAME
+			 	     , IMGPATH
+			 	     , CALL_NUM
+			 	     , STATUS
+				  FROM 
+				 	   BOOK 
+				  JOIN 
+				  	   BDETAIL USING (ISBN)
+				 WHERE 
+				 	   BK_NAME LIKE  '%' || ? || '%'
+		   		   AND WRITER LIKE '%' || ? || '%'
+		   		   AND PUBLISHER LIKE '%' || ? || '%'
+		   		   AND ISBN LIKE '%' || ? || '%'
+		   		   AND TO_NUMBER(ISSUE_YEAR) BETWEEN ? AND ?
+			  ORDER BY WRITER
+			  )
+		 WHERE 
+		 	   RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="searchLatestSortList">
+		SELECT 
+			   TO_NUMBER(ISBN)
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+		  FROM 
+			   (SELECT 
+			 		   ROWNUM RNUM
+			 	     , ISBN
+			 	     , BK_NAME
+			 	     , WRITER
+			 	     , PUBLISHER
+			 	     , ISSUE_YEAR
+			 	     , R_DATE
+			 	     , IMGNAME
+			 	     , IMGPATH
+			 	     , CALL_NUM
+			 	     , STATUS
+				  FROM 
+				 	   BOOK 
+				  JOIN 
+				  	   BDETAIL USING (ISBN)
+				 WHERE 
+				 	   BK_NAME LIKE  '%' || ? || '%'
+		   		   AND WRITER LIKE '%' || ? || '%'
+		   		   AND PUBLISHER LIKE '%' || ? || '%'
+		   		   AND ISBN LIKE '%' || ? || '%'
+		   		   AND TO_NUMBER(ISSUE_YEAR) BETWEEN ? AND ?
+			  ORDER BY ISSUE_YEAR DESC
+			  )
+		 WHERE 
+		 	   RNUM BETWEEN ? AND ?
+	</entry>
+	
+	
+	<entry key="autoBookNameSearch">
+		SELECT 
+			   BK_NAME
+		  FROM 
+		  	   (SELECT 
+			           BK_NAME
+	      		  FROM
+	      	   		   BOOK
+	     	 	 WHERE 
+	     	   		   BK_NAME LIKE '%' || ? || '%'
+	  		  ORDER BY BK_NAME
+	  		    )
+	</entry>
+
+	
+	
+	
 	<entry key="insertBook">
 	INSERT 
 	INTO BOOK

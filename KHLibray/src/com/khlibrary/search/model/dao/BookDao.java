@@ -262,7 +262,8 @@ public class BookDao {
 
 		return list;
 	}
-		
+	
+	// 
 	public List<Book> searchLatestSortList(Connection conn, PageInfo pi, String searchSelect, String search) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -368,7 +369,8 @@ public class BookDao {
 		
 		return result;
 	}
-
+	
+	// 도서 상세 정보 update
 	public int updateLoanCallNum(Connection conn, String[] chk) {
 		PreparedStatement pstmt = null;
 		int result = 0;

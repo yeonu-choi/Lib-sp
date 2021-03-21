@@ -5,7 +5,6 @@
 	String bWriter = (String)request.getAttribute("bWriter") != null ? (String)request.getAttribute("bWriter") : "";
 	String bPublisher = (String)request.getAttribute("bPublisher") != null ? (String)request.getAttribute("bPublisher") : "";	
 	String issueDate = (String)request.getAttribute("issueDate") != null ? (String)request.getAttribute("issueDate") : "";
-	
 %>
 <!DOCTYPE html>
 <html>
@@ -313,7 +312,7 @@
                 </div>
 
                 <div class="btnArea">
-                    <button type="button" id="wishBtn" onclick="return wishBookApply();">도서 신청</button>
+                    <button type="button" id="wishBtn" onclick="return wishBookApply()">도서 신청</button>
                     <button type="button" onclick="location.reload()">신청 취소</button>
                 </div>
 
@@ -324,6 +323,8 @@
     
    <script>
    // 휴대폰번호, 발행연도 유효성 검사
+  
+   
    function wishBookApply(){
 	   
 	   var phone = $(".userTable input[name=phone]").val().trim();
@@ -345,56 +346,39 @@
 	   		}
 		}
 	   
-	   if($(".iCheck").val().trim().length == 0){
-		   alert("필수 사항을 입력하세요.");
-		   return false;
-		   
+	   var iCheck = document.getElementsByClassName("iCheck")
+	   
+	   for(var i = 0; i < iCheck.length; i++){
+	  		if(iCheck[i].value.trim().length == 0){
+			   alert("필수 사항을 입력하세요.");
+			   return false;
+	   		}
 	   }
 	   
 	   $(function(){
 		var bName = $(".bookTable input[name=bName]");
-		$.ajax({
-			url : "<%= request.getContextPath() %>/wish/bkFCheck",
-			type : "post",
-			data : { bName : bName.val() },
-			asyan: false,
-			success : function(data){
-				console.log(data);
-				
-				if(data == "fail"){
-					//flag="false";
-					alert("해당 도서는 현재 도서관에 소장 중인 도서입니다.");
-					bName.focus();
-				} else {
-					$.ajax({
-						url : "<%= request.getContextPath() %>/wish/bkCheck",
-						type : "post",
-						data : { bName : bName.val() },
-						asyan: false,
-						success : function(data){
-							console.log(data);
-							if(data == "fail"){
-								//flag="false";
-								alert("해당 도서는 이미 희망 도서 신청 상태입니다.");
-								bName.focus();
-							} else {
-								//flag = "true";
-								$("#wishBookForm").submit();
-							}
-						},
-						error : function(e){
-							console.log(e);
-						}
-					});
+			$.ajax({
+				url : "<%= request.getContextPath() %>/wish/bkCheck",
+				type : "post",
+				data : { bName : bName.val() },
+				success : function(data){
+					console.log(data);							
+					if(data == "fail1"){
+						alert("해당 도서는 현재 도서관에 소장 중인 도서입니다.");
+						bName.focus();
+					}else if(data == "fail2"){alert("해당 도서는 이미 희망 도서 신청 상태입니다.");
+						bName.focus();
+						
+					} else {
+						$("#wishBookForm").submit();
+					}
+				},
+				error : function(e){
+					console.log(e);
 				}
-			},
-			error : function(e){
-				console.log(e);
-			}
-		});
+			});
 	   });
-   	}
-   
+   }
    
    	const searchBtn = document.getElementById('searchBtn');
    		searchBtn.addEventListener('click', function(){

@@ -33,6 +33,16 @@ public class Book {
 	}
 
 
+	public Book(long isbn, String bName, Date registDate, String imgName, String imgPath) {
+		super();
+		this.isbn = isbn;
+		this.bName = bName;
+		this.registDate = registDate;
+		this.imgName = imgName;
+		this.imgPath = imgPath;
+	}
+
+
 
 	public Book(long isbn, String bName, String bWriter, String bPublisher) {
 		super();

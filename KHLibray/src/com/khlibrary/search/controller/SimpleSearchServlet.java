@@ -34,8 +34,8 @@ public class SimpleSearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// getParameter로 넘어온 값 변수에 저장
-		request.getSession().removeAttribute("searchSelect");
-		request.getSession().removeAttribute("search");
+		// request.getSession().removeAttribute("searchSelect");
+		// request.getSession().removeAttribute("search");
 		
 		// System.out.println("SSS" + (String) request.getSession().getAttribute("searchSelect"));
 		

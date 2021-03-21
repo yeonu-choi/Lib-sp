@@ -131,6 +131,19 @@ public class NoticeService {
 		
 	}
 
+	
+	
+	///////////// yw 공지사항 메인용  ///////////////////////////////////////////////
+	public List<Notice> selectMainList() {
+		Connection conn = getConnection();
+		
+		List<Notice> list = new NoticeDao().selectMainList(conn);
+		
+		close(conn);
+			
+		return list;
+	}
+
 
 
 

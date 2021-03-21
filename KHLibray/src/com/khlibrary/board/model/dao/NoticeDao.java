@@ -312,4 +312,33 @@ public class NoticeDao {
 		return list;
 	}
 
+	
+	
+	///////////// yw 공지사항 메인용  ///////////////////////////////////////////////
+	public List<Notice> selectMainList(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Notice> list = new ArrayList<>();
+		String sql = query.getProperty("selectMainList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Notice(rset.getInt("nno"),
+						   			rset.getString("ntitle"),
+						   			rset.getDate("c_date")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+				
+		return list;
+	}
+
 }

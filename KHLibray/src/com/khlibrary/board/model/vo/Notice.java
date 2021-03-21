@@ -14,6 +14,15 @@ public class Notice {
 	
 	public Notice() {}
 
+
+	public Notice(int nNo, String nTitle, Date c_Date) {
+		super();
+		this.nNo = nNo;
+		this.nTitle = nTitle;
+		this.c_Date = c_Date;
+	}
+
+
 	public Notice(int nNo, String nTitle, String nContent, int nCount, Date c_Date, String status) {
 		super();
 		this.nNo = nNo;

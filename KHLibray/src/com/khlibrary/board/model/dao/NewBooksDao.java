@@ -1,5 +1,6 @@
 package com.khlibrary.board.model.dao;
 
+import static com.khlibrary.common.JDBCTemplate.close;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -47,8 +48,38 @@ public class NewBooksDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
 		}
 		
+		return list;
+	}
+
+
+
+	public List<Book> selectMainList(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Book> list = new ArrayList<>();
+		String sql = query.getProperty("selectMainList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Book(rset.getString("bk_name"),
+						 		  rset.getString("imgname"),
+						 		  rset.getString("imgpath")));
+			}
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
 		return list;
 	}
 

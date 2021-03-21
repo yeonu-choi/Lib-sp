@@ -162,6 +162,31 @@ public class BookService {
 		return list;
 	}
 	
+	// 재검색 리스트 카운트
+	public int getReSearchListCount(String preSearchSelect, String preSearch, String searchSelect, String search) {
+		Connection conn = getConnection();
+		
+		int result = new BookDao().getReSearchListCount(conn, preSearchSelect, preSearch, searchSelect, search);
+		
+		close(conn);
+		
+		return result;
+	}
+
+	// 재검색 리스트 목록
+	public List<Book> selectReSearchList(PageInfo pi, String preSearchSelect, String preSearch, String searchSelect,
+			String search) {
+		Connection conn = getConnection();
+		
+		List<Book> list = new BookDao().selectReSearchList(conn, pi, preSearchSelect, preSearch, searchSelect, search);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	
+	
 	
 	
 	
@@ -189,20 +214,10 @@ public class BookService {
 	
 	}
 
+
+
 	
 	
 	
-	
-
-	
-
-
-
-
-
-
-
-
-
 
 }

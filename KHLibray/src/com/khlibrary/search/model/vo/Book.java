@@ -16,10 +16,14 @@ public class Book {
 	
 	public Book() {}
 	
+	
+
 	public Book(String bName) {
 		super();
 		this.bName = bName;
 	}
+
+
 
 	public Book(String bName, String bWriter, String bPublisher) {
 		super();
@@ -54,16 +58,6 @@ public class Book {
 		this.callNum = callNum;
 		this.status = status;
 	}
-	
-	public Book(long isbn, String bName, Date registDate, String imgName, String imgPath) {			
-		super();
-		this.isbn = isbn;
-		this.bName = bName;
-		this.registDate = registDate;
-		this.imgName = imgName;
-		this.imgPath = imgPath;
-	}
-	
 
 	public long getIsbn() {
 		return isbn;

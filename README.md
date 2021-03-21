@@ -141,3 +141,7 @@
 21.03.21 WishSearchAPIServlet 주소 - /wish/search -ay
 
 21.03.21 WishBookChoiceServlet 주소 - /wish/choice - ay
+
+21.03.21 AutoBookServlet 주소 - /book/auto - ay
+
+21.03.21 DetailSortServlet 주소 - /detail/sort - 

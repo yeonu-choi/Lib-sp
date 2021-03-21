@@ -151,3 +151,5 @@
 21.03.21 search.model.vo.Book 생성자 추가 - doo
 
 21.03.21 mainbar-basic 경로 수정,  views.common.errorPage 추가 - doo
+
+21.03.21 NewBooksServlet 주소 - /newBooks - doo

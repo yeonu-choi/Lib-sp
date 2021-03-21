@@ -153,3 +153,6 @@
 21.03.21 mainbar-basic 경로 수정,  views.common.errorPage 추가 - doo
 
 21.03.21 NewBooksServlet 주소 - /newBooks - doo
+
+21.03.21 SimpleReSearchServlet 주소 - /simple/reSearch - ay
+

@@ -10,6 +10,9 @@
 <head>
 <meta charset="UTF-8">
 <title>KH도서관</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 <style>
         body {
             margin: 0;
@@ -60,7 +63,6 @@
             font-size: 14px;
             cursor: pointer;
         }
-
         .sideMenu {
             display: block;
             width: 300px;
@@ -71,7 +73,6 @@
 
         #sideMenu {
             width: 250px;
-            margin-left: 0;
         }
 
         #sideMenu td {
@@ -84,16 +85,17 @@
         }
 
         #sideMenu td p {
-            padding-top: 10px;
+            padding-top: 15px;
             font-size: 16px;
             font-weight: 600;
         }
         
+        
         #subTitle {
             float: left;
             margin-left: auto;
-            width: 248px;
-            height: 80px;
+            width: 250px;
+            height: 180px;
             padding-top: 100px;
             text-align: center; 
             border-left: 1px solid rgb(201, 201, 201);
@@ -109,9 +111,9 @@
         }
         
         #sideMenu a {
-             text-decoration: none;
-             color: black;
-       }
+       		text-decoration: none;
+       		color: black;
+    	}
 
         #wrap {
             width: 65%;
@@ -141,38 +143,35 @@
         }
 
         #top_empty {
-            display: inline-block;
             width: 100%;
-            height: 30px;
+            height: 100px;
         }
 
         #search{
-            position: relative;
             float : right;
-            right: 120px;
-            height: 30px;
-            width: 240px;
-            margin-bottom: 25px;
+            width: 380px;
+            margin-top: 30px;
             border: 1px solid #b8b8b8;
             border-radius: 7px;
-            padding: 3px 40px 3px 5px;
+            margin-right: 180px;
+            padding: 3px 0 3px 5px;
         }
 
         #search input[type="search"] {
-            display: inline-block;
+        	display: inline-block;
             line-height: 30px;
-            width: 90%;
+            width: 80%;
             border: 0;
         }
 
         #search button {
+        	float : right;
             border: 0px;
-            position: absolute;
             display: inline-block;			
             height: 30px;
-            width: 40px;
-            top: 3px;
-            right: 9px;
+            width: 60px;
+            margin-top: 1px;
+            margin-right: 12px;
             border-radius: 7px;
         }
 
@@ -181,7 +180,7 @@
             border-top: 2px solid #3b414d; 
             border-bottom: 1px solid #b8b8b8; 
             border-collapse: collapse;
-            margin: auto;
+            margin-left: 70px;
         }
 
         .b_num {
@@ -242,19 +241,22 @@
         }
         
         #paging {
-            padding-top: 30px;
-            text-align:center;
+        	width: 80%;
+            padding-top: 50px;
+ 			text-align: center;
+ 			margin-left: 70px;
             
         }
 
         #paging button {
             height: 30px;
-            width: 30px;
+            width: 40px;
+            border: none;
         }
         
         #writeb{
         	float:right;
-        	margin-right: 130px;
+        	margin-right: 170px;
         }
         
         #write{
@@ -273,7 +275,7 @@
     <div class="bcrumb">
         <span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
         <span><a id="mName" href="">열린공간</a></span>&nbsp;&nbsp;&nbsp;
-        <span><a id="subName" href="">공지사항</a></span>
+        <span><a id="subName" href="">Q&A</a></span>
     </div>
     <div class="sidebar">
             <div class="sideMenu">
@@ -303,14 +305,14 @@
                     <h3>공지사항</h3>
                     <hr>
                 </div>
-                <div id="top_empty"></div>
-                <fieldset id="search">
+                <div id="top_empty">
+				<fieldset id="search">
                 	<form action="<%= request.getContextPath() %>/notice/search" method="get" onsubmit="return checkSearchBox();">
                     	<input type="search" id="search_box" name="search" placeholder="검색어를 입력하세요" value="<%=search%>">
                     	<button type="submit">검색</button>
                     </form>
-                </fieldset>
-
+                </fieldset>                
+                </div>
                 <table id="boardlist">
                     <thead id="t_h">
                         <tr>
@@ -357,13 +359,12 @@
  					<button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= pi.getCurrentPage() + 1 %>'">&gt;</button>
  					<% } %>
                     <button onclick="location.href='<%= request.getContextPath() %>/notice?currentPage=<%= pi.getMaxPage() %>'">&gt;&gt;</button>         
-                </div>             	
+                </div>
+                	<br>        	
                     <form id="writeb">
-                    <% if(loginId != null && loginId.equals("admin")) { %>  
+                    	<% if(loginId != null && loginId.equals("admin")) { %>
                     	<input id="write" type="button" value="글쓰기" onclick="location.href='noticeInsert.jsp'">
-                    <% } else { %> 
-                    	<input id="write" type="hidden" value="글쓰기" onclick="location.href='noticeInsert.jsp'">
-                    <% } %>
+                    	<% } %>
                     </form>                  
                     <script>
                     		const write = document.getElementById('write');

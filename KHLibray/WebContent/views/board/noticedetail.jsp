@@ -285,10 +285,13 @@
                 <div id="main_content"><%= n.getnContent() %></div>
      
                 <div id="tolist">
-                	
+                	<% if(loginId != null && loginId.equals("admin")) { %>
                     <button id="modify">수정하기</button>
+                    <% } %>
                     <button id="list_b" onclick="location.href='<%= request.getContextPath()%>/notice'">목록으로</button>
+                    <% if(loginId != null && loginId.equals("admin")) { %>
                     <button id="delete">삭제하기</button>
+                    <% } %>
                     <form id="nnoForm" method="POST">
                     	<input type="hidden" name="nno" value="<%= n.getnNo() %>">
                     </form>

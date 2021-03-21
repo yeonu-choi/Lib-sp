@@ -137,3 +137,7 @@
 21.03.21 UserLeaveServlet 주소 - /mylib/leave - yw
 
 21.03.21 mainbar-basic 수정 - ay
+
+21.03.21 WishSearchAPIServlet 주소 - /wish/search -ay
+
+21.03.21 WishBookChoiceServlet 주소 - /wish/choice - ay

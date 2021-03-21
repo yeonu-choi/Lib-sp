@@ -120,15 +120,15 @@
             margin-left : 25%
         }
         
-	    .title {
+	.title {
         	font-weight: 600;
-			font-size: 28px;
-			padding: 90px 0px 5px 20px;
+		font-size: 28px;
+		padding: 90px 0px 5px 20px;
 		}
 
         .inner {
             margin: auto;
-			margin-top: 30px;
+		margin-top: 20px;
             padding: 40px;
         }   
 

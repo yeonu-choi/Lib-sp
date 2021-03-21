@@ -156,3 +156,13 @@
 
 21.03.21 SimpleReSearchServlet 주소 - /simple/reSearch - ay
 
+21.03.22 notice-query, service, dao 수정 - yw
+ 
+21.03.22 book vo 수정 - yw
+
+21.03.22 newBooks-query, service, dao 수정 - yw
+
+21.03.22 (src common 폴더 하위) MainContentsServlet 주소 - /main  - yw
+
+21.03.22 index.jsp 접속 페이지 서블릿으로 수정, 전체 컨텐츠 수정 및 연결 - yw
+

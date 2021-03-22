@@ -594,8 +594,7 @@
 		   		   AND PUBLISHER LIKE '%' || ? || '%'
 		   		   AND ISBN LIKE '%' || ? || '%'
 		   		   AND TO_NUMBER(ISSUE_YEAR) BETWEEN ? AND ?
-			  ORDER BY BK_NAME
-			  )
+			  ORDER BY BK_NAME)
 		 WHERE 
 		 	   RNUM BETWEEN ? AND ?
 	</entry>
@@ -634,8 +633,7 @@
 		   		   AND PUBLISHER LIKE '%' || ? || '%'
 		   		   AND ISBN LIKE '%' || ? || '%'
 		   		   AND TO_NUMBER(ISSUE_YEAR) BETWEEN ? AND ?
-			  ORDER BY WRITER
-			  )
+			  ORDER BY WRITER)
 		 WHERE 
 		 	   RNUM BETWEEN ? AND ?
 	</entry>
@@ -674,8 +672,7 @@
 		   		   AND PUBLISHER LIKE '%' || ? || '%'
 		   		   AND ISBN LIKE '%' || ? || '%'
 		   		   AND TO_NUMBER(ISSUE_YEAR) BETWEEN ? AND ?
-			  ORDER BY ISSUE_YEAR DESC
-			  )
+			  ORDER BY ISSUE_YEAR DESC)
 		 WHERE 
 		 	   RNUM BETWEEN ? AND ?
 	</entry>
@@ -690,10 +687,133 @@
 	      		  FROM
 	      	   		   BOOK
 	     	 	 WHERE 
-	     	   		   BK_NAME LIKE '%' || ? || '%'
-	  		  ORDER BY BK_NAME
-	  		    )
+	     	   		   LOWER (BK_NAME) LIKE '%' || ? || '%'
+	     	   		OR UPPER (BK_NAME) LIKE '%' || ? || '%'
+	  		  ORDER BY BK_NAME)
 	</entry>
+	<entry key="autoBookWriterSearch">
+		SELECT 
+			   WRITER
+		  FROM 
+		  	   (SELECT 
+			           WRITER
+	      		  FROM
+	      	   		   BOOK
+	     	 	 WHERE 
+	     	   		   LOWER (WRITER) LIKE '%' || ? || '%'
+	     	   		OR UPPER (WRITER) LIKE '%' || ? || '%'
+	  		  ORDER BY WRITER)
+	</entry>
+	
+	<entry key="autoBookPublisherSearch">
+		SELECT 
+			   PUBLISHER
+		  FROM 
+		  	   (SELECT 
+			           PUBLISHER
+	      		  FROM
+	      	   		   BOOK
+	     	 	 WHERE 
+	     	   		   LOWER (PUBLISHER) LIKE '%' || ? || '%'
+	     	   		OR UPPER (PUBLISHER) LIKE '%' || ? || '%'
+	  		  ORDER BY PUBLISHER)
+	</entry>
+	
+	<entry key="loanNumCount">
+		SELECT 
+			COUNT(*)
+        FROM 
+        	LOAN
+        WHERE 
+        	USER_ID = ?
+        AND STATUS LIKE '대출중'
+	</entry>
+	
+	<entry key="getReSearchListCount">
+		SELECT 
+			   COUNT(*)
+		  FROM 
+		 	   (SELECT 
+		 	  		   ISBN
+		 	  		 , BK_NAME
+		 	  		 , WRITER
+		 	  		 , PUBLISHER
+					 , ISSUE_YEAR
+					 , R_DATE
+					 , IMGNAME
+					 , IMGPATH
+					 , CALL_NUM
+					 , STATUS
+    			  FROM 
+    			       BOOK 
+    			  JOIN 
+    			  	   BDETAIL USING(ISBN)
+    			 WHERE 
+    			 	   BK_NAME LIKE '%' || ? || '%'
+    				OR WRITER LIKE '%' || ? || '%'
+   					OR PUBLISHER LIKE '%' || ? || '%')
+		  WHERE 
+				BK_NAME LIKE '%' || ? || '%'
+				OR WRITER LIKE '%' || ? || '%'
+				OR PUBLISHER LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key ="selectReSearchList">
+		SELECT
+			   ISBN
+			 , BK_NAME
+			 , WRITER
+			 , PUBLISHER
+			 , ISSUE_YEAR
+			 , R_DATE
+			 , IMGNAME
+			 , IMGPATH
+			 , CALL_NUM
+			 , STATUS
+		 FROM
+			  (SELECT 
+			  		  ROWNUM RNUM 
+			   	    , ISBN
+		 	        , BK_NAME
+		 	        , WRITER
+		 	        , PUBLISHER
+			 	    , ISSUE_YEAR
+			 	    , R_DATE
+			 	    , IMGNAME
+			 	    , IMGPATH
+			 	    , CALL_NUM
+			 	    , STATUS
+		  	    FROM 
+		 	   		  (SELECT 
+		 	  		   		  ISBN
+		 	  		 	    , BK_NAME
+		 	  		 	    , WRITER
+		 	  		 	    , PUBLISHER
+					 	    , ISSUE_YEAR
+					 	    , R_DATE
+					 	    , IMGNAME
+					 	    , IMGPATH
+					 	    , CALL_NUM
+					 	    , STATUS
+    			 	    FROM 
+    			       		 BOOK JOIN BDETAIL USING(ISBN)
+    			 	   WHERE 
+    			 	   		 BK_NAME LIKE '%' || ? || '%'
+    					  OR WRITER LIKE '%' || ? || '%'
+   						  OR PUBLISHER LIKE '%' || ? || '%')
+		 		WHERE 
+					  BK_NAME LIKE '%' || ? || '%'
+				   OR WRITER LIKE '%' || ? || '%'
+				   OR PUBLISHER LIKE '%' || ? || '%'
+	 		 ORDER BY BK_NAME)
+	    WHERE 
+	    	  RNUM BETWEEN ? AND ?
+	</entry>
+	
+	
+	
+	
+	
 
 	
 	
@@ -738,17 +858,6 @@
 		)
 	
 	</entry>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

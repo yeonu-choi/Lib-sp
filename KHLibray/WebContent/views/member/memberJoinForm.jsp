@@ -174,9 +174,11 @@
             text-align: center;
         }
         sub {
-        	color : blue;
+        	color : #1E82FF;
         }
-      
+      .starclass {
+      	float : right;
+      }
      
      
 </style>
@@ -222,7 +224,7 @@
     <div class="passchk">
         <form class="passout" id="joinForm" action="<%= request.getContextPath() %>/member/insert"
             method="post" onsubmit="return joinValidate();">
-        
+        <div class="starclass">(<span class="empa">*</span>)는 필수 입력사항입니다.</div>
         <table id="tablejoin" style="border-collapse: collapse;">
             <tr>
                  <th width="20%">아이디(<span class="empa">*</span>)</th>
@@ -233,7 +235,7 @@
             <tr>
             	 <th class="join_title">비밀번호(<span class="empa">*</span>)</th>
             	 <td> <input type="password" maxlength="12" name="user_pwd" required> </td>
-           		 <td colspan="2"><sub>!!유효성검사 추후 추가 예정!!</sub></td>
+           		 <td colspan="2"><sub>비밀번호는 영소문자로 시작해서 4~12자 입력(숫자포함 가능)</sub></td>
        		</tr>
         	<tr>
             	 <th class="join_title">비밀번호 확인(<span class="empa">*</span>)</th>
@@ -245,9 +247,15 @@
             	 <td><input type="text" maxlength="10" name="user_name" required></td>
             	 <td colspan="2"><sub>이름은 한글로 2글자 이상 입력</sub></td>
         	</tr>
+        	<tr>   
+            	 <th class="join_title">이메일(<span class="empa">*</span>)</th>
+            	 <td><input type="email" name="email" size="20" required></td>
+            	 <td></td><td></td>
+         
+        	</tr> 
         	<tr>
             	 <th class="join_title">생년월일</th>
-            	 <td><input type="text" name="birth_date" placeholder="(-없이)"></td>
+            	 <td><input type="text" name="birth_date" maxlength="8" placeholder="(-없이)"></td>
             	 <td colspan="2"><sub>8자리 숫자로 입력하시오 예시) 19950510</sub></td>
         	</tr>
         	<tr>
@@ -255,12 +263,7 @@
             	 <td><input type="tel" maxlength="11" name="phone" placeholder="(-없이)"></td>
             	 <td></td><td></td>
         	</tr>
-        	<tr>   
-            	 <th class="join_title">이메일</th>
-            	 <td><input type="email" name="email" size="20"></td>
-            	 <td></td><td></td>
-         
-        	</tr> 
+        	
         	<tr>   
             	 <th class="join_title">우편번호</th>
             	 <td><input type="text" name="address" class="postcodify_postcode5" readonly></td>   
@@ -306,6 +309,17 @@
             $("#joinForm input[name=user_id]").select();
             return false;
          }
+         // 비밀번호
+         if (!(/^[a-z][a-z\d]{3,11}$/.test($("#joinForm input[name=user_pwd]").val()))) {
+             alert("비밀번호는 영소문자로 시작해서 4~12자 입력(숫자포함 가능)");
+             $("#joinForm input[name=user_pwd]").select();
+             return false;
+          }
+         
+         
+         
+         
+         
          
          // 비밀번호 일치여부
          if ($("#joinForm input[name=user_pwd]").val() != $("#joinForm input[name=user_pwd2]").val()) {

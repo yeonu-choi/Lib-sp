@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.board.model.vo.*" %>
+<%
+	ArrayList<FAQ> common = (ArrayList<FAQ>)request.getAttribute("common");
+	ArrayList<FAQ> account = (ArrayList<FAQ>)request.getAttribute("account");
+	ArrayList<FAQ> book = (ArrayList<FAQ>)request.getAttribute("book");
+	ArrayList<FAQ> facility = (ArrayList<FAQ>)request.getAttribute("facility");
+	int ci = 0; int ai = 0; int bi = 0; int fi = 0;
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,79 +119,19 @@
     	}
     	        
        	#wrap{
-       		width: 65%;
-            height: 80%;
-            margin-top: 60px;
+       		width: 60%;
+            margin-top: 80px;
             margin-bottom: 80px;
-            float : left;
+            margin-left:10px;
+            float:left;
        	}
+       	
+       	#addfaq {
+       		margin-top:50px;
+       		float:right;
+       	}
+
         
-        
-        #content {
-            width: 1073px;
-            margin-right: 200px;
-            padding-left: 80px;
-            padding-right: 127px;
-            display: inline-block;
-			
-        }
-
-
-        #boardtitle {            
-            width: 1150px;
-            font-size: 30px;
-        }
-        
-        #boardtitle h3 {
-        	margin-top: 40px;
-        	margin-bottom: 40px;
-        }
-
-
-        #boardtitle hr {
-            width: 93%;
-            opacity: 0.5;        
-        }
-
-        #qna dl {
-            margin-top: 20px;
-            align-items: center;
-        }
-
-        #top_empty {
-            height: 40px;
-        }
-
-        #qna {
-            min-height: 500px;
-            padding: 0px 0px 40px 0px;
-            border-bottom: 1px solid black;
-            border-top: 1px solid black;
-            font-size: 15px;
-            padding-left: 20px;
-        }
-
-        dt{
-            padding: 10px;
-        }
-
-
-        #qna a{
-            text-decoration: none;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            font-weight: bold;
-        }
-
-        #qna dd {
-            padding : 10px 30px 10px 40px;
-            background: #f7f7f7;
-            border-bottom: 1px solid #b8b8b8;
-        }
-
-        button {
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
@@ -216,80 +164,170 @@
             </div>
     </div>
 </div>
-<div id="wrap">
-            <div id="content">
-                <div id="boardtitle">
-                    <h3>FAQ</h3>
-                   	<hr>
-                </div>
-                <div id="top_empty"></div>
-                <div id="qna">
-                        <dl>
-                            <dt>
-                                <a href="">
-                                    <span>1.</span>
-                                    	도서관 위치와 주차시설을 알려주세요.
-                                </a>
-                            </dt>
-                            <dd>                                
-                                    KH도서관 주소와 연락처
-                                    - 위치 : 서울시 강남구
-                                    - 주차 : 30대
-                                    ......                               
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <a href="">
-                                    <span>2.</span>
-                                   	 자원봉사를 하고 싶습니다.
-                                </a>
-                            </dt>
-                            <dd>
-                                
-                                -도서관 자원봉사신청은 1365 자원봉사포탈을 통해 등록된 일감 내용을 확인 후 신청 바랍니다.                            
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <a href="">
-                                    <span>3.</span>
-                                    도서 연장은 어떻게 하나요?
-                                </a>
-                            </dt>
-                            <dd>
-                                
-                                - 대출기간은 14일이고, 1회에 한하여 반납예정일 이전에 반납연기 가능하며 그 기간은 반납예정일 기준으로 7일간 연장됩니다.                           
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <a href="">
-                                    <span>4.</span>
-                                    도서관자료의 변상은 어떻게 하나요?
-                                </a>
-                            </dt>
-                            <dd>
-                                
-                                ※ 서울특별시 금천구 도서관 설치 및 운영에 관한 조례 ....                              
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <a href="">
-                                    <span>5.</span>
-                                    도서관 휴관일, 이용시간이 궁금합니다.
-                                </a>
-                            </dt>
-                            <dd>                              
-                                - 금천구립도서관 홈페이지 메인화면에서 도서관별로 확인하실 수 있습니다.                           
-                            </dd>
-                        </dl>
-                </div>
-                    <button id="new" onclick="location.href='faqInsert.jsp'">등록하기</button>
-            </div>
-    </div>    
-    
+	<div id="wrap">
+		<div id="boardTitle">
+			<h2>&nbsp;&nbsp;FAQ</h2>
+			<br>
+			<hr>
+			<br>
+		</div>
+		<div class="dropdown">&nbsp;&nbsp;
+		  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+		    전체
+		  </a>
+		
+		  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+		    <li><a class="dropdown-item" href="#11">공통</a></li>
+		    <li><a class="dropdown-item" href="#22">계정</a></li>
+		    <li><a class="dropdown-item" href="#33">도서</a></li>
+		    <li><a class="dropdown-item" href="#44">시설</a></li>
+		  </ul>
+		</div>
+		<br><br>
+		<!-- 그룹 -->
+		
+		<ul class="list-group">
+		<li class="list-group-item list-group-item-light 11"><p id="11">공통</p>		
+		<div class="accordion accordion-flush" id="accordionFlushExample">
+		<!-- 질문 답변 -->                    
+		<% if(common.isEmpty()) { %>
+              <div class="accordion-item">
+		   	  <h2 class="accordion-header" id="flush-headingOne">
+		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= ci %>c" aria-expanded="false" aria-controls="flush-collapseOne">
+		       <h4>Q.</h4>&nbsp;&nbsp;<h6>조회 된 질문이 없습니다.</h6>
+		      </button>
+		    </h2>
+		    <div id="flush-collapse<%= ci %>c" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+		      <div class="accordion-body"><h3>A.</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회 된 답변이 없습니다.</div>
+		    </div>
+		  </div>                  
+          <% } else { %>
+		  <% for(FAQ f1 : common) { %>		  
+		  <div class="accordion-item">
+		    <h2 class="accordion-header" id="flush-headingOne">
+		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= ci %>c" aria-expanded="false" aria-controls="flush-collapseOne">
+		       <h4>Q.</h4>&nbsp;&nbsp;<h6><%= common.get(ci).getF_Qcontent() %></h6>
+		      </button>
+		    </h2>
+		    <div id="flush-collapse<%= ci %>c" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+		      <div class="accordion-body"><h3>A.</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= common.get(ci).getF_Acontent() %></div>
+		    </div>
+		  </div>
+		  <% ci++; %>
+		  <% } %>
+		  <% } %>
+		  <!-- 질문 답변 -->
+		</div>
+		</li>
+		<!-- 카테고리 -->
+		
+		<li class="list-group-item list-group-item-light 22"><p id="22">계정</p>		
+		<div class="accordion accordion-flush" id="accordionFlushExample">
+		 <!-- 질문 답변 -->
+		 <% if(account.isEmpty()) { %>
+		 <div class="accordion-item">
+		    <h2 class="accordion-header" id="flush-headingOne">
+		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= ai %>a" aria-expanded="false" aria-controls="flush-collapseOne">
+		       <h4>Q.</h4>&nbsp;&nbsp;<h6>조회 된 질문이 없습니다.</h6>
+		      </button>
+		    </h2>
+		    <div id="flush-collapse<%= ai %>a" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+		      <div class="accordion-body"><h3>A.</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회 된 답변이 없습니다.</div>
+		    </div>
+		  </div>
+		 <% } else { %>
+		 <% for(FAQ f : account) { %>
+		  <div class="accordion-item">
+		    <h2 class="accordion-header" id="flush-headingOne">
+		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= ai %>a" aria-expanded="false" aria-controls="flush-collapseOne">
+		       <h4>Q.</h4>&nbsp;&nbsp;<h6><%= account.get(ai).getF_Qcontent() %></h6>
+		      </button>
+		    </h2>
+		    <div id="flush-collapse<%= ai %>a" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+		      <div class="accordion-body"><h3>A.</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= account.get(ai).getF_Acontent() %></div>
+		    </div>
+		  </div>
+		  <% ai++; %>
+		  <% } %>
+		  <% } %>
+		</div>
+		</li>
+		
+		<!-- 카테고리 -->
+			<li class="list-group-item list-group-item-light 33"><p id="33">도서</p>		
+		<div class="accordion accordion-flush" id="accordionFlushExample">
+		<!-- 질문 답변 -->
+		<% if(book.isEmpty()) { %>
+		<div class="accordion-item">
+		    <h2 class="accordion-header" id="flush-headingOne">
+		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= bi %>b" aria-expanded="false" aria-controls="flush-collapseOne">
+		       <h4>Q.</h4>&nbsp;&nbsp;<h6>조회 된 질문이 없습니다.</h6>
+		      </button>
+		    </h2>
+		    <div id="flush-collapse<%= bi %>b" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+		      <div class="accordion-body"><h3>A.</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회 된 답변이 없습니다.</div>
+		    </div>
+		  </div>
+		<% } else { %>
+		<% for(FAQ f : book) { %>
+		  <div class="accordion-item">
+		    <h2 class="accordion-header" id="flush-headingOne">
+		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= bi %>b" aria-expanded="false" aria-controls="flush-collapseOne">
+		       <h4>Q.</h4>&nbsp;&nbsp;<h6><%= book.get(bi).getF_Qcontent() %></h6>
+		      </button>
+		    </h2>
+		    <div id="flush-collapse<%= bi %>b" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+		      <div class="accordion-body"><h3>A.</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= book.get(bi).getF_Acontent() %></div>
+		    </div>
+		  </div>
+		  <% bi++; %>
+		  <% } %>		  
+		  <% } %>		  
+		</div>
+		</li>
+		<!-- 카테고리 -->
+		    <li class="list-group-item list-group-item-light 44"><p id="44">시설</p>		
+		<div class="accordion accordion-flush" id="accordionFlushExample">
+		<!-- 질문 답변 -->
+		<% if(facility.isEmpty()) { %>
+		<div class="accordion-item">
+		    <h2 class="accordion-header" id="flush-headingOne">
+		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= fi %>f" aria-expanded="false" aria-controls="flush-collapseOne">
+		       <h4>Q.</h4>&nbsp;&nbsp;<h6>조회 된 질문이 없습니다.</h6>
+		      </button>
+		    </h2>
+		    <div id="flush-collapse<%= fi %>f" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+		      <div class="accordion-body"><h3>A.</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회 된 답변이 없습니다.</div>
+		    </div>
+		  </div>
+		<% } else { %>
+		<% for(FAQ f : facility) { %>
+		  <div class="accordion-item">
+		    <h2 class="accordion-header" id="flush-headingOne">
+		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%= fi %>f" aria-expanded="false" aria-controls="flush-collapseOne">
+		       <h4>Q.</h4>&nbsp;&nbsp;<h6><%= facility.get(fi).getF_Qcontent() %></h6>
+		      </button>
+		    </h2>
+		    <div id="flush-collapse<%= fi %>f" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+		      <div class="accordion-body"><h3>A.</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= facility.get(fi).getF_Acontent() %></div>
+		    </div>
+		  </div>
+		  <% fi++; %>
+		  <% } %>
+		  <% } %>
+		</div>
+		</li>
+		</ul>
+		<% if(loginId != null && loginId.equals("admin")) { %>
+		<button type="button" class="btn btn-secondary" id="addfaq">FAQ 추가</button>	
+		<% } %>
+		<script>
+                const write = document.getElementById('addfaq');
+                write.addEventListener('click', function(){
+                location.href='<%= request.getContextPath() %>/views/board/faqInsert.jsp';
+                });                    		
+        </script>
+    </div>
     
 <%@ include file="../common/footer.jsp" %>
 </body>

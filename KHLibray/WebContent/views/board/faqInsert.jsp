@@ -220,6 +220,11 @@
             height: 30px;
             width: 50px;
         }
+        
+        .b_category select{
+        	width: 100px;
+        	height: 30px;
+        }
     </style>
 </head>
 <body>
@@ -259,17 +264,29 @@
                    	<hr>
                 </div>
                 <div id="top_empty"></div>
-                <form id="b_area">
+                <form id="b_area" action="<%= request.getContextPath() %>/faq/insert" method="POST">
+                     <dl class="b_category">
+                        <dt class="b_category"> 분 류</dt>
+                        <dd class="b_category">
+                        	<select name="category">
+		                		<option>공통</option>
+		                		<option>계정</option>
+		                		<option>도서</option>
+		                		<option>시설</option>               	
+                	    	</select> 
+                	    </dd>
+                    </dl>
+                	               	
                     <dl class="b_title">
                         <dt class="b_title"> 질 문</dt>
-                        <dd class="b_title"><input type="text"></dd>
+                        <dd class="b_title"><input type="text" name="question" required></dd>
                     </dl>
                     <dl class="b_content">
                         <dt class="b_content">답 변</dt>
-                        <dd class="b_content"><textarea></textarea></dd>
+                        <dd class="b_content"><textarea name="answer" required></textarea></dd>
                     </dl>
                         <button type="submit" id="bsubmit">등록</button>
-                        <button type="button" id="bcancel">취소</button>
+                        <button type="button" id="bcancel" onclick="javascript:history.back();">취소</button>
                 </form>
             </div>
     </div>

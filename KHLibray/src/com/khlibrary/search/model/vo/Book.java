@@ -24,7 +24,6 @@ public class Book {
 	}
 
 
-
 	public Book(String bName, String bWriter, String bPublisher) {
 		super();
 		this.bName = bName;
@@ -32,6 +31,13 @@ public class Book {
 		this.bPublisher = bPublisher;
 	}
 
+	public Book(String bName, String bWriter, String imgName, String imgPath) {
+		super();
+		this.bName = bName;
+		this.bWriter = bWriter;
+		this.imgName = imgName;
+		this.imgPath = imgPath;
+	}
 
 	public Book(long isbn, String bName, Date registDate, String imgName, String imgPath) {
 		super();

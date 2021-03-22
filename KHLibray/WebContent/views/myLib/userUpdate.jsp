@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
         
+        <%
+	Member m = (Member)session.getAttribute("loginUser");
+
+	String user_id = m.getUser_id();
+	String user_name = m.getUser_name();
+	String birth_date = m.getBirth_date();
+	String phone = (m.getPhone() != null) ? m.getPhone() : "";
+	String email = (m.getEmail() != null) ? m.getEmail() : "";
+	String[] address = {"", "", ""};
+	if(m.getAddress() != null)
+		address = m.getAddress().split(",");
+		
+%>
+      
 <!DOCTYPE html>
 <html>
 <head>
@@ -174,6 +188,10 @@
             width: 100%;
             text-align: center;
         }
+        .starclass {
+      	float : right;
+      }
+     
         	
     </style>
 </head>
@@ -218,11 +236,12 @@
     <div class="passchk">
         <form class="passout" id="updateForm" action="<%= request.getContextPath() %>/member/update"
          method="post">
-        
+        <div class="starclass">(<span class="empa">*</span>)는 필수 입력사항입니다.</div>
         <table id="tablejoin" style="border-collapse: collapse;">
             <tr>
                  <th width="20%">아이디</th>
-                 <td><input type="text" maxlength="12" name="user_id" readonly> </td>
+                 <td><input type="text" maxlength="12" name="user_id" value="<%=user_id%>"
+                  readonly> </td>
            		 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -234,7 +253,7 @@
             <tr>
             	 <th class="join_title">비밀번호(<span class="empa">*</span>)</th>
             	 <td> <input type="password" maxlength="12" name="user_pwd" required> </td>
-           		 <td></td>
+           		 <td> <button id="pwdUpdateBtn" type="button">비밀번호 변경</button></td>
        		</tr>
         	<tr>
             	 <th class="join_title">비밀번호 확인(<span class="empa">*</span>)</th>
@@ -243,38 +262,44 @@
         	</tr>
         	<tr>
             	 <th class="join_title">이름(<span class="empa">*</span>)</th>
-            	 <td><input type="text" maxlength="10" name="user_name" required></td>
+            	 <td><input type="text" maxlength="10" name="user_name" value ="<%=user_name%>"
+            	  required></td>
             	 <td></td>
         	</tr>
+        	<tr>   
+            	 <th class="join_title">이메일(<span class="empa">*</span>)</th>
+            	 <td><input type="email" name="email" value="<%= email%>" size="20" required></td>
+            	 <td></td><td></td>
+         
+        	</tr> 
         	<tr>
             	 <th class="join_title">생년월일</th>
-            	 <td><input type="text" name="birth_date" placeholder="(-없이)"></td>
+            	 <td><input type="text" name="birth_date" value="<%=birth_date%>" 
+            	 maxlength="8" placeholder="(-없이)"></td>
             	 <td></td>
         	</tr>
         	<tr>
            	     <th class="join_title">휴대폰번호</th>
-            	 <td><input type="tel" maxlength="11" name="phone" placeholder="(-없이)"></td>
+            	 <td><input type="tel" maxlength="11" name="phone" value="<%= phone%>" placeholder="(-없이)"></td>
             	 <td></td><td></td>
         	</tr>
-        	<tr>   
-            	 <th class="join_title">이메일</th>
-            	 <td><input type="email" name="email" size="20"></td>
-            	 <td></td><td></td>
-         
-        	</tr> 
+        	
         	<tr>   
             	 <th class="join_title">우편번호</th>
-            	 <td><input type="text" name="address" class="postcodify_postcode5" readonly></td>   
+            	 <td><input type="text" name="address" value="<%= address[0] %>"  class="postcodify_postcode5" 
+            	  readonly></td>   
             	 <td><button id="postcodify_search_button" type="button">검색</button></td><td></td>      
         	</tr> 
         	<tr>   
             	 <th class="join_title">도로명 주소</th>
-            	 <td><input type="text" name="address" class="postcodify_address" readonly></td> 
+            	 <td><input type="text" name="address" value="<%= address[1] %>"
+            	 class="postcodify_address" readonly></td> 
             	 <td></td><td></td>        
         	</tr> 
         	<tr>   
             	 <th class="join_title">상세 주소</th>
-            	 <td><input type="text" name="address" class="postcodify_details"></td>
+            	 <td><input type="text" name="address" value="<%= address[2] %>"
+            	  class="postcodify_details"></td>
             	 <td></td><td></td>         
         	</tr>  
        </table>

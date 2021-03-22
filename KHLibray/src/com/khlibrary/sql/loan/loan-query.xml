@@ -41,9 +41,9 @@
 			 				L.LID = A.LID
 			 			AND L.CALL_NUM = B.CALL_NUM
 			 			AND B.ISBN = K.ISBN
-                		AND A.USER_ID = ?) A)
+                		AND A.USER_ID = ?
+                   ORDER BY LID DESC ) A)
            	 WHERE RNUM BETWEEN ? AND ?
-           	 ORDER BY LID DESC
 	</entry>
 	<entry key="selectRdateAsc">
 	SELECT  
@@ -77,10 +77,11 @@
 			 	L.LID = A.LID
 			 	AND L.CALL_NUM = B.CALL_NUM
 			 	AND B.ISBN = K.ISBN
-                AND A.USER_ID = ?) A)
+                AND A.USER_ID = ?
+                ORDER BY RETURN_DATE ASC) A)
                 WHERE 
                     RNUM BETWEEN ? AND ?
-                ORDER BY RETURN_DATE ASC
+                
 	</entry>
 	<entry key="selectRdateDesc">
 	SELECT  
@@ -114,10 +115,10 @@
 			 	L.LID = A.LID
 			 	AND L.CALL_NUM = B.CALL_NUM
 			 	AND B.ISBN = K.ISBN
-                AND A.USER_ID = ?) A)
+                AND A.USER_ID = ?
+                ORDER BY RETURN_DATE DESC) A)
                 WHERE 
-                    RNUM BETWEEN ? AND ?
-                ORDER BY RETURN_DATE DESC
+                    RNUM BETWEEN ? AND ?         
 	</entry>
 	<entry key="selectLidAsc">
 	SELECT  
@@ -151,10 +152,10 @@
 			 	L.LID = A.LID
 			 	AND L.CALL_NUM = B.CALL_NUM
 			 	AND B.ISBN = K.ISBN
-                AND A.USER_ID = ?) A)
+                AND A.USER_ID = ?
+                ORDER BY LID ASC) A)
                 WHERE 
                     RNUM BETWEEN ? AND ?
-                ORDER BY LID ASC
 	</entry>
 	<entry key="selectLidDesc">
 	SELECT  
@@ -188,10 +189,10 @@
 			 	L.LID = A.LID
 			 	AND L.CALL_NUM = B.CALL_NUM
 			 	AND B.ISBN = K.ISBN
-                AND A.USER_ID = ?) A)
+                AND A.USER_ID = ?
+                ORDER BY LID DESC) A)
                 WHERE 
                     RNUM BETWEEN ? AND ?
-                ORDER BY LID DESC
 	</entry>
 	<entry key="selectLdateAsc">
 	SELECT  
@@ -225,10 +226,10 @@
 			 	L.LID = A.LID
 			 	AND L.CALL_NUM = B.CALL_NUM
 			 	AND B.ISBN = K.ISBN
-                AND A.USER_ID = ?) A)
+                AND A.USER_ID = ?
+                ORDER BY LOAN_DATE ASC) A)
                 WHERE 
                     RNUM BETWEEN ? AND ?
-                ORDER BY LOAN_DATE ASC
 	</entry>
 	<entry key="selectLdateDesc">
 	SELECT  
@@ -262,10 +263,10 @@
 			 	L.LID = A.LID
 			 	AND L.CALL_NUM = B.CALL_NUM
 			 	AND B.ISBN = K.ISBN
-                AND A.USER_ID = ?) A)
+                AND A.USER_ID = ?
+                ORDER BY LOAN_DATE DESC) A)
                 WHERE 
                     RNUM BETWEEN ? AND ?
-                ORDER BY LOAN_DATE DESC
 	</entry>
 	<entry key="selectStatusAsc">
 	SELECT  
@@ -299,10 +300,10 @@
 			 	L.LID = A.LID
 			 	AND L.CALL_NUM = B.CALL_NUM
 			 	AND B.ISBN = K.ISBN
-                AND A.USER_ID = ?) A)
+                AND A.USER_ID = ?
+                ORDER BY STATUS ASC) A)
                 WHERE 
                     RNUM BETWEEN ? AND ?
-                ORDER BY STATUS ASC
 	</entry>
 	<entry key="selectStatusDesc">
 	SELECT  
@@ -336,10 +337,10 @@
 			 	L.LID = A.LID
 			 	AND L.CALL_NUM = B.CALL_NUM
 			 	AND B.ISBN = K.ISBN
-                AND A.USER_ID = ?) A)
+                AND A.USER_ID = ?
+                ORDER BY STATUS DESC) A)
                 WHERE 
                     RNUM BETWEEN ? AND ?
-                ORDER BY STATUS DESC
 	</entry>
 	<entry key="returnRequest">
 		UPDATE 

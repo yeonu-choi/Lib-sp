@@ -45,11 +45,9 @@ public class MemberService {
 		// 3. 회원 정보 수정용 서비스 메서드
 		public Member updateMember(Member m) {
 			Connection conn = getConnection();
-			// 1. update 수행
+			
 			int result = new MemberDao().updateMember(conn, m);
 			
-			
-			// 2. update 결과에 따라 수정 된 updateMember 객체를 리턴하거나 null을 리턴
 			Member updateMember =null;
 			if(result > 0) {
 				commit(conn);
@@ -66,11 +64,9 @@ public class MemberService {
 		// 비밀번호 수정용 서비스 메소드
 		public Member updatePwd(String user_id, String user_pwd, String new_pwd) {
 			Connection conn = getConnection();
-			// 1.비밀번호 수정
+			
 			int result = new MemberDao().updatePwd(conn, user_id, user_pwd, new_pwd);
 			
-		
-			// 2. update 결과에 따라 수정 된 updateMember 객체를 리턴하거나 null을 리턴
 			Member updateMember =null;
 			if(result > 0) {
 				commit(conn);

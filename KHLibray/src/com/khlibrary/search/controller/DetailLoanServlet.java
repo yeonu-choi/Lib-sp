@@ -39,7 +39,10 @@ public class DetailLoanServlet extends HttpServlet {
 		if(result > 0) {
 			request.getSession().setAttribute("msg", "대출 예약 되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/mylib/lblist");
-		} 
+		} else {
+			request.getSession().setAttribute("msg", "대출 예약에 실패했습니다.");
+			response.sendRedirect(request.getContextPath() + "/mylib/lblist");
+		}
 	
 	}
 

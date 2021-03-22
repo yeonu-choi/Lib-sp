@@ -12,11 +12,11 @@
 	if(searchSelect == "") {
 		select[0] = "selected";
 	} else {
-		if(searchSelect.equals("total")){
+		if(searchSelect.equals("전체")){
 			select[0] = "selected";
-		} else if (searchSelect.equals("name")){
+		} else if (searchSelect.equals("서명")){
 			select[1] = "selected";
-		} else if (searchSelect.equals("writer")){
+		} else if (searchSelect.equals("저자")){
 			select[2] = "selected";
 		} else {
 			select[3] = "selected";
@@ -385,10 +385,10 @@
                 <div class="searchArea">
                     <div class="selectArea">
                     	<select name="searchSelect" id="searchSelect">
-                        	<option value="total" <%= select[0] %>>전체</option>
-                        	<option value="name" <%= select[1] %>>서명</option>
-                        	<option value="writer" <%= select[2] %>>저자</option>
-                        	<option value="publisher" <%= select[3] %>>발행처</option>
+                        	<option value="전체" <%= select[0] %>>전체</option>
+                        	<option value="서명" <%= select[1] %>>서명</option>
+                        	<option value="저자" <%= select[2] %>>저자</option>
+                        	<option value="발행처" <%= select[3] %>>발행처</option>
                     	</select>
                     </div>
 

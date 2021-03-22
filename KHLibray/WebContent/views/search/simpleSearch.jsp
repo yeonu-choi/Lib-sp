@@ -212,10 +212,10 @@
 				<div class="searchArea">
 					<div class="selectArea">
 						<select name="searchSelect" id="searchSelect">
-							<option value="total">전체</option>
-							<option value="name">서명</option>
-							<option value="writer">저자</option>
-							<option value="publisher">발행처</option>
+							<option value="전체">전체</option>
+							<option value="서명">서명</option>
+							<option value="저자">저자</option>
+							<option value="발행처">발행처</option>
 						</select>
 					</div>
 

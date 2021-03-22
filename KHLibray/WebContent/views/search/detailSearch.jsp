@@ -234,7 +234,7 @@
 	<div class="outer">
         <div><p class="title">상세 검색</p><hr></div>
         <div class="inner">
-            <form action="<%= request.getContextPath() %>/detail/search" method="get">
+            <form action="<%= request.getContextPath() %>/detail/search" method="get" >
                 <div class="searchArea">
                     <ul>
                         <li>

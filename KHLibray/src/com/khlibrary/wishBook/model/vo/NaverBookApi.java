@@ -64,8 +64,16 @@ public class NaverBookApi {
 	            String titleFilter = getTitle.replaceAll("<b>", "");
 	            String title = titleFilter.replaceAll("</b>", "");
 	            
-	            String author = (String) object.get("author");
-	            String publisher = (String) object.get("publisher");
+	            String getAuthor = (String) object.get("author");
+	            String authorFilter = getAuthor.replaceAll("<b>", "");
+	            String author = authorFilter.replaceAll("</b>", "");
+	            
+	            
+	            String getPublisher = (String) object.get("publisher");
+	            String publisherFilter = getPublisher.replaceAll("<b>", "");
+	            String publisher = publisherFilter.replaceAll("</b>", "");
+	            
+	            
 	            String pubdate = (String) object.get("pubdate");
 	            String image = (String) object.get("image");
 	            

@@ -172,5 +172,5 @@
 
 21.03.22 UpdatePasswordServlet 주소 - /member/updatePwd - km
 
-
+21.03.22 mainbar-basic 경로 수정 - doo
 

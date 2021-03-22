@@ -154,7 +154,6 @@
             margin-top: 50px;
             margin-left: 28%;
             width: 60%;
-            height: 350px;
         }
 
         #subselect {
@@ -217,7 +216,7 @@
         }
 
         #paging {
-            margin-top: 150px;
+            margin-top: 50px;
             margin-left: 27%;
             margin-bottom : 100px;
             width: 60%;

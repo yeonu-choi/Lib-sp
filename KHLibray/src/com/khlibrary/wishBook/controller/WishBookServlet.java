@@ -44,13 +44,6 @@ public class WishBookServlet extends HttpServlet {
 			issueDate = Integer.parseInt(request.getParameter("issueDate"));
 		}
 		
-//		if(email == "") {
-//			email = "없음";
-//		}
-//		if(phone == "") {
-//			phone = "없음";
-//		}
-		
 		WishBook wb = new WishBook(bName, bWriter, bPublisher, issueDate, userId, phone, email);
 		
 		System.out.println(wb);

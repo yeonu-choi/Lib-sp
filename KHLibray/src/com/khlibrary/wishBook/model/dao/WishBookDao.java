@@ -226,10 +226,7 @@ public class WishBookDao {
 		return list;
 	}
 	
-	
-	
-	
-	
+
 	
 	
 	
@@ -372,6 +369,8 @@ public class WishBookDao {
 		return listCount;
 	}
 
+
+	
 	
 
 }

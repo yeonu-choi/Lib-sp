@@ -34,9 +34,7 @@ public class WishSearchAPIServlet extends HttpServlet {
 		String search = request.getParameter("search");
 		System.out.println(search);
 		
-		List<NaverBook> list  = new NaverBookApi().searchBook(search);
-		//String nn = 
-		//System.out.println(list);
+		List<NaverBook> list  = new NaverBookApi().searchBook(search, 20);
 		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/views/search/naverSearchBookResult.jsp").forward(request, response);

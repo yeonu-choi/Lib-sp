@@ -2,6 +2,7 @@ package com.khlibrary.wishBook.controller;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.khlibrary.member.model.vo.Member;
 import com.khlibrary.wishBook.model.service.WishBookService;
 
 /**
@@ -33,12 +35,11 @@ public class WishBookManageServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String[] chkWbId = request.getParameterValues("chkWbId");
-				
-		// String[] -> int[] 타입으로 변경
+		
 		int[] wbId = Arrays.stream(chkWbId).mapToInt(Integer::parseInt).toArray();
-		// System.out.println("Int" + Arrays.toString(wbId));
 		
 		int result = new WishBookService().insertWishBook(wbId);
+		
 		
 		if(result > 0) {
 			request.getSession().setAttribute("msg", wbId.length + "권 입고 처리되었습니다.");

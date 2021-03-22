@@ -22,7 +22,7 @@ public class NaverBookApi {
     }
 
 
-	public List<NaverBook> searchBook(String keyword) {
+	public List<NaverBook> searchBook(String keyword, int display) {
         String clientId = "Lt2CWe7q40LzGBQXOYAj"; //애플리케이션 클라이언트 아이디값"
         String clientSecret = "uC2sxKUWM6"; //애플리케이션 클라이언트 시크릿값"
 
@@ -34,7 +34,7 @@ public class NaverBookApi {
             throw new RuntimeException("검색어 인코딩 실패",e);
         }
         
-        String apiURL = "https://openapi.naver.com/v1/search/book.json?query=" + text;    // json 결과
+        String apiURL = "https://openapi.naver.com/v1/search/book.json?query=" + text + (display != 0? "&display=" + display : "");    // json 결과
         //String apiURL = "https://openapi.naver.com/v1/search/book.xml="+ text; // xml 결과
 
 

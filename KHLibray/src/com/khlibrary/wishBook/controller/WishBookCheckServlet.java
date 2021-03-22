@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.khlibrary.member.model.vo.Member;
 import com.khlibrary.wishBook.model.service.WishBookService;
 
 /**
@@ -31,18 +32,23 @@ public class WishBookCheckServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String bName = request.getParameter("bName");
+		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUser_id();
 		
-		int result = new WishBookService().firstCheckWishBook(bName);
+		System.out.println(bName);
+		System.out.println(userId);
+		
+		int result1 = new WishBookService().firstCheckWishBook(bName);
 		int result2 = new WishBookService().checkWishBook(bName);
 		
-		System.out.println("소장 도서 확인 결과 : " + result);
+		
+		System.out.println("소장 도서 확인 결과 : " + result1);
 		
 		System.out.println("중복 도서 확인 결과 : " + result2);
 		
 		
 		PrintWriter out = response.getWriter();
 		
-		if(result > 0) {
+		if(result1 > 0) {
 			// 소장 도서 
 			out.print("fail1");
 		} else if(result2 > 0) {

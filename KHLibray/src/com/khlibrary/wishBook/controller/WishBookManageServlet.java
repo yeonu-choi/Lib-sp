@@ -46,6 +46,7 @@ public class WishBookManageServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/wish/list");
 		} else {
 			request.getSession().setAttribute("msg", "입고 처리에 실패했습니다.");
+			response.sendRedirect(request.getContextPath() + "/wish/list");
 		}
 	
 		

@@ -55,6 +55,9 @@ public class WishBookServlet extends HttpServlet {
 		if(result > 0) {
 			request.getSession().setAttribute("msg", "희망 도서 신청이 완료되었습니다.");
 			request.getRequestDispatcher("/views/search/wishBook.jsp").forward(request, response);
+		} else {
+			request.getSession().setAttribute("msg", "희망도서 신청에 실패했습니다.");
+			request.getRequestDispatcher("/views/search/wishBook.jsp").forward(request, response);
 		}
 		
 		

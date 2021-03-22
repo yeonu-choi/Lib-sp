@@ -284,7 +284,6 @@
                         <dt class="b_content">내 용</dt>
                         <dd class="b_content"><textarea name="content"></textarea></dd>
                     </dl>
-                    <input type="file" id="upload">
                         <button type="submit" id="bsubmit">등록</button>
                         <button type="button" id="bcancel" onclick="javascript:history.back();">취소</button>
                 </form>

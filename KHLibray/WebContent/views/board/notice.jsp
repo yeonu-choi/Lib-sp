@@ -195,6 +195,10 @@
         .b_num, .b_count, .b_date {
             text-align: center;
         }
+        
+        #t_h th[class="b_title"]{
+            text-align: center;
+        }
 
 
         #t_h {

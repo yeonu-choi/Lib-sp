@@ -158,9 +158,9 @@ public class BookService {
 		
 		List<String> list = new ArrayList<>();
 		
-		if(sel.equals("writer")) {
+		if(sel.equals("저자")) {
 			list = new BookDao().autoBookWriterSearch(conn, val, sel);
-		} else if (sel.equals("publisher")){
+		} else if (sel.equals("발행처")){
 			list = new BookDao().autoBookPublisherSearch(conn, val, sel);
 		} else {
 			list = new BookDao().autoBookNameSearch(conn, val, sel);

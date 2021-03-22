@@ -109,11 +109,11 @@ public class BookDao {
 		int listCount = 0;
 		String sql ="";
 		
-		if(searchSelect.equals("total")) {
+		if(searchSelect.equals("전체")) {
 			sql = query.getProperty("getSearchTotalListCount");
-		} else if(searchSelect.equals("name")) {
+		} else if(searchSelect.equals("서명")) {
 			sql = query.getProperty("getSearchNameListCount");
-		} else if(searchSelect.equals("writer")) {
+		} else if(searchSelect.equals("저자")) {
 			sql = query.getProperty("getSearchWriterListCount");
 		} else {
 			sql = query.getProperty("getSearchPublisherListCount");
@@ -123,8 +123,7 @@ public class BookDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, search);
-			
-			if(searchSelect.equals("total")) {
+			if(searchSelect.equals("전체")) {
 				pstmt.setString(2, search);
 				pstmt.setString(3, search);
 			}
@@ -151,11 +150,11 @@ public class BookDao {
 		List<Book> list = new ArrayList<>();
 		String sql = "";
 		
-		if(searchSelect.equals("total")) {
+		if(searchSelect.equals("전체")) {
 			sql = query.getProperty("selectSearchTotalList");
-		} else if(searchSelect.equals("name")) {
+		} else if(searchSelect.equals("서명")) {
 			sql = query.getProperty("selectSearchNameList");
-		} else if(searchSelect.equals("writer")) {
+		} else if(searchSelect.equals("저자")) {
 			sql = query.getProperty("selectSearchWriterList");
 		} else {
 			sql = query.getProperty("selectSearchPublisherList");
@@ -169,7 +168,7 @@ public class BookDao {
 				
 				pstmt.setString(1, search);
 				
-				if(searchSelect.equals("total")) {
+				if(searchSelect.equals("전체")) {
 					pstmt.setString(2, search);
 					pstmt.setString(3, search);
 					pstmt.setInt(4, startRow);
@@ -211,11 +210,11 @@ public class BookDao {
 		List<Book> list = new ArrayList<>();
 		String sql = "";
 		
-		if(searchSelect.equals("total")) {
+		if(searchSelect.equals("전체")) {
 			sql = query.getProperty("totalWriterSortList");
-		} else if(searchSelect.equals("name")) {
+		} else if(searchSelect.equals("서명")) {
 			sql = query.getProperty("nameWriterSortList");
-		} else if(searchSelect.equals("writer")) {
+		} else if(searchSelect.equals("저자")) {
 			sql = query.getProperty("writerWriterSortList");
 		} else {
 			sql = query.getProperty("publisherWriterSortList");
@@ -228,7 +227,7 @@ public class BookDao {
 				
 				pstmt.setString(1, search);
 				
-				if(searchSelect.equals("total")) {
+				if(searchSelect.equals("전체")) {
 					pstmt.setString(2, search);
 					pstmt.setString(3, search);
 					pstmt.setInt(4, startRow);
@@ -270,11 +269,11 @@ public class BookDao {
 		List<Book> list = new ArrayList<>();
 		String sql = "";
 		
-		if(searchSelect.equals("total")) {
+		if(searchSelect.equals("전체")) {
 			sql = query.getProperty("totalLatestSortList");
-		} else if(searchSelect.equals("name")) {
+		} else if(searchSelect.equals("서명")) {
 			sql = query.getProperty("nameLatestSortList");
-		} else if(searchSelect.equals("writer")) {
+		} else if(searchSelect.equals("저자")) {
 			sql = query.getProperty("writerLatestSortList");
 		} else {
 			sql = query.getProperty("publisherLatestSortList");
@@ -287,7 +286,7 @@ public class BookDao {
 				
 				pstmt.setString(1, search);
 				
-				if(searchSelect.equals("total")) {
+				if(searchSelect.equals("전체")) {
 					pstmt.setString(2, search);
 					pstmt.setString(3, search);
 					pstmt.setInt(4, startRow);

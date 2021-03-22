@@ -61,28 +61,26 @@
              , EMAIL = ?
              , ADDRESS = ?
              , BIRTH_DATE = ?
-             , MODIFY_DATE = SYSDATE
        WHERE
              USER_ID = ?
    </entry>
    <entry key="selectMember">
       SELECT
-             USER_NO
-           , USER_ID
+             USER_ID
            , USER_PWD
            , USER_NAME
-           , BIRTH_DATE
+           , BIRTH_DATE        
            , PHONE
            , EMAIL
            , ADDRESS
+           , GRADE
            , ENROLL_DATE
-           , MODIFY_DATE
-           , STATUS
+           , USER_NO
+           , OVERDUE
         FROM
              MEMBER
        WHERE
-             USER_ID = ?
-         AND STATUS = 'Y'         
+             USER_ID = ?        
    </entry>
    <entry key="updatePwd">
      UPDATE
@@ -91,7 +89,7 @@
    		USER_PWD = ?
    	  WHERE
    		USER_ID = ?
-    	AND USER_PWD = ?			 
+    	   AND USER_PWD = ?			 
    </entry>
    	<entry key="idCheck">
 		SELECT

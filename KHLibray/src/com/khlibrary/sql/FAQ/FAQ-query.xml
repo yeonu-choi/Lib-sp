@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="selectCommonList">
+	SELECT 
+			*
+	  FROM
+	  		FAQ
+	 WHERE
+	 		STATUS = 'Y'
+	   AND	CATEGORY = '공통'	
+</entry>
+<entry key="selectAccountList">
+	SELECT 
+			*
+	  FROM
+	  		FAQ
+	 WHERE
+	 		STATUS = 'Y'
+	   AND	CATEGORY = '계정'	
+</entry>
+<entry key="selectBookList">
+	SELECT 
+			*
+	  FROM
+	  		FAQ
+	 WHERE
+	 		STATUS = 'Y'
+	   AND	CATEGORY = '도서'	
+</entry>
+<entry key="selectFacilityList">
+	SELECT 
+			*
+	  FROM
+	  		FAQ
+	 WHERE
+	 		STATUS = 'Y'
+	   AND	CATEGORY = '시설'	
+</entry>
+</properties>

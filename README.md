@@ -166,3 +166,11 @@
 
 21.03.22 index.jsp 접속 페이지 서블릿으로 수정, 전체 컨텐츠 수정 및 연결 - yw
 
+21.03.22 IdCheckServlet 주소 - /member/idCheck - km
+
+21.03.22 UpdateMemberServlet 주소 - /member/update - km
+
+21.03.22 UpdatePasswordServlet 주소 - /member/updatePwd - km
+
+
+

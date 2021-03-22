@@ -69,6 +69,15 @@ public class Member {
 		this.overdue = overdue;
 	}
 
+	public Member(String user_id, String user_name, String birth_date, String phone, String email, String address) {
+		super();
+		this.user_id = user_id;
+		this.user_name = user_name;
+		this.birth_date = birth_date;
+		this.phone = phone;
+		this.email = email;
+		this.address = address;
+	}
 
 	public String getUser_id() {
 		return user_id;

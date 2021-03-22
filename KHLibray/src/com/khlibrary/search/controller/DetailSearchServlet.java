@@ -32,13 +32,6 @@ public class DetailSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//request.getSession().removeAttribute("bName");
-		//request.getSession().removeAttribute("bWriter");
-		//request.getSession().removeAttribute("bPublisher");
-		//request.getSession().removeAttribute("isbn");
-		//request.getSession().removeAttribute("tDate");
-		//request.getSession().removeAttribute("fDate");
-		
 		System.out.println("BSS" + (String) request.getSession().getAttribute("tDate"));
 		
 		String bName = request.getParameter("bName");
@@ -48,7 +41,6 @@ public class DetailSearchServlet extends HttpServlet {
 		String tDate = request.getParameter("tDate");
 		String fDate = request.getParameter("fDate");
 		
-		// isbn varchar/String으로 바꾸면 bk 객체에 담고 Service, Dao, query(To_Number 같은거!), 다 수정하기
 		Book bk = new Book(bName, bWriter, bPublisher);
 		
 		int currentPage = 1;

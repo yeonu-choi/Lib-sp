@@ -33,21 +33,9 @@ public class SimpleSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// getParameter로 넘어온 값 변수에 저장
-		// request.getSession().removeAttribute("searchSelect");
-		// request.getSession().removeAttribute("search");
-		
-		// System.out.println("SSS" + (String) request.getSession().getAttribute("searchSelect"));
 		
 		String searchSelect = request.getParameter("searchSelect");
 		String search = request.getParameter("search");
-		
-		// 검색 초기화 or 재검색 
-//		String reSearch = request.getParameter("reSearch");
-//		
-//		if(reSearch != null) {
-//			request.removeAttribute("list"); // 다시 생각하기
-//		}
 		
 		int currentPage = 1;
 		

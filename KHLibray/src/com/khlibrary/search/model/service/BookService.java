@@ -1,6 +1,7 @@
 package com.khlibrary.search.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.khlibrary.search.model.dao.BookDao;
@@ -152,15 +153,26 @@ public class BookService {
 	}
 	
 	// 자동 완성
-	public List<String> autoBookNameSearch(String val) {
+	public List<String> autoBookSearch(String val, String sel) {
 		Connection conn = getConnection();
 		
-		List<String> list = new BookDao().autoBookNameSearch(conn,  val);
+		List<String> list = new ArrayList<>();
+		
+		if(sel.equals("writer")) {
+			list = new BookDao().autoBookWriterSearch(conn, val, sel);
+		} else if (sel.equals("publisher")){
+			list = new BookDao().autoBookPublisherSearch(conn, val, sel);
+		} else {
+			list = new BookDao().autoBookNameSearch(conn, val, sel);
+		}
 		
 		close(conn);
 		
 		return list;
 	}
+	
+	
+	
 	
 	// 재검색 리스트 카운트
 	public int getReSearchListCount(String preSearchSelect, String preSearch, String searchSelect, String search) {
@@ -174,17 +186,28 @@ public class BookService {
 	}
 
 	// 재검색 리스트 목록
-	public List<Book> selectReSearchList(PageInfo pi, String preSearchSelect, String preSearch, String searchSelect,
-			String search) {
+	public List<Book> selectReSearchList(PageInfo pi, String preSearch,	String search) {
 		Connection conn = getConnection();
 		
-		List<Book> list = new BookDao().selectReSearchList(conn, pi, preSearchSelect, preSearch, searchSelect, search);
+		List<Book> list = new BookDao().selectReSearchList(conn, pi, preSearch, search);
 		
 		close(conn);
 		
 		return list;
 	}
 
+	
+	
+	// 회원 대출 카운트
+	public int loanNumCount(String user_id) {
+		Connection conn = getConnection();
+		
+		int result = new BookDao().loanNumCount(conn, user_id);
+		
+		close(conn);
+		
+		return result;
+	}
 	
 	
 	
@@ -213,6 +236,7 @@ public class BookService {
 		return result;
 	
 	}
+
 
 
 

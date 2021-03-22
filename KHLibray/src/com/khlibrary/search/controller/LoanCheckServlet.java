@@ -1,6 +1,8 @@
 package com.khlibrary.search.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,16 +13,16 @@ import com.khlibrary.member.model.vo.Member;
 import com.khlibrary.search.model.service.BookService;
 
 /**
- * Servlet implementation class DetailLoanServlet
+ * Servlet implementation class LoanCheckServlet
  */
-@WebServlet("/detail/loan")
-public class DetailLoanServlet extends HttpServlet {
+@WebServlet("/loan/check")
+public class LoanCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DetailLoanServlet() {
+    public LoanCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,19 +30,20 @@ public class DetailLoanServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		request.setCharacterEncoding("UTF-8");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String user_id = ((Member)request.getSession().getAttribute("loginUser")).getUser_id();
 		
-		String[] chk = request.getParameterValues("checkSelect");
-		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUser_id();
-	
-		int result = new BookService().loanBook(chk, userId);
-	
-		if(result > 0) {
-			request.getSession().setAttribute("msg", "대출 예약 되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/mylib/lblist");
-		} 
-	
+		System.out.println(user_id);
+		
+		int result = new BookService().loanNumCount(user_id);
+		
+		PrintWriter out = response.getWriter();
+		
+		if(result > 5) {
+			out.print("fail");
+		} else {
+			out.print("success");
+		}
 	}
 
 	/**

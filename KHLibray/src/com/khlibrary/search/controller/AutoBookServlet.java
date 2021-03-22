@@ -33,14 +33,11 @@ public class AutoBookServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String val = request.getParameter("val");
+		String sel = request.getParameter("sel");
 		
-		//System.out.println(val);
-		
-		List<String> list = new BookService().autoBookNameSearch(val);
+		List<String> list = new BookService().autoBookSearch(val, sel);
 		
 		response.setContentType("application/json; charset=utf-8");
-		
-		//System.out.println(list);
 		
 		new Gson().toJson(list, response.getWriter());
 	}

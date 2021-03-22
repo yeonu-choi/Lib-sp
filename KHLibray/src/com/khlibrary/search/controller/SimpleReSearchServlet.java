@@ -37,6 +37,7 @@ public class SimpleReSearchServlet extends HttpServlet {
 		String searchSelect = request.getParameter("searchSelect");
 		String search = request.getParameter("search");
 		
+		
 		int currentPage = 1;
 		
 		if(request.getParameter("currentPage") != null) {
@@ -46,7 +47,6 @@ public class SimpleReSearchServlet extends HttpServlet {
 		BookService bService = new BookService();
 		
 		int listCount = bService.getReSearchListCount(preSearchSelect, preSearch, searchSelect, search);
-		
 		
 		int pageLimit = 10;
 		int boardLimit = 10;
@@ -58,12 +58,12 @@ public class SimpleReSearchServlet extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
+				
+		List<Book> list = bService.selectReSearchList(pi, preSearch, search);
 		
-		System.out.println(listCount);
-		
-		List<Book> list = bService.selectReSearchList(pi, preSearchSelect, preSearch, searchSelect, search);
-		
-		System.out.println(list);
+		request.setAttribute("pi", pi);
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("/views/search/simpleSearchResult.jsp").forward(request, response);
 	}
 
 	/**

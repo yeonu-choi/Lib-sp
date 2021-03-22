@@ -30,33 +30,18 @@ public class SimpleLoanServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
-		//String searchSelect = request.getParameter("searchSelect");
-		//String search = request.getParameter("search");
-		
-		// System.out.println("BLS" + (String) request.getSession().getAttribute("searchSelect"));
 				
 		String[] chk = request.getParameterValues("checkSelect");
-		
 		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUser_id();
 		
 		int result = new BookService().loanBook(chk, userId);
 		
 		
 		if(result > 0) {
-			//request.getSession().setAttribute("searchSelect", searchSelect);
-			//request.getSession().setAttribute("search", search);
-			
 			request.getSession().setAttribute("msg", "대출 예약 되었습니다.");
-			//response.sendRedirect(request.getContextPath() + "/simple/result");
-			
 			response.sendRedirect(request.getContextPath() + "/mylib/lblist");
-			//request.getRequestDispatcher("/views/myLib/loanList.jsp").forward(request, response);
 			
-		} else {
-			System.out.println("실패");
-			// 수정하기
-		}
+		} 
 	}
 
 	/**

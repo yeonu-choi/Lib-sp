@@ -603,17 +603,17 @@ public class BookDao {
 	}
 	
 	// 자동 완성
-	public List<String> autoBookNameSearch(Connection conn, String val) {
+	public List<String> autoBookNameSearch(Connection conn, String val, String sel) {
 	PreparedStatement pstmt = null;
 	ResultSet rset = null;
 	List<String> list = new ArrayList<>();
 	String sql = query.getProperty("autoBookNameSearch");
 	
-	
 	try {
 		pstmt = conn.prepareStatement(sql);
 		
 		pstmt.setString(1, val);
+		pstmt.setString(2, val);
 		
 		rset = pstmt.executeQuery();
 		
@@ -632,7 +632,68 @@ public class BookDao {
 	
 	}
 
+	
+	public List<String> autoBookWriterSearch(Connection conn, String val, String sel) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	List<String> list = new ArrayList<>();
+	String sql = query.getProperty("autoBookWriterSearch");
+	
+	try {
+		pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, val);
+		pstmt.setString(2, val);
+		
+		rset = pstmt.executeQuery();
+		
+		while(rset.next()) {
+			list.add(rset.getString("writer"));
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
 
+	return list;
+	
+	}
+	
+	
+	public List<String> autoBookPublisherSearch(Connection conn, String val, String sel) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	List<String> list = new ArrayList<>();
+	String sql = query.getProperty("autoBookPublisherSearch");
+	
+	try {
+		pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, val);
+		pstmt.setString(2, val);
+		
+		rset = pstmt.executeQuery();
+		
+		while(rset.next()) {
+			list.add(rset.getString("publisher"));
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+
+	return list;
+	
+	}
+
+	
+	
 	// 재검색 리스트 카운트
 	public int getReSearchListCount(Connection conn, String preSearchSelect, String preSearch, String searchSelect,
 			String search) {
@@ -668,55 +729,81 @@ public class BookDao {
 	}
 
 	//재검색 리스트 목록
-	public List<Book> selectReSearchList(Connection conn, PageInfo pi, String preSearchSelect, String preSearch,
-			String searchSelect, String search) {
+	public List<Book> selectReSearchList(Connection conn, PageInfo pi, String preSearch, String search) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Book> list = new ArrayList<>();
-		String sql = "selectReSearchList";
+		String sql = query.getProperty("selectReSearchList");
 		
-		
-			try {
-				pstmt = conn.prepareStatement(sql);
-				
-				int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
-				int endRow = startRow + pi.getBoardLimit() - 1;
-				
-				pstmt.setString(1, preSearch);
-				pstmt.setString(2, preSearch);
-				pstmt.setString(3, preSearch);
-				pstmt.setString(4, search);
-				pstmt.setString(5, search);
-				pstmt.setString(6, search);
-				pstmt.setInt(7, startRow);
-				pstmt.setInt(8, endRow);
-				
-				rset = pstmt.executeQuery();
-				
-				while(rset.next()) {
-					list.add(new Book(rset.getLong("isbn")
-									, rset.getString("bk_name")
-									, rset.getString("writer")
-									, rset.getString("publisher")
-									, rset.getInt("issue_year")
-									, rset.getDate("r_date")
-									, rset.getString("imgname")
-									, rset.getString("imgpath")
-									, rset.getString("call_num")
-									, rset.getString("status")));
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				close(rset);
-				close(pstmt);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			
+			pstmt.setString(1, preSearch);
+			pstmt.setString(2, preSearch);
+			pstmt.setString(3, preSearch);
+			pstmt.setString(4, search);
+			pstmt.setString(5, search);
+			pstmt.setString(6, search);
+			pstmt.setInt(7, startRow);
+			pstmt.setInt(8, endRow);
+			
+			rset=pstmt.executeQuery();
+					
+			while(rset.next()) {
+				list.add(new Book((rset.getLong("isbn"))
+						, rset.getString("bk_name")
+						, rset.getString("writer")
+						, rset.getString("publisher")
+						, rset.getInt("issue_year")
+						, rset.getDate("r_date")
+						, rset.getString("imgname")
+						, rset.getString("imgpath")
+						, rset.getString("call_num")
+						, rset.getString("status")));
 			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
 
 		return list;
 	}
 	
-	
+	// 회원 대출 카운트
+	public int loanNumCount(Connection conn, String user_id) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		String sql = query.getProperty("loanNumCount");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, user_id);
+			
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return listCount;
+	}
+		
 	
 	
 	
@@ -771,6 +858,7 @@ public class BookDao {
 		
 		return result;
 	}
+
 
 	
 

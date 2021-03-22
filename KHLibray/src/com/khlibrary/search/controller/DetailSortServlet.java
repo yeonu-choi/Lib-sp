@@ -43,7 +43,6 @@ public class DetailSortServlet extends HttpServlet {
 		String sortSelect = request.getParameter("sortSelect");
 		String numSelect = request.getParameter("numSelect");
 		
-		// isbn varchar/String으로 바꾸면 bk 객체에 담고 Service, Dao, query(To_Number 같은거!), 다 수정하기
 		Book bk = new Book(bName, bWriter, bPublisher);
 		
 		int currentPage = 1;
@@ -69,12 +68,11 @@ public class DetailSortServlet extends HttpServlet {
 		
 		System.out.println(pi);
 		
-		//List<Book> list = 
 
 		List<Book> list = new ArrayList<>(); 
 		
 		if(sortSelect.equals("서명순")) {
-			list = bService.selectSearchList(pi, isbn, bk, tDate, fDate); // 원래 것
+			list = bService.selectSearchList(pi, isbn, bk, tDate, fDate); 
 		} else if(sortSelect.equals("저자순")){
 			list = bService.searchWriterSortList(pi, isbn, bk, tDate, fDate); 
 		} else {

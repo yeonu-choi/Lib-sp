@@ -24,6 +24,7 @@
 	<entry key="selectMainList">
 		SELECT 
 			BK_NAME,
+			WRITER,
 			IMGNAME,
 			IMGPATH
         FROM 
@@ -34,6 +35,7 @@
        			 (
                   SELECT 
                     	BK_NAME,
+                    	WRITER,
                     	IMGNAME,
                     	IMGPATH
                   FROM 

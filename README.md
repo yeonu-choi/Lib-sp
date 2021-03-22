@@ -175,3 +175,7 @@
 21.03.22 mainbar-basic 경로 수정 - doo
 
 21.03.22 FAQListServlet 주소 /faq/list - doo
+
+21.03.22 newBooks-query, loan-query 수정
+
+21.03.22 book vo 수정

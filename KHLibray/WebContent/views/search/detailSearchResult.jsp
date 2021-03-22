@@ -3,32 +3,13 @@
 <%
 	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	
-	//String bName =  (String)request.getSession().getAttribute("bName");
-	//String bWriter = (String)request.getSession().getAttribute("bWriter");
-	//String bPublisher = (String)request.getSession().getAttribute("bPublisher");
-	//String isbn = (String)request.getSession().getAttribute("isbn");
-	//String tDate = (String)request.getSession().getAttribute("tDate");
-	//String fDate = (String)request.getSession().getAttribute("fDate");
-	
-	//if(bName == null){
+
 	String bName = (String)request.getParameter("bName") != null ? request.getParameter("bName") : "";;
-	//} 
-	//if(bWriter == null){
 	String bWriter = (String)request.getParameter("bWriter") != null ? request.getParameter("bWriter") : "";
-	//} 
-	//if(bPublisher == null){
 	String bPublisher = (String)request.getParameter("bPublisher") != null ? request.getParameter("bPublisher") : "";
-	//} 	
-	//if(isbn == null){
 	String isbn = (String)request.getParameter("isbn") != null ? request.getParameter("isbn") : "";
-	//} 
-	//if(tDate == null){
 	String tDate = (String)request.getParameter("tDate") != null ? request.getParameter("tDate") : "";
-	//} 
-	//if(fDate == null){
 	String fDate = (String)request.getParameter("fDate") != null ? request.getParameter("fDate") : "";
-	//} 
 
 	String sortSelect = request.getParameter("sortSelect") != null ? request.getParameter("sortSelect") : "";
 	String numSelect = request.getParameter("numSelect") != null ? request.getParameter("numSelect") : "";

@@ -242,14 +242,19 @@
 			var val= $("#search").val();
 			console.log(val);
 			
+			var sel = $("#searchSelect").val();
+			
 			$(document).ready(function(){
+				$("#searchSelect").change(function(){
+					sel = $("#searchSelect").val();
+				});
 				$("#search").autocomplete({
 					minLength: 1,
 					source:function(request, response) {
 						$.ajax({
 							url : "<%= request.getContextPath() %>/book/auto",
 							type : "get",
-							data : { val : request.term },
+							data : { val : request.term , sel : sel },
 							success : function(data){
 								console.log(data);
 								response( 

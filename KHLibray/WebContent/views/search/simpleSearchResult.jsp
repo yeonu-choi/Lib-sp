@@ -4,15 +4,8 @@
 	ArrayList<Book> list = (ArrayList<Book>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
-	String searchSelect = request.getParameter("searchSelect") != null ? request.getParameter("searchSelect") : "";		//=(String)request.getSession().getAttribute("searchSelect");
-	String search = request.getParameter("search")!= null ? request.getParameter("search") : ""; 						//(String)request.getSession().getAttribute("search");
-	
-	//if(searchSelect == null){
-	//	searchSelect = request.getParameter("searchSelect") != null ? request.getParameter("searchSelect") : "";
-	//} 
-	//if(search == null){
-	//	search = request.getParameter("search")!= null ? request.getParameter("search") : "";
-	//} 
+	String searchSelect = request.getParameter("searchSelect") != null ? request.getParameter("searchSelect") : "";		
+	String search = request.getParameter("search")!= null ? request.getParameter("search") : ""; 						
 
 	String select[] = new String[4];
 
@@ -58,6 +51,9 @@
 			num[2] = "selected";
 		}
 	}
+	
+	String preSearchSelect = request.getParameter("preSearchSelect") != null ? request.getParameter("preSearchSelect") : "";
+	String preSearch = request.getParameter("preSearch") != null ? request.getParameter("preSearch") : "";
 	
 %>
 <!DOCTYPE html>
@@ -407,8 +403,8 @@
                         <input type="checkbox" name="reSearch" id="reSearch">
                         <label>결과내재검색</label>
                     </div>
-                    <input type="hidden" value="<%=searchSelect%>" name="preSearchSelect">
-                    <input type="hidden" value="<%=search%>" name="preSearch">
+                    <input type="hidden" value="<%= searchSelect %>" name="preSearchSelect">
+                    <input type="hidden" value="<%= search %>" name="preSearch">
                     
                 </div>
                 
@@ -424,9 +420,7 @@
 					} else if($("#reSearch").is(":checked") == true){
 						$("#searchForm").attr("action", "<%= request.getContextPath()%>/simple/reSearch");
 						
-						console.log("얍");
 					} else {
-						
 						return true;
 					}
 				}
@@ -434,14 +428,19 @@
 				var val= $("#search").val();
 				console.log(val);
 				
+				var sel = $("#searchSelect").val();
+				
 				$(document).ready(function(){
+					$("#searchSelect").change(function(){
+						sel = $("#searchSelect").val();
+					});
 					$("#search").autocomplete({
 						minLength: 1,
 						source:function(request, response) {
 							$.ajax({
 								url : "<%= request.getContextPath() %>/book/auto",
 								type : "get",
-								data : { val : request.term },
+								data : { val : request.term , sel : sel},
 								success : function(data){
 									console.log(data);
 									response( 
@@ -525,22 +524,27 @@
 
                 <div class="pageArea">
                     <% if(pi.getCurrentPage() == 1) {%>
-                    <a href="#;"><i class="bi bi-chevron-double-left"></i></a>
-                    <a href="#;"><i class="bi bi-chevron-compact-left"></i></a>
-                    <% } else if(sortSelect.equals("") && numSelect.equals("")){%>
-                    <a href="<%= request.getContextPath() %>/simple/search?currentPage=1&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-left"></i></a>
-                    <a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getCurrentPage()- 1 %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-compact-left"></i></a>
-					<% } else {%>
-					<a href="<%= request.getContextPath() %>/simple/sort?currentPage=1&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-left"></i></a>
-                    <a href="<%= request.getContextPath() %>/simple/sort?currentPage=<%= pi.getCurrentPage()- 1 %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-compact-left"></i></a>
+                    	<a href="#;"><i class="bi bi-chevron-double-left"></i></a>
+                    	<a href="#;"><i class="bi bi-chevron-compact-left"></i></a>
+                    <% } else if(sortSelect.equals("") && numSelect.equals("")){ %>
+                    	<a href="<%= request.getContextPath() %>/simple/search?currentPage=1&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-left"></i></a>
+                    	<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getCurrentPage()- 1 %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-compact-left"></i></a>
+					<% } else if(preSearchSelect.equals("") && preSearch.equals("")){ %>
+						<a href="<%= request.getContextPath() %>/simple/sort?currentPage=1&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-left"></i></a>
+                    	<a href="<%= request.getContextPath() %>/simple/sort?currentPage=<%= pi.getCurrentPage()- 1 %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-compact-left"></i></a>
+					<% } else { %>
+						<a href="<%= request.getContextPath() %>/simple/reSearch?currentPage=1&searchSelect=<%= searchSelect %>&search=<%= search %>&preSearchSelect=<%= preSearchSelect %>&preSearch=<%= preSearch %>"><i class="bi bi-chevron-double-left"></i></a>
+                    	<a href="<%= request.getContextPath() %>/simple/reSearch?currentPage=<%= pi.getCurrentPage()- 1 %>&searchSelect=<%= searchSelect %>&search=<%= search %>&preSearchSelect=<%= preSearchSelect %>&preSearch=<%= preSearch %>"><i class="bi bi-chevron-compact-left"></i></a>
 					<% } %>	
                     <% for(int i = pi.getStartPage(); i <= pi.getEndPage(); i++) { %>
                     	<% if(i == pi.getCurrentPage()) { %>
                     		<a href="#;" style="background:rgb(216, 215, 215)"><%= i %></a>
                     	<% } else if(sortSelect.equals("") && numSelect.equals("")) { %>
                     		<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= i %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><%= i %></a>
-                    	<% } else {%>
+                    	<% } else if(preSearchSelect.equals("") && preSearch.equals("")) { %>
 							<a href="<%= request.getContextPath() %>/simple/sort?currentPage=<%= i %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><%= i %></a>
+						<% } else { %>
+                    		<a href="<%= request.getContextPath() %>/simple/reSearch?currentPage=<%= i %>&searchSelect=<%= searchSelect %>&search=<%= search %>&preSearchSelect=<%= preSearchSelect %>&preSearch=<%= preSearch %>"><%= i %></a>						
 						<% } %>	
                     <% } %>
                     
@@ -550,9 +554,12 @@
                     <% } else if(sortSelect.equals("") && numSelect.equals("")) { %>
                     	<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getCurrentPage() + 1 %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-right"></i></a>
                     	<a href="<%= request.getContextPath() %>/simple/search?currentPage=<%= pi.getMaxPage() %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-right"></i></a>
-                    <% }  else {%>
+                    <% }  else if(preSearchSelect.equals("") && preSearch.equals("")){ %>
 						<a href="<%= request.getContextPath() %>/simple/sort?currentPage=<%= pi.getCurrentPage() + 1 %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-right"></i></a>
                     	<a href="<%= request.getContextPath() %>/simple/sort?currentPage=<%= pi.getMaxPage() %>&sortSelect=<%= sortSelect %>&numSelect=<%= numSelect %>&searchSelect=<%= searchSelect %>&search=<%= search %>"><i class="bi bi-chevron-double-right"></i></a>
+					<% } else { %>
+					    <a href="<%= request.getContextPath() %>/simple/reSearch?currentPage=<%= pi.getCurrentPage() + 1 %>&searchSelect=<%= searchSelect %>&search=<%= search %>&&preSearchSelect=<%= preSearchSelect %>&preSearch=<%= preSearch %>"><i class="bi bi-chevron-right"></i></a>
+                    	<a href="<%= request.getContextPath() %>/simple/reSearch?currentPage=<%= pi.getMaxPage() %>&searchSelect=<%= searchSelect %>&search=<%= search %>&preSearchSelect=<%= preSearchSelect %>&preSearch=<%= preSearch %>"><i class="bi bi-chevron-double-right"></i></a>
 					<% } %>	
 					</div>
 
@@ -608,16 +615,33 @@
 			console.log(sArr);
 			
 			<% if(loginUser != null) { %>
-				
-				if(sArr.includes("대출불가능[대출중]")){
-					alert("대출 불가능한 도서가 있습니다.")
-				} else {
-					$(".book").each(function(i){
-						if($('#checkSelect' + i ).is(":checked") == true){
-							$("#loansForm").submit()
+						
+			$(function(){
+				$.ajax({
+					url : "<%= request.getContextPath() %>/loan/check",
+					type : "post",
+					success : function(data){
+						console.log(data);	
+							
+						if(data == "fail"){
+							alert("회원님은 더 이상 대출할 수 없습니다.");
+						} else if(sArr.includes("대출불가능[대출중]")){
+							alert("대출 불가능한 도서가 있습니다.")
+						} else {
+							$(".book").each(function(i){
+								if($('#checkSelect' + i ).is(":checked") == true){
+									$("#loansForm").submit()
+								}
+							});
 						}
-					});
-				}
+							
+					},
+					error : function(e){
+						console.log(e);
+					}
+				});
+			});
+				
 				
 			<% } else {%>
 				alert("로그인 후 이용이 가능합니다.")

@@ -254,7 +254,7 @@
     </div>
     <div class="mainSearch">
         <form action="<%=request.getContextPath() %>/simple/search" method="get">
-        	<input type="hidden" name="searchSelect" value="total">
+        	<input type="hidden" name="searchSelect" value="전체">
             <div class="label">
             <p>통합검색</p>
             </div>
@@ -356,7 +356,7 @@
                 <tr class="line1">
                     <td>도서관 일정</td>
                     <td class="moreView" align="right">
-                    <a href="">
+                    <a href="<%= request.getContextPath() %>/views/libInfo/libSchedule.jsp">
                         <img src="<%=request.getContextPath() %>/resources/image/yw/plus3.png" width="17px" height="15px">
                     </a>
                     </td>
@@ -401,15 +401,15 @@
             	<% if(blist != null) {%>
                 <tr>
                  <% for(Book b : blist) { %>
-                    <td class="bimg"><a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= b.getbName() %>"><img src="<%=request.getContextPath() %>/<%= b.getImgPath() %>/<%= b.getImgName() %>" width="100px" height="150px"></a></td>
+                    <td class="bimg"><a href="<%= request.getContextPath() %>/simple/search?searchSelect=서명&search=<%= b.getbName() %>"><img src="<%=request.getContextPath() %><%= b.getImgPath() %><%= b.getImgName() %>" width="100px" height="150px"></a></td>
                	 <% } %>
                 </tr>
                 <tr>
                 <% for(Book b : blist) { %>
                 	<% if(b.getbName().length() < 9) { %>
-                    <td class="btitle" name="btitle" align="center"><%= b.getbName() %></td>
+                    <td class="btitle" align="center"><%= b.getbName() %></td>
                     <% } else { %>
-                    <td class="btitle" name="btitle" align="center"><%= b.getbName().substring(0,9) %>...</td>
+                    <td class="btitle" align="center"><%= b.getbName().substring(0,9) %>...</td>
                     <% } %>
                 <% } %>
                 </tr> 

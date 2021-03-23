@@ -57,6 +57,7 @@ public class NewBooksDao {
 	}
 
 
+
 	public List<Book> selectMainList(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -69,7 +70,6 @@ public class NewBooksDao {
 			
 			while(rset.next()) {
 				list.add(new Book(rset.getString("bk_name"),
-								  rset.getString("writer"),
 						 		  rset.getString("imgname"),
 						 		  rset.getString("imgpath")));
 			}

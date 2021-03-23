@@ -49,4 +49,35 @@ public class FAQService {
 		return list;
 	}
 
+	public int insertFAQ(FAQ faq) {
+		Connection conn = getConnection();
+		
+		int result = new FAQDao().insertFAQ(conn, faq);
+		
+		if(result > 0) {
+			commit(conn);			
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+
+	public int deleteFAQ(FAQ faq) {
+		Connection conn = getConnection();
+		
+		int result = new FAQDao().deleteFAQ(conn, faq);
+		
+		if(result > 0) {
+			commit(conn);
+		} else  {
+			rollback(conn);
+		}
+		
+		return result;
+	}
+
 }

@@ -45,7 +45,6 @@ public class FAQDao {
 						  	 	 rset.getString("status")));
 			}
 			
-			System.out.println(list);
 			
 			
 		} catch (SQLException e) {
@@ -77,7 +76,6 @@ public class FAQDao {
 						  	 	 rset.getString("status")));
 			}
 			
-			System.out.println(list);
 			
 			
 		} catch (SQLException e) {
@@ -139,7 +137,6 @@ public class FAQDao {
 						  	 	 rset.getString("status")));
 			}
 			
-			System.out.println(list);
 			
 			
 		} catch (SQLException e) {
@@ -150,6 +147,52 @@ public class FAQDao {
 		}
 		
 		return list;
+	}
+
+
+	public int insertFAQ(Connection conn, FAQ faq) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = query.getProperty("insertFAQ");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, faq.getF_Qcontent());
+			pstmt.setString(2, faq.getF_Acontent());
+			pstmt.setString(3, faq.getCategory());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+
+	public int deleteFAQ(Connection conn, FAQ faq) {
+		PreparedStatement pstmt= null;
+		int result = 0;
+		String sql = query.getProperty("deleteFAQ");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, faq.getF_Qcontent());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);			
+		}		
+		return result;
 	}
 
 }

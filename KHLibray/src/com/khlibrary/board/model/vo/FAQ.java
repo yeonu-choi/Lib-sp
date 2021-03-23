@@ -8,6 +8,15 @@ public class FAQ {
 	private String status;
 	
 	public FAQ() {}
+	
+	
+
+	public FAQ(String f_Qcontent) {
+		super();
+		this.f_Qcontent = f_Qcontent;
+	}
+
+
 
 	public FAQ(int fNo, String f_Qcontent, String f_Acontent, String category, String status) {
 		super();
@@ -16,6 +25,14 @@ public class FAQ {
 		this.f_Acontent = f_Acontent;
 		this.category = category;
 		this.status = status;
+	}
+	
+
+	public FAQ(String f_Qcontent, String f_Acontent, String category) {
+		super();
+		this.f_Qcontent = f_Qcontent;
+		this.f_Acontent = f_Acontent;
+		this.category = category;
 	}
 
 	public int getfNo() {

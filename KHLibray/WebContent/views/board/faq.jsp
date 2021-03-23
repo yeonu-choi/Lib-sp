@@ -126,10 +126,36 @@
             float:left;
        	}
        	
+       	#addDelete {
+       		float:left;
+       		width: 100%;
+       	}
+       	
        	#addfaq {
        		margin-top:50px;
        		float:right;
        	}
+       	
+       	#deleteForm{
+       		float: right;
+       	}
+       	
+       	#deleteText{
+       		float: right;
+       		width: 300px;
+       	}
+       	
+       	#addBtn {
+       		width: 100%;
+       		float:right;
+       	}
+       	
+       	#deleteFormDiv {
+       		margin-top: 30px;
+       		float:right;
+       	}
+       		
+       	
 
         
     </style>
@@ -319,7 +345,16 @@
 		</li>
 		</ul>
 		<% if(loginId != null && loginId.equals("admin")) { %>
-		<button type="button" class="btn btn-secondary" id="addfaq">FAQ 추가</button>	
+		<div id="addDelete">
+			<div id="addBtn">
+				<button type="button" class="btn btn-secondary" id="addfaq">FAQ 추가</button>	
+			</div>
+			<div id="deleteFormDiv">
+				<form id="deleteForm" method="post" action="<%= request.getContextPath() %>/faq/delete">
+					<input type="text" name="deleteTitle" placeholder="삭제할 질문을 입력하세요" id="deleteText" required><input type="submit" value="삭제">
+				</form>
+			</div>
+		</div>
 		<% } %>
 		<script>
                 const write = document.getElementById('addfaq');

@@ -183,3 +183,5 @@
 21.03.23 FAQInsertServlet 주소 /faq/insert - doo
 
 21.03.23 FAQDeleteServlet 주소 /faq/delete - doo
+
+21.03.23 index.jsp 수정 - yw

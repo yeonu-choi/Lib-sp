@@ -163,7 +163,7 @@
         .tableArea {
             width: 100%;
             height:100%;
-            max-height: 400px;
+            max-height: 500px;
             /* border-top: 1px rgb(204, 199, 199) solid;   좀 더 진함... */
             border-top: 1px rgb(138, 137, 137) solid;
             border-bottom: 1px rgb(226, 223, 223) solid;
@@ -285,7 +285,13 @@
                         </thead>
 
                         <tbody>
-                        <% for(WishBook wb : list) {%>
+                       	<% if(list.isEmpty()) { %>
+                       		<tr>
+                        	<td colspan="10" align="center">희망 도서 내역이 없습니다</td>
+                        	</tr>
+                        	
+                        <% } else { %>
+                        <% for(WishBook wb : list) { %>
                         <tr>
                         	
                             <td><input type="checkbox" value="<%= wb.getWbId() %>" name="chkWbId" 
@@ -310,6 +316,7 @@
                             <% } %>
                             </td>
                         </tr>
+						<% } %>
 						<% } %>
                         </tbody>
                     </table>

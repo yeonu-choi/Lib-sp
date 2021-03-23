@@ -179,3 +179,7 @@
 21.03.22 newBooks-query, loan-query 수정 - yw
 
 21.03.22 book vo 수정 - yw
+
+21.03.23 FAQInsertServlet 주소 /faq/insert - doo
+
+21.03.23 FAQDeleteServlet 주소 /faq/delete - doo

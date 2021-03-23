@@ -72,7 +72,7 @@ public class BookInsertServlet extends HttpServlet {
 			
 			if(result >0) {
 				request.getSession().setAttribute("msg","도서가 성공적으로 등록되었습니다.");
-				response.sendRedirect(request.getContextPath()+ "/admin/bookInsert");
+				request.getRequestDispatcher("/views/admin/bookInsert.jsp").forward(request, response);
 			} else {
 				request.setAttribute("msg", "도서 등록에 실패했습니다.");
 				request.getRequestDispatcher("/views/common/errorPage.jsp").forward(request, response);

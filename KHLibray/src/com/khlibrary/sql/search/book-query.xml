@@ -693,7 +693,7 @@
 	</entry>
 	<entry key="autoBookWriterSearch">
 		SELECT 
-			   WRITER
+			   DISTINCT WRITER
 		  FROM 
 		  	   (SELECT 
 			           WRITER
@@ -707,7 +707,7 @@
 	
 	<entry key="autoBookPublisherSearch">
 		SELECT 
-			   PUBLISHER
+			   DISTINCT PUBLISHER
 		  FROM 
 		  	   (SELECT 
 			           PUBLISHER

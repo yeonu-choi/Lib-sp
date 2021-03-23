@@ -37,4 +37,32 @@
 	 		STATUS = 'Y'
 	   AND	CATEGORY = '시설'	
 </entry>
+<entry key="insertFAQ">
+	INSERT
+		INTO FAQ
+		(
+			FNO
+		  , F_QCONTENT
+		  , F_ACONTENT
+		  , CATEGORY
+		  , STATUS			
+		)
+		
+		VALUES
+		(
+			SEQ_FNO.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , DEFAULT
+		)	
+</entry>
+<entry key="deleteFAQ">
+	UPDATE 
+			FAQ
+	   SET
+	   		STATUS = 'N'
+	 WHERE	F_QCONTENT LIKE '%' || ? || '%'	
+	   
+</entry>
 </properties>

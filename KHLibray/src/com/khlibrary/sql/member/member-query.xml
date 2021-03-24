@@ -61,10 +61,48 @@
              , EMAIL = ?
              , ADDRESS = ?
              , BIRTH_DATE = ?
+           
        WHERE
              USER_ID = ?
    </entry>
    <entry key="selectMember">
+      SELECT
+              USER_ID
+           , USER_PWD
+           , USER_NAME
+           , BIRTH_DATE        
+           , PHONE
+           , EMAIL
+           , ADDRESS
+           , GRADE
+           , ENROLL_DATE
+           , USER_NO
+           , OVERDUE
+          
+        FROM
+             MEMBER
+       WHERE
+             USER_ID = ?        
+   </entry>
+   <entry key="updatePwd">
+     UPDATE
+   		MEMBER
+    SET
+   		USER_PWD = ?
+   	  WHERE
+   		USER_ID = ?
+    	AND USER_PWD = ?			 
+   </entry>
+   	<entry key="idCheck">
+		SELECT
+			COUNT(*)
+		FROM
+			MEMBER
+		WHERE
+			USER_ID = ?		
+	</entry>
+	
+	<entry key="idSearch">
       SELECT
              USER_ID
            , USER_PWD
@@ -80,25 +118,43 @@
         FROM
              MEMBER
        WHERE
-             USER_ID = ?        
+             USER_NAME = ?
+         AND EMAIL = ?
+       
    </entry>
-   <entry key="updatePwd">
+	
+	<entry key="pwdSearch">
+      SELECT
+             USER_ID
+           , USER_PWD
+           , USER_NAME
+           , BIRTH_DATE        
+           , PHONE
+           , EMAIL
+           , ADDRESS
+           , GRADE
+           , ENROLL_DATE
+           , USER_NO
+           , OVERDUE
+        FROM
+             MEMBER
+       WHERE
+             USER_ID = ?
+         AND EMAIL = ?
+       
+   </entry>
+	
+	 <entry key="pwdUpdate">
      UPDATE
    		MEMBER
     SET
    		USER_PWD = ?
    	  WHERE
-   		USER_ID = ?
-    	   AND USER_PWD = ?			 
+   		USER_ID = ?			 
    </entry>
-   	<entry key="idCheck">
-		SELECT
-			COUNT(*)
-		FROM
-			MEMBER
-		WHERE
-			USER_ID = ?		
-	</entry>
+	
+	
+	
 	
 	
 	

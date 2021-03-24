@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="getListCount">
+		SELECT
+				COUNT(*)
+		  FROM
+		  		QNA
+		 WHERE
+		 		STATUS = 'Y'
+	</entry>
+	<entry key="selectList">
+		SELECT 
+				RNUM
+			  , QNA_NO
+			  , QNA_QTITLE
+			  , QNA_QCONTENT
+			  , QNA_ACONTENT
+			  , Q_COUNT
+			  , C_DATE
+			  , M_DATE
+			  , STATUS
+			  , SECRET
+			  , USER_ID
+		FROM 	
+				(SELECT
+     					ROWNUM RNUM
+     				  , QNA_NO
+     				  , QNA_QTITLE
+     				  , QNA_QCONTENT
+     				  , QNA_ACONTENT
+     				  , Q_COUNT
+     				  , C_DATE
+     				  , M_DATE
+     				  , STATUS
+     				  , SECRET
+     				  , USER_ID
+     		   	 FROM 
+     		   	 		QNA 
+     			 JOIN 	MEMBER 
+     			 		USING(USER_ID)
+      			 WHERE 
+      			 		STATUS = 'Y'
+    					ORDER BY QNA_NO DESC)
+		WHERE 
+				RNUM BETWEEN ? AND ?		
+	</entry>
+	<entry key="insertQNA">
+		INSERT
+		INTO QNA
+		(
+				QNA_NO
+			  , QNA_QTITLE
+			  , QNA_QCONTENT
+			  , QNA_ACONTENT
+			  , Q_COUNT
+			  , C_DATE
+			  , M_DATE
+			  , STATUS
+			  , SECRET
+			  , USER_ID
+		)
+		VALUES
+		(
+				SEQ_QNO.NEXTVAL
+			  , ?
+			  , ?
+			  , DEFAULT
+			  , 0
+			  , SYSDATE
+			  , SYSDATE
+			  , DEFAULT
+			  , ?
+			  , ?				
+		)		
+	</entry>
+	
+</properties>

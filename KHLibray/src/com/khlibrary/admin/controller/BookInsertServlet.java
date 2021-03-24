@@ -41,7 +41,7 @@ public class BookInsertServlet extends HttpServlet {
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			int maxSize = 1024*1024*10;
-			String root = request.getSession().getServletContext().getRealPath("/"); // 실제 경로를 알아오세요
+			String root = request.getSession().getServletContext().getRealPath("/"); 
 			String savePath = root + "resources\\uploadFiles\\";
 			
 			MultipartRequest multiRequest = 

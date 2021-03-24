@@ -1,17 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+       
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%if(session.getAttribute("msg") != null){ %>
-<script>
-	alert('<%= session.getAttribute("msg") %>');
-</script>
-<%
-	session.removeAttribute("msg");
-} %>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
@@ -146,7 +140,7 @@
     	.btnArea {
     	    margin-top: 20px; 
     	
-    		margin-left: 320px; 
+    		margin-left: 340px; 
     	}
     	
     	  button{
@@ -162,7 +156,7 @@
    			border : 1px solid #aaaaaa;
    		   	 background: #d2d2d2;   		
    		}
-   		.pwdSearchTable td{
+   		.idser{
    			height:55px;
    			width : 330px;
    			border : 1px solid #aaaaaa;
@@ -176,8 +170,6 @@
   			margin-left: 13px;
    			
    		}
-	
-	
 	
 </style>
 </head>
@@ -216,29 +208,67 @@
 	<div class="outer">
 		 <h2>비밀번호 찾기</h2><hr>
 		<div class="inner">
-		 <form id="pwdSearch" action="<%= request.getContextPath() %>/member/pwdSearch"
-            method="post">
+		 <form id="pwdSearch" action="<%= request.getContextPath() %>/member/pwdSearchResult"
+            method="post" onsubmit="return pwdValidate();">
 		<div class="insertArea">
-              
+    
         <table class="pwdSearchTable">
             <tr>
-                <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
-                <td class = "idser"><input type="text" name=user_id></td>					
-            </tr>      
+                <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;인증번호 입력&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
+                <td class = "idser"><input type="text" name="AuthenticationUser"></td>					
+            </tr>   
             <tr>
-                <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>	
-                <td class = "idser"><input type=email name="email"></td>
+                <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>	
+                <td class = "idser"><input type="text" name="user_id" maxlength="12" ></td>
+                 <td><label id="pwdId"></label></td>
+            </tr>              
+            <tr>
+                <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;새 비밀번호&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>	
+                <td class = "idser"><input type="password" name="new_pwd" maxlength="12"></td>
+                 <td><label id="pwdResult"></label></td>
+            </tr>
+           <tr>
+                <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;새 비밀번호 확인&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>	
+                <td class = "idser" ><input type="password" name="new_pwd2" maxlength="12"></td>
+               
             </tr>
            
 		</table>
 			<div class="btnArea">
-				<button type="submit">검색하기</button>
+				<button type="submit">입력하기</button>
 			</div>
 		</div>
 	</form>
 	</div>
 	</div>
- 
+
+
+
+<script>
+      function pwdValidate() { 
+         // 비밀번호
+         if (!(/^[a-z][a-z\d]{3,11}$/.test($(".idser input[name= new_pwd]").val()))) {
+             alert("비밀번호는 영소문자로 시작해서 4~12자 입력(숫자포함 가능)");
+             $(".idser input[name=new_pwd]").select();
+             return false;
+          }
+         
+         // 비밀번호 일치여부
+         if ($(".idser input[name=new_pwd]").val() != $(".idser input[name=new_pwd2]").val()) {
+            $("#pwdResult").text("비밀번호불일치").css("color", "red");
+            return false;
+         }
+         
+        	 return true;
+      }
+</script>
+
+
+<script>	
+  		alert("입력하신 이메일에서 인증번호를 확인하세요."); 
+</script>   
+
+
 
 <%@ include file="../common/footer.jsp" %>
 </body>

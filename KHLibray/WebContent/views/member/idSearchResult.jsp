@@ -1,18 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	Member m = (Member)session.getAttribute("idSear");
+
+	String user_id = m.getUser_id();
+	String user_name = m.getUser_name();
+	String birth_date = m.getBirth_date();
+	String phone = (m.getPhone() != null) ? m.getPhone() : "";
+	String email = (m.getEmail() != null) ? m.getEmail() : "";
+	String[] address = {"", "", ""};
+	if(m.getAddress() != null)
+		address = m.getAddress().split(",");		
+%>
+   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%if(session.getAttribute("msg") != null){ %>
-<script>
-	alert('<%= session.getAttribute("msg") %>');
-</script>
-<%
-	session.removeAttribute("msg");
-} %>
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
@@ -115,9 +121,9 @@
         
         #sideMenu a {
        		text-decoration: none;
-       		color: black;      		
-    	}
-    	 /********************************************************/
+       		color: black;
+       		}
+       /********************************************************/
        	.outer{
             width: 65%;
             min-width : 850px;
@@ -132,42 +138,42 @@
             padding: 40px;
             border : 1px rgb(219, 219, 219) solid;
         }
-    	    	
+    	
+    	
     	h2{
     		font-weight: 600;
 			font-size: 28px;
-			padding: 90px 0px 5px 20px;
-    	    	} 	
-    	.pwdSearchTable {
-    		margin-left: 130px;
-    		border : 1px solid #aaaaaa;    	
+			padding: 90px 0px 5px 20px;    	
     	}
+  
+    	.idSearchTable {
+    		margin-left: 130px; 
+    		border : 1px solid #aaaaaa;
     	
+    	}
     	.btnArea {
-    	    margin-top: 20px; 
-    	
-    		margin-left: 320px; 
+    	    margin-top: 30px;     	
+    		margin-left: 250px; 
     	}
-    	
+    	   	
     	  button{
    	  		 width:80px;
       		 height:40px;
      		 color:white;
-     		 background: #aaaaaa;
+     		  background: #aaaaaa;
      		 border: #aaaaaa;
       		 border-radius:5px;  
    		}  
-	
-	    .pwdSearchTable th {
+   		.idSearchTable th {
    			border : 1px solid #aaaaaa;
    		   	 background: #d2d2d2;   		
    		}
-   		.pwdSearchTable td{
+   		.idSearchTable td{
    			height:55px;
    			width : 330px;
-   			border : 1px solid #aaaaaa;
+  			border : 1px solid #aaaaaa;
    		}
-		.idser input {
+   		.idser input {
    			height:35px;
    			border : 1px solid #aaaaaa;
    			display: inline-block;
@@ -176,19 +182,18 @@
   			margin-left: 13px;
    			
    		}
-	
-	
-	
-</style>
+   		
+    	
+    </style>
 </head>
 <body>
 <%@ include file="../common/mainbar-basic.jsp" %>
-
-<div class="submArea">
+ 
+ <div class="submArea">
     <div class="bcrumb">
         <span><a id="homebtn" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/image/yw/homebtnw.png" width="20px" height="20px"></a></span>&nbsp;&nbsp;&nbsp;
         <span><a id="mName" href="">회원가입 및 로그인</a></span>&nbsp;&nbsp;&nbsp;
-        <span><a id="subName" href="">비밀번호 찾기</a></span>
+        <span><a id="subName" href="">아이디 찾기</a></span>
     </div>
     <div class="sidebar">
             <div class="sideMenu">
@@ -212,34 +217,50 @@
             </div>
     </div>
 </div>
-
-	<div class="outer">
-		 <h2>비밀번호 찾기</h2><hr>
+ 	 
+ 	
+ 	<div class="outer">
+  <% if((Member)session.getAttribute("idSear") == null) { %>
+ 
+		 <h2>아이디 찾기</h2><hr>
+	
 		<div class="inner">
-		 <form id="pwdSearch" action="<%= request.getContextPath() %>/member/pwdSearch"
+		 
+		 <form id="idSearch" action="<%=request.getContextPath() %>/member/idSearch"
             method="post">
 		<div class="insertArea">
-              
-        <table class="pwdSearchTable">
+           
+        <table class="idSearchTable">
             <tr>
-                <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
-                <td class = "idser"><input type="text" name=user_id></td>					
-            </tr>      
+                <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
+                <td class= "idser"><input type="text" name=user_name></td>					
+            </tr>
             <tr>
                 <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>	
-                <td class = "idser"><input type=email name="email"></td>
+                <td class= "idser"><input type="email" name="email"></td>
             </tr>
            
 		</table>
 			<div class="btnArea">
+				<button type="button">취소하기</button>
 				<button type="submit">검색하기</button>
 			</div>
 		</div>
 	</form>
 	</div>
 	</div>
+<%} else { %>
+  	<script>	
+  		alert("<%= user_name%>님의 아이디는 <%= user_id%>입니다.");
+			location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"
  
+	</script>
+ 
+ <% } %>
 
-<%@ include file="../common/footer.jsp" %>
+  
+  
+ 
+   <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

@@ -240,7 +240,7 @@
         	<tr>
             	 <th class="join_title">비밀번호 확인(<span class="empa">*</span>)</th>
             	 <td><input type="password" maxlength="12" name="user_pwd2" required> </td>
-            	 <td></td>
+            	 <td><label id="pwdResult"></label></td>
         	</tr>
         	<tr>
             	 <th class="join_title">이름(<span class="empa">*</span>)</th>
@@ -315,11 +315,6 @@
              $("#joinForm input[name=user_pwd]").select();
              return false;
           }
-         
-         
-         
-         
-         
          
          // 비밀번호 일치여부
          if ($("#joinForm input[name=user_pwd]").val() != $("#joinForm input[name=user_pwd2]").val()) {

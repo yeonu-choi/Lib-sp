@@ -185,3 +185,6 @@
 21.03.23 FAQDeleteServlet 주소 /faq/delete - doo
 
 21.03.23 index.jsp 수정 - yw
+
+21.03.24 WEB-INF/lib - 라이브러리 추가 - ay
+

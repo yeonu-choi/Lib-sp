@@ -38,18 +38,22 @@ public class WishBookManageServlet extends HttpServlet {
 		
 		int[] wbId = Arrays.stream(chkWbId).mapToInt(Integer::parseInt).toArray();
 		
+		List<String> wbEmail = new WishBookService().wishBookEmail(wbId);	// 해당 회원 이메일 알아오기
+		
 		int result = new WishBookService().insertWishBook(wbId);
 		
 		
+		
 		if(result > 0) {
-			request.getSession().setAttribute("msg", wbId.length + "권 입고 처리되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/wish/list");
+			request.getSession().setAttribute("wbId", wbId);
+			request.getSession().setAttribute("wbEmail", wbEmail);
+			//request.getSession().setAttribute("msg", wbId.length + "권 입고 처리되었습니다.");
+			response.sendRedirect(request.getContextPath() + "/wish/mail");	// 이메일 보내기로 바로 이동
 		} else {
 			request.getSession().setAttribute("msg", "입고 처리에 실패했습니다.");
 			response.sendRedirect(request.getContextPath() + "/wish/list");
 		}
 	
-		
 		
 	}
 

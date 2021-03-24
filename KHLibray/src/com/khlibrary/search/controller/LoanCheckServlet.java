@@ -37,9 +37,11 @@ public class LoanCheckServlet extends HttpServlet {
 		
 		int result = new BookService().loanNumCount(user_id);
 		
+		System.out.println(result);
+		
 		PrintWriter out = response.getWriter();
 		
-		if(result > 5) {
+		if(result >= 5) {
 			out.print("fail");
 		} else {
 			out.print("success");

@@ -227,7 +227,39 @@ public class WishBookDao {
 	}
 	
 
-	
+	public List<String> wishBookEmail(Connection conn, int[] wbId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<String> list = new ArrayList<>();
+		
+		String sql = query.getProperty("wishBookEmail");
+		
+		try {
+			
+			for(int w : wbId) {
+				pstmt = conn.prepareStatement(sql);
+			
+				pstmt.setInt(1, w);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					list.add(rset.getString("email"));
+				}
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return list;
+		
+		
+	}
+
 	
 	
 	

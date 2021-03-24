@@ -96,6 +96,16 @@ public class WishBookService {
 	}
 
 
+	public List<String> wishBookEmail(int[] wbId) {
+		Connection conn = getConnection();
+		
+		List<String> list = new WishBookDao().wishBookEmail(conn, wbId);
+		
+		close(conn);
+		
+		return list;
+	}
+
 	
 	
 	
@@ -146,6 +156,7 @@ public class WishBookService {
 		
 		return listCount;
 	}
+
 
 
 

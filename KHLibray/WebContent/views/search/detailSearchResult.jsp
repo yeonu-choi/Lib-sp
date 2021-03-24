@@ -409,7 +409,6 @@
                 <div class="resultArea">
                      <% if(list.isEmpty()) {%>
                     	<div class="resultBook"><p>조회 된 도서가 없습니다.</p></div>
-                    		
                     	<script>
                     		$(document).ready(function() {
                     			if(confirm("희망 도서를 신청하시겠습니까?")) {
@@ -417,30 +416,27 @@
                     			}
                     		});
                     	</script>
-                    	
                     <% } else { %>
                     	<% int i = 0; %>
                    		<% for(Book bk : list) { %>
                     	<div class="resultBook" >
-                        	
                         	<div class="bookImg"><img src="<%= request.getContextPath() %><%= bk.getImgPath()%><%= bk.getImgName() %>"></img></div>
                         	<div class="book">
-                            		<div class="bName" id="bName<%= i %>"><%= bk.getbName() %></div>
-                            		<div><span>저자 : <%= bk.getbWriter() %>  지음 | </span>
-                                		<span>발행처 : <%= bk.getbPublisher() %> | </span>
-                                		<span>발행연도 : <%= bk.getIssueDate() %> 년</span></div>
-                            		<div><span>ISBN : <%= bk.getIsbn() %> | </span>
-                                		<span>청구 기호 : <%= bk.getCallNum() %></span></div>
-                            		<div>재고 여부 : <span id="bks<%= i %>"><%= bk.getStatus() %></span></div>
-                            		<input type="hidden" value="<%=bName%>" name="bName">
-                            		<input type="hidden" value="<%=bWriter%>" name="bWriter">
-                            		<input type="hidden" value="<%=bPublisher%>" name="bPublisher">
-                            		<input type="hidden" value="<%=isbn%>" name="isbn">
-                            		<input type="hidden" value="<%=tDate%>" name="tDate">
-                            		<input type="hidden" value="<%=fDate%>" name="fDate">
-                            		
+                            	<div class="bName" id="bName<%= i %>"><%= bk.getbName() %></div>
+                            	<div><span>저자 : <%= bk.getbWriter() %>  지음 | </span>
+                                	<span>발행처 : <%= bk.getbPublisher() %> | </span>
+                                	<span>발행연도 : <%= bk.getIssueDate() %> 년</span></div>
+                            	<div><span>ISBN : <%= bk.getIsbn() %> | </span>
+                                	<span>청구 기호 : <%= bk.getCallNum() %></span></div>
+                            	<div>재고 여부 : <span id="bks<%= i %>"><%= bk.getStatus() %></span></div>
+                            	<input type="hidden" value="<%=bName%>" name="bName">
+                            	<input type="hidden" value="<%=bWriter%>" name="bWriter">
+                            	<input type="hidden" value="<%=bPublisher%>" name="bPublisher">
+                            	<input type="hidden" value="<%=isbn%>" name="isbn">
+                            	<input type="hidden" value="<%=tDate%>" name="tDate">
+                            	<input type="hidden" value="<%=fDate%>" name="fDate">
                         	</div>
-                        	<span class="chk"><input type="checkbox" value=<%= bk.getCallNum() %>  name="checkSelect" id="checkSelect<%=i%>"></span>
+                        	<span class="chk"><input type="checkbox" value=<%= bk.getCallNum() %>  name="checkSelect" id="checkSelect<%= i %>"></span>
                         		
                         	<% i++; %>
                     	</div>
@@ -532,20 +528,31 @@
 		modalbody.innerHTML = arr.join('<br>');
 	});
 	
-	
 	$("#yesBtn").click(function(){
-		console.log(sArr);
-		
 		<% if(loginUser != null) { %>
-			if(sArr.includes("대출불가능[대출중]")){
-				alert("대출 불가능한 도서가 있습니다.")
-			} else {
-				$(".book").each(function(i){
-					if($('#checkSelect' + i ).is(":checked") == true){
-						$("#loansForm").submit()
+		$(function(){
+			$.ajax({
+				url : "<%= request.getContextPath() %>/loan/check",
+				type : "post",
+				success : function(data){
+					console.log(data);	
+					if(data == "fail"){
+						alert("회원님은 더 이상 대출할 수 없습니다.");
+					} else if(sArr.includes("대출불가능[대출중]")){
+						alert("대출 불가능한 도서가 있습니다.")
+					} else {
+						$(".book").each(function(i){
+							if($('#checkSelect' + i ).is(":checked") == true){
+								$("#loansForm").submit()
+							}
+						});
 					}
-				});
-			}
+				},
+				error : function(e){
+					console.log(e);
+				}
+			});
+		});
 		<% } else {%>
 			alert("로그인 후 이용이 가능합니다.")
 			location.href="<%= request.getContextPath() %>/views/member/loginForm.jsp"

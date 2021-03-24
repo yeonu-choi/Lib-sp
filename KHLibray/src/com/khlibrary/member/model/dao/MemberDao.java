@@ -226,6 +226,104 @@ public class MemberDao {
 			return result;
 		}
 	
+	public Member idSearch(Connection conn, Member member) {
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      Member idSearch = null;
+	      String sql = query.getProperty("idSearch");
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         
+	         pstmt.setString(1, member.getUser_name());
+	         pstmt.setString(2, member.getEmail());
+	         
+	         rset = pstmt.executeQuery();
+	         
+	         if(rset.next()) {
+	            idSearch = new Member(rset.getString("user_id"),
+	                              rset.getString("user_pwd"),
+	                              rset.getString("user_name"),
+	                              rset.getString("birth_date"),
+	                              rset.getString("phone"),
+	                              rset.getString("email"),
+	                              rset.getString("address"),
+	                              rset.getString("grade"),
+	                              rset.getDate("enroll_date"),
+	                              rset.getInt("user_no"),
+	                              rset.getInt("overdue"));	                           
+	         }
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      
+	      return idSearch;
+	   }
+	
+	public Member pwdSearch(Connection conn, Member member) {
+		 PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      Member pwdSearch = null;
+	      String sql = query.getProperty("pwdSearch");
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         
+	         pstmt.setString(1, member.getUser_id());
+	         pstmt.setString(2, member.getEmail());
+	         
+	         rset = pstmt.executeQuery();
+	         
+	         if(rset.next()) {
+	            pwdSearch = new Member(rset.getString("user_id"),
+	                              rset.getString("user_pwd"),
+	                              rset.getString("user_name"),
+	                              rset.getString("birth_date"),
+	                              rset.getString("phone"),
+	                              rset.getString("email"),
+	                              rset.getString("address"),
+	                              rset.getString("grade"),
+	                              rset.getDate("enroll_date"),
+	                              rset.getInt("user_no"),
+	                              rset.getInt("overdue"));	                           
+	         }
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      
+	      return pwdSearch;
+	}
+
+	
+	 public int pwdUpdate(Connection conn, String user_id, String user_pwd) {
+		   int result = 0;
+		   PreparedStatement pstmt = null;
+		   String sql = query.getProperty("pwdUpdate");
+		   
+		   try {
+			   pstmt = conn.prepareStatement(sql);
+						 
+			   pstmt.setString(1, user_id);
+			   pstmt.setString(2, user_pwd);
+			
+			   result = pstmt.executeUpdate();
+			
+		   } catch (SQLException e) {
+			   e.printStackTrace();
+		   } finally {
+			   close(pstmt);
+		   }
+		   
+		   return result;
+	   }
 	
 	
 	
@@ -412,5 +510,9 @@ public class MemberDao {
 		
 		return result;
 	}
+
+	
+
+	
 
 }

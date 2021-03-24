@@ -119,6 +119,17 @@
 			   REQUEST_DATE DESC
 	</entry>
 
+	<entry key="wishBookEmail">
+		SELECT 
+			    PHONE
+			  , EMAIL
+		  FROM
+		  	   WISHBOOK
+		 WHERE
+		       WB_ID = ?
+	</entry>
+	
+	
 
 	
 	<!-- ////////////이하 yw /////////////////////////////////////////////// -->

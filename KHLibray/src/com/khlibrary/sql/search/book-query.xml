@@ -723,7 +723,9 @@
 		SELECT 
 			COUNT(*)
         FROM 
-        	LOAN
+        	LDETAIL
+        JOIN 
+        	LOAN USING(LID)
         WHERE 
         	USER_ID = ?
         AND STATUS LIKE '대출중'

@@ -190,3 +190,15 @@
 
 21.03.24 WishBookMailServlet 주소 - /wish/mail - ay
 
+21.03.24 IdSearchServlet 주소 - /member/idSearch - km
+
+21.03.24 pwdSearchServlet 주소 -/member/pwdSearch - km
+
+21.03.24 pwdSearchResultServlet 주소 - /member/pwdSearchResult - km
+
+
+
+
+
+
+

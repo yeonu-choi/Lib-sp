@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.khlibrary.board.model.vo.*"%>
+    
+<% 
+	ArrayList<QNA> list = (ArrayList<QNA>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,129 +116,66 @@
        		color: black;
     	}
     	
-        #content {
-            width: 60%;
-            padding: 60px 0px 0px 40px;
-            margin-right: 100px;
-            margin-bottom: 60px;
-            display: inline-block;
-        }
-
-        #boardtitle {           
-            width: 100%;
-            font-size: 30px;
-            margin-top: 30px;
-        }
-
-        #boardtitle h3 {
-            padding-bottom: 23px;
-            margin: 0;
-        }
-
-        #boardtitle hr {
-            float: left;
-            width: 100%;
-            margin: 0;
-            opacity: 0.5;        
-        }
-
-        #top_empty {
-            display: inline-block;
-            width: 100%;
-            height: 50px;
-        }
-
-        #search{
-            position: relative;
-            top: -18px;
-            left: 750px;
-            height: 43px;
-            width: 350px;
-            margin: 0;
-            border: 1px solid #b8b8b8;
-            border-radius: 7px;
-            padding: 3px 60px 3px 5px;
-            display: flex;
-            align-items: center;
-        }
-
-        #search input[type="text"] {
-            width: 90%;
-            border: none;
-        }
-
-        #search button {
-            border: 0px;
-            position: absolute;
-            height: 32px;
-            width: 60px;
-            right: 9px;
-            border-radius: 7px;
-        }
-
-        #boardlist {
-            width: 100%;
-            border-top: 2px solid #3b414d; 
-            border-bottom: 1px solid #b8b8b8; 
-            border-collapse: collapse;
-        }
-
-        .b_num {
-            border-left: none;
-        }
-
-        .b_count {
-            border-right: none;
-        }
-
-        .b_num, .b_count, .b_date, .b_ctgr, .b_writer {
-            text-align: center;
-        }
-
-
-        #t_h {
-
-            border-bottom: 1px solid #b8b8b8; 
-        }
-
-        #boardlist th {
-        	padding : 12px;
-            border: #b8b8b8 solid 1px;	
-            background: #fcfcfc;
-            color: #313131;
-        }
-
-        #boardlist td {
-            border: #b8b8b8 solid 1px;
-			padding : 12px;
-            color: #5d5d5d;
-        }
-
-        #paging {
-            padding-top: 40px;
-            text-align:center;
-            position: relative;
-            
-        }
-
-        #paging button {
-            height: 40px;
-            width: 40px;
-            border-radius: 6px;
-        }
-
-        #write {
-            width: 100px;
-            height: 40px;
-            border-radius: 6px;
-            position: absolute;
-            right: 20px;
-            background: #fcfcfc ;
-        }
-
-        #boardlist a {
-            text-decoration: none;
-        }
+		#wrap {
+			float: left;
+			width: 60%;
+			padding-left: 50px;
+		}
+		
+		#title {
+			margin-top: 100px;
+		}
+		
+		#searchForm {
+			margin-top: 50px;
+		}
+		
+		.form-select {
+			width: 180px;
+			display: inline-block;
+		}
+		
+		#searchText {
+			display: inline-block;
+			width: 800px;
+		}
+		
+		#searchBtn {
+			margin-top: -4px;
+		}
+		
+		#content {
+			padding-top: 30px;
+		}
+		
+		.no{
+			width:5%;
+		}
+		
+		.title {
+			width: 50%;
+		}
+		
+		.writer {
+			width: 15%;
+		}
+		
+		.date {
+			width: 20%;
+		}
+		
+		#paging {
+			text-align: center;
+			margin-top: 50px;
+			margin-right: 60px;
+		}
+		
+		#btn {
+			float: right;
+			margin: 30px 30px 50px 0
+		}
+		
+        
         
     </style>
 </head>
@@ -266,87 +209,146 @@
             </div>
     </div>
 </div>
-	    <div id="wrap">        
-            <div id="content">
-                <div id="boardtitle">
-                    <h3>Q & A</h3>
-                   	<hr>
-                </div>
-                <div id="top_empty"></div>
-                <fieldset id="search">
-                    <input type="text" id="search_box" placeholder="검색어를 입력하세요">
-                    <button type="submit">검색</button>
-                </fieldset>
+	<div id="wrap">
+		<div id="title">
+			<h3>Q & A</h3>
+			<br>
+			<hr>
+		</div>
+		<div id="search">
+			<form id="searchForm" method="get" action="">
+				<select class="form-select" aria-label="Default select example">
+				  <option>-----</option>	
+				  <option value="qna_Qtitle">제 목</option>
+				  <option value="qna_Qcontent">내 용</option>
+				  <option value="user_id">작 성 자</option>
+				</select>
+				<input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" id="searchText">
+				<button type="submit" class="btn btn-outline-secondary" id="searchBtn">검색</button>
+			</form>
+		</div>
+		<div id="content">
+		    <table class="table table-hover">
+				<thead>
+					<tr>
+						<td class="no">No.</td>
+						<td class="title">제목</td>
+						<td class="writer">작성자</td>
+						<td class="date">작성일</td>
+						<td class="count">조회수</td>					
+					</tr>
+				</thead>
+				<tbody>
+					<% if(list.isEmpty()) { %>
+					<tr>
+						<td colspan="5">조회 된 게시글이 없습니다.</td>
+					</tr>
+					<% } else { %>
+						<% for(QNA q : list) { %>	
+							<% if(q.getSecret().equals("Y")) { %>
+								<tr id="listTable" style="visibility:collapse">
+									<td class="no"><%= q.getQna_No() %></td>						
+									<% if(q.getSecret().equals("Y")) { %>
+										<td id="hiddentitle"><%= q.getQna_Qtitle() %>&nbsp;
+										<img id="img" src="<%= request.getContextPath() %>/resources/image/doo/sec.png" width="30px" height="20px">
+										</td>						
+									<% } else { %>
+									<td class="title"><%= q.getQna_Qtitle() %>
+									<% } %>
+									</td>
+									<td class="writer"><%= q.getUser_Id() %></td>
+									<td class="date"><%= q.getC_Date() %></td>
+									<td class="count"><%= q.getQ_Count() %></td>
+								</tr>
+								<!--  -->
+							<script>
+							<% String writer = q.getUser_Id(); %>
+							<% if(loginId != null && (loginId.equals("admin") || loginId.equals(writer))){ %>
+								
+								$(function(){
+									$("#listTable").css({"visibility" : "visible"});
+								});									
+								
+							<% } %>
+							</script>		
+						 <!--  -->																	
+							<% } else { %>				
+						<tr id="listTable">
+							<td class="no"><%= q.getQna_No() %></td>						
+							<% if(q.getSecret().equals("Y")) { %>
+								<td class="hiddentitle"><%= q.getQna_Qtitle() %>&nbsp;
+								<img id="img" src="<%= request.getContextPath() %>/resources/image/doo/sec.png" width="30px" height="20px">
+								</td>						
+							<% } else { %>
+							<td class="title"><%= q.getQna_Qtitle() %>
+							<% } %>
+							</td>
+							<td class="writer"><%= q.getUser_Id() %></td>
+							<td class="date"><%= q.getC_Date() %></td>
+							<td class="count"><%= q.getQ_Count() %></td>
+						</tr>
+							<% } %>
+																						
+						<% } %>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+		<div id="paging"> 
+			<!-- << -->
+			<button type="button" class="btn btn-outline-secondary" onclick="location.href='<%= request.getContextPath() %>/qna/list?currentPage=1'"> &lt;&lt; </button>
+			<!-- < -->
+			<% if(pi.getCurrentPage() == 1) { %>
+			<button type="button" class="btn btn-outline-secondary" disabled> &lt; </button>
+			<% } else { %>
+			<button type="button" class="btn btn-outline-secondary" onclick="location.href='<%= request.getContextPath() %>/qna/list?currentPage=<%= pi.getCurrentPage() - 1 %>'"> &lt; </button>
+			<% } %>
+			<!-- 페이지 목록 -->
+			<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+				<% if(p == pi.getCurrentPage()) { %>
+					<button style="background:lightgray;" type="button" class="btn btn-outline-secondary" disabled><%= p %></button>
+				<% } else { %>
+					<button type="button" class="btn btn-outline-secondary" onclick="location.href='<%= request.getContextPath() %>/qna/list?currentPage=<%= p %>'"><%= p %></button>
+				<% } %>			
+			<% } %>
+			<!-- > -->
+			<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+			<button type="button" class="btn btn-outline-secondary" disabled> &gt; </button>
+			<% } else { %>
+			<button type="button" class="btn btn-outline-secondary" onclick="location.href='<%= request.getContextPath() %>/qna/list?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
+			<% } %>
+			<!-- >> -->
+			<button type="button" class="btn btn-outline-secondary" onclick="location.href='<%= request.getContextPath() %>/qna/list?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
+		</div>
+		
+		<div id="btn">
+			<% if(loginUser != null) { %>
+			<button type="button" class="btn btn-secondary" onclick="location.href='<%= request.getContextPath() %>/views/board/qnaInsert.jsp'">글쓰기</button>
+			<% } %>
+		</div>
+	</div>
+	
+	<script>
+		$(function(){
+			$("#listTable td").mouseenter(function(){
+				$(this).parent().css({"cursor":"pointer"});
+			}).click(function(){
+				<% if(loginUser != null) { %>
+				let no = $(this).parent().children().eq(0).text();
+				location.href="<%= request.getContextPath() %>/qna/detail?qna_No=" + no; 
+				<% } else { %>
+					alert("로그인 후 조회 가능합니다.")
+				<% } %>				
+			});	
 
-                <table id="boardlist">
-                    <thead id="t_h">
-                        <tr>
-                            <th class="b_num">번호</th>
-                            <th class="b_ctgr">분류</th>
-                            <th class="b_title">제목</th>
-                            <th class="b_writer">작성자</th>
-                            <th class="b_date">작성일</th>
-                            <th class="b_count">조회</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="b_num">5</td>
-                            <td class="b_ctgr">회원</td>
-                            <td class="b_title"><a href="qnadetail.jsp">탈퇴 요청합니다.</a></td>
-                            <td class="b_writer">두*형</td>
-                            <td class="b_date">2021-03-13</td>
-                            <td class="b_count">10</td>
-                        </tr>
-                        <tr>
-                            <td class="b_num">4</td>
-                            <td class="b_ctgr">도서대출</td>
-                            <td class="b_title"><a href="qnadetail.jsp">대출도서 연장 신청 어떻게 하나요?</a></td>
-                            <td class="b_writer">이*빈</td>
-                            <td class="b_date">2021-03-12</td>
-                            <td class="b_count">20</td>
-                        </tr>
-                        <tr>
-                        <tr>
-                            <td class="b_num">3</td>
-                            <td class="b_ctgr">공통</td>
-                            <td class="b_title"><a href="qnadetail.jsp">대체공휴일에도 휴관인가요?</a></td>
-                            <td class="b_writer">황*혜</td>
-                            <td class="b_date">2021-03-11</td>
-                            <td class="b_count">30</td>
-                        </tr>
-                        </tr>
-                        <tr>
-                            <td class="b_num">2</td>
-                            <td class="b_ctgr">도서</td>
-                            <td class="b_title"><a href="qnadetail.jsp">책 추천 해주세요</a></td>
-                            <td class="b_writer">안*란</td>
-                            <td class="b_date">2021-03-12</td>
-                            <td class="b_count">40</td>
-                        </tr>
-                        <tr>
-                            <td class="b_num">1</td>
-                            <td class="b_ctgr">시설</td>
-                            <td class="b_title"><a href="qnadetail.jsp">제 2 열람실 이용 가능한가요?</a></td>
-                            <td class="b_writer">엄*인</td>
-                            <td class="b_date">2021-03-11</td>
-                            <td class="b_count">50</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div id="paging">
-                    <button>&lt;&lt;</button>
-                    <button>&lt;</button>
-                    <button>1</button>
-                    <button>&gt;</button>
-                    <button>&gt;&gt;</button>
-                    <input id="write" type="button" value="글쓰기" onclick="location.href='qnaInsert.jsp'">
-                </div>
-                
-                
-            </div>
-    </div>
+		});
 
+		
+	</script>
+	
+	
+	
+	
 
 <%@ include file="../common/footer.jsp" %>
 </body>

@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.text.SimpleDateFormat, java.util.Date"%>
+    
+<% 
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	Date date = new Date();	
+	String today = sdf.format(date);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -153,31 +159,62 @@
         	margin: 0;
         }
         
-        #b_area dt{
-            width: 20%;
+        dt[class="b_title"],
+        dt[class="b_content"] {
+        	width: 15%;
             height: 35px;
             margin-right: 10px;
             float: left;
-            background: #F6F6F6 ;
+            background: #F6F6F6;
             font-size: 20px;
             text-align: center;
             line-height: 36px;
         }
         
-        dl[class="b_info"] dd {
+        
+       
+        
+        dl[class="b_info"] dt {
+        	width: 80px;
         	height: 35px;
-            width: 27%;        	
+        	margin-right: 10px;
+        	float: left;
+        	background: #F6F6F6;
+        	font-size: 15px;
+        	text-align: center;
+        	line-height: 36px;
+        }
+        
+        dl[class="b_info"] dd {
+        	width: 250px;
+        	height: 35px;        	
         	float: left;
         }
         
-        dd[class="b_info"] select {
-            font-size: 20px;
+        #scrtdd, #scrtdd2 {
+        	width: 50px;
+        }
+        
+       
+        
+        #scrtN, #scrtY {
+      		zoom: 1.7;
+        	margin-top: 4px;
+        	margin-left: 7px;
+        }
+        
+        dd[class="b_info"] input {
+           	font-size: 15px;
             width: 95%;
             height: 100%;
+            padding-left: 20px;
+            background: #F6F6F6;
+            border: none;
+            line-height: 36px;
         }
 
         dd[class="b_info2"] input {
-            font-size: 20px;
+            font-size: 15px;
             width: 95%;
             height: 100%;
             padding-left: 20px;
@@ -284,41 +321,37 @@
                     <hr>
                 </div>
                 <div id="top_empty"></div>
-                <form id="b_area">
+                <form id="b_area" action="<%= request.getContextPath() %>/qna/insert" method="POST">
                     <dl class="b_info">
-                        <dt class="b_info">분 류</dt>
+                        <dt class="b_info">작성자</dt>
                         <dd class="b_info">
-                            <select>
-                                <option value="">공  통</option>
-                                <option value="">시  설</option>
-                                <option value="">도  서</option>
-                                <option value="">도서대출</option>
-                                <option value="">회  원</option>
-                            </select>
+                           <input type="text" name="name" value="<%= loginId %>" readonly>
                         </dd>
-                        <dt class="b_info2">작성자</dt>
-                        <dd class="b_info2"><input type="text" value="홍길동" readonly></dd>                        
+                        <dt class="b_info2">작성일</dt>
+                        <dd class="b_info2"><input type="text" value="<%= today %>" disabled></dd>
+                        <dt id="scrtdtN">공개</dt>
+                        <dd id="scrtdd">
+                        <input id="scrtN" type="radio" name="secret" value="N" required>
+                        </dd> 
+                         <dt id="scrtdtY">비공개</dt>
+                         <dd id="scrtdd2">
+                        <input id="scrtY" type="radio" name="secret" value="Y">
+                        </dd>                      
                     </dl>
+                    <br><br>
                     <dl class="b_title">
                         <dt class="b_title">제 목</dt>
-                        <dd class="b_title"><input type="text"></dd>
+                        <dd class="b_title"><input type="text" name="title"></dd>
                     </dl>
                     <dl class="b_content">
                         <dt class="b_content">내 용</dt>
-                        <dd class="b_content"><textarea></textarea></dd>
+                        <dd class="b_content"><textarea name="content"></textarea></dd>
                     </dl>
-                    <input type="file" id="upload">
-
-
                         <button type="submit" id="bsubmit">등록</button>
-                        <button type="button" id="bcancel">취소</button>
-
-
+                        <button type="button" id="bcancel" onclick="javascript:history.back();">취소</button>
                 </form>
             </div>
     </div>
-
-
 <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

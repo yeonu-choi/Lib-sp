@@ -178,10 +178,10 @@
                         <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/notice">공지사항</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/board/faq.jsp">FAQ</a></p></td>
+                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/faq/list">FAQ</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/board/qna.jsp">Q&A</a></p></td>
+                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/qna/list">Q&A</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/newbooks">이달의신간</a></p></td>

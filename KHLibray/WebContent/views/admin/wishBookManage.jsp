@@ -268,7 +268,7 @@
         
             <form action="<%= request.getContextPath() %>/wish/manage" method="POST">
                 <div class="tableArea">
-                    <table>
+                    <table id="wishBookTable">
                         <thead>
                             <tr>
                                 <th><i class="bi bi-check"></i></th>
@@ -293,7 +293,6 @@
                         <% } else { %>
                         <% for(WishBook wb : list) { %>
                         <tr>
-                        	
                             <td><input type="checkbox" value="<%= wb.getWbId() %>" name="chkWbId" 
                             	<% if (!wb.getStatus().equals("입고중")) { %>
                             		<%= flag %> 
@@ -330,6 +329,7 @@
             </form>
         </div>
     </div>
+    
     
     
 	<%@ include file="../common/footer.jsp" %>

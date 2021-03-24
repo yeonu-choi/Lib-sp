@@ -1,7 +1,6 @@
 package com.khlibrary.board.controller;
 
 import java.io.IOException;
-
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,21 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.khlibrary.board.model.service.NoticeService;
-import com.khlibrary.board.model.vo.Notice;
+import com.khlibrary.board.model.service.QNAService;
 import com.khlibrary.board.model.vo.PageInfo;
+import com.khlibrary.board.model.vo.QNA;
 
 /**
- * Servlet implementation class NoticeServlet
+ * Servlet implementation class QNAListServlet
  */
-@WebServlet("/notice")
-public class NoticeServlet extends HttpServlet {
+@WebServlet("/qna/list")
+public class QNAListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeServlet() {
+    public QNAListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,27 +33,22 @@ public class NoticeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		NoticeService nService = new NoticeService();
-			
-		/* 페이징 */
 		int currentPage = 1;
 		
 		if(request.getParameter("currentPage") != null) {
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));			
 		}
 		
-		int listCount = nService.getListCount();
-		
-			
-		
+		QNAService qService = new QNAService();
+		int listCount = qService.getListCount();
 		
 		int pageLimit = 10;
-		int noticeLimit = 10;
+		int qnaLimit = 10;
 		int maxPage;
 		int startPage;
 		int endPage;
 		
-		maxPage = (int)Math.ceil((double)listCount / noticeLimit);
+		maxPage = (int)Math.ceil((double)listCount / qnaLimit);
 		startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
 		endPage = startPage + pageLimit - 1;
 		
@@ -62,14 +56,15 @@ public class NoticeServlet extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, noticeLimit, maxPage, startPage, endPage);
+		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, qnaLimit, maxPage, startPage, endPage);
 		
-		List<Notice> list = nService.selectList(pi);
+		List<QNA> list = qService.selectList(pi);
+		
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/board/notice.jsp");
-		view.forward(request, response);
+		request.getRequestDispatcher("/views/board/qna.jsp").forward(request, response);
+		
 		
 	}
 

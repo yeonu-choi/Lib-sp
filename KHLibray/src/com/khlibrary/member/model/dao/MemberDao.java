@@ -303,7 +303,7 @@ public class MemberDao {
 	}
 
 	
-	 public int pwdUpdate(Connection conn, String user_id, String user_pwd) {
+	 public int pwdUpdate(Connection conn, Member m) {
 		   int result = 0;
 		   PreparedStatement pstmt = null;
 		   String sql = query.getProperty("pwdUpdate");
@@ -311,8 +311,8 @@ public class MemberDao {
 		   try {
 			   pstmt = conn.prepareStatement(sql);
 						 
-			   pstmt.setString(1, user_id);
-			   pstmt.setString(2, user_pwd);
+			   pstmt.setString(1, m.getUser_pwd());
+			   pstmt.setString(2, m.getUser_id());
 			
 			   result = pstmt.executeUpdate();
 			
@@ -324,8 +324,6 @@ public class MemberDao {
 		   
 		   return result;
 	   }
-	
-	
 	
 	
 	/////////////////아래부터 yw //////////////////////////////////////////////////////
@@ -511,6 +509,10 @@ public class MemberDao {
 		return result;
 	}
 
+	
+	
+	
+	
 	
 
 	

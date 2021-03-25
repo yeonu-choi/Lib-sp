@@ -48,4 +48,23 @@ public class QNAService {
 		return result;
 	}
 
+	public QNA selectQNA(int qna_No) {
+		Connection conn = getConnection();
+		
+		int result = new QNADao().increaseCount(conn, qna_No);
+		
+		QNA q = null;
+		
+		if(result > 0) {
+			q = new QNADao().selectQNA(conn, qna_No);
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return q;
+	}
+
+
+
 }

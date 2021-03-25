@@ -35,49 +35,20 @@ public class QNADetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int qna_No = Integer.parseInt(request.getParameter("qna_No"));
 		
-		Cookie[] cookies = request.getCookies();
+		QNA qna = new QNAService().selectQNA(qna_No);
 		
-		QNA qna = null;
+		String page = "";
 		
-		boolean flagQList = false;
-		boolean flagQid = false;
-		
-		if(cookies != null) {
-			for(Cookie c : cookies) {
-				if(c.getName().equals("qList")) {
-					flagQList = true;
-					
-					String qList = URLDecoder.decode(c.getValue(), "UTF-8");
-					
-					String[] list = qList.split(",");
-					for(String st : list) {
-						if(st.equals(String.valueOf(qna_No))) {
-							flagQid = true;
-							break;
-						}
-					}
-					
-					if(!flagQid) {
-						c.setValue(URLEncoder.encode(qList + "," + qna_No, "UTF-8"));
-						response.addCookie(c);
-						
-					}
-				}
-			}
-			
-			
-			if(!flagQList) {
-				Cookie c1 = new Cookie("qList", URLEncoder.encode(String.valueOf(qna_No), "UTF-8"));
-				response.addCookie(c1);
-				qna = new QNAService().selectQNA(qna_No);
-			} else if(!flagQid) {
-				qna = new QNAService().selectQNA(qna_No);
-			} else {
-				qna = new QNAservice().selectQNANoCnt(qna_No);
-			}
-			
-			
+		if(qna != null) {
+			request.setAttribute("qna", qna);
+			page = "/views/board/qnadetail.jsp";			
+		} else {
+			request.setAttribute("msg", "해당 게시글을 조회 할 수 없습니다.");
+			page = "/views/common/errorPage.jsp";
 		}
+				
+		request.getRequestDispatcher(page).forward(request, response);
+
 	}
 
 	/**

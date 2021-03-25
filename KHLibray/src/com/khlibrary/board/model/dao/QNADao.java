@@ -115,4 +115,64 @@ public class QNADao {
 		return result;
 	}
 
+	public int increaseCount(Connection conn, int qna_No) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = query.getProperty("increaseCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, qna_No);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public QNA selectQNA(Connection conn, int qna_No) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		QNA q = null;
+		String sql = query.getProperty("selectQNA");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, qna_No);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				q = new QNA(rset.getInt("qna_no"),
+							rset.getString("qna_qtitle"),
+							rset.getString("qna_qcontent"),
+							rset.getString("qna_acontent"),
+							rset.getInt("q_count"),
+							rset.getDate("c_date"),
+							rset.getDate("m_date"),
+							rset.getString("status"),
+							rset.getString("secret"),
+							rset.getString("user_id"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		
+		return q;
+	}
+
 }

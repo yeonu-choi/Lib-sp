@@ -109,32 +109,24 @@ public class MemberService {
 		
 		close(conn);
 		
-		return pwdSearch;
-			
+		return pwdSearch;			
 		}
+	
 	// 비밀번호 찾기 후 수정된 비밀번호 등록하기
-	public Member pwdUpdate(String user_id, String user_pwd) {
-		Connection conn = getConnection();
-		
-		int result = new MemberDao().pwdUpdate(conn, user_id, user_pwd);
-					
-		Member pwdUpdate =null;
-		if(result > 0) {
-			commit(conn);
-			pwdUpdate = new MemberDao().selectMember(conn, user_id);
-		} else {
-			rollback(conn);
-		}
-				
-		close(conn);
-						
-		return pwdUpdate;
-	}
-		
-		
-		
-		
-		
+	public int pwdUpdate(Member m) {
+	      Connection conn = getConnection();	      
+	      int result = new MemberDao().pwdUpdate(conn, m);
+	               
+	      if(result > 0) {
+	        commit(conn);
+	    } else {	         
+	    	rollback(conn);
+	      }	            
+	      close(conn);
+	         
+	      return result ;
+	   }
+	
 /////////////////아래부터 yw ////////////////////////////////////////////////////// 	
 		
 		public int getListCount() {
@@ -205,6 +197,12 @@ public class MemberService {
 
 			return result;
 		}
+
+		
+
+		
+
+		
 
 	
 	

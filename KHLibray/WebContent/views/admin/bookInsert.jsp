@@ -138,9 +138,9 @@
     	
     	}
     	.btnArea {
-    	    margin-top: 30px; 
+    	    margin-top: 20px; 
     	
-    		margin-left: 220px; 
+    		margin-left: 320px; 
     	}
     	
     	#inputId {
@@ -207,7 +207,7 @@
         <table class="bookInsertTable">
             <tr>
                 <th><label>ISBN</label></th>
-                <td><input type="number" id="inputId" name="isbn" required></td>					
+                <td><input type="number" id="inputId"  name="isbn" required></td>					
             </tr>
             <tr>
                 <th><label>청구기호</label></th>
@@ -241,7 +241,6 @@
             </tr>                       
 		</table>
 			<div class="btnArea">
-				<button type="button">취소하기</button>
 				<button type="submit">등록하기</button>
 			</div>
 		</div>

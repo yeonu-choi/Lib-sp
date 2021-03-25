@@ -74,5 +74,32 @@
 			  , ?				
 		)		
 	</entry>
+	<entry key="increaseCount">
+		UPDATE
+				QNA
+		   SET
+		   		Q_COUNT = Q_COUNT + 1
+		 WHERE
+		 		QNA_NO = ?
+		   AND STATUS = 'Y'
+	</entry>
+	<entry key="selectQNA">
+		SELECT
+				QNA_NO
+			  , QNA_QTITLE
+			  , QNA_QCONTENT
+			  , QNA_ACONTENT
+			  , Q_COUNT
+			  , C_DATE
+			  , M_DATE
+			  , STATUS
+			  , SECRET
+			  , USER_ID
+		  FROM
+		  		QNA
+		 WHERE	
+		 		QNA_NO = ?
+		   AND	STATUS = 'Y'			  
+	</entry>
 	
 </properties>

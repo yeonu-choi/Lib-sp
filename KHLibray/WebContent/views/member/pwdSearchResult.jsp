@@ -134,7 +134,10 @@
     	    	} 	
     	.pwdSearchTable {
     		margin-left: 130px;
-    		border : 1px solid #aaaaaa;    	
+    		 	
+    	}
+    	.pwdSearchTable label {
+    		text-align:center;
     	}
     	
     	.btnArea {
@@ -216,12 +219,7 @@
             <tr>
                 <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;인증번호 입력&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
                 <td class = "idser"><input type="text" name="AuthenticationUser"></td>					
-            </tr>   
-            <tr>
-                <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>	
-                <td class = "idser"><input type="text" name="user_id" maxlength="12" ></td>
-                 <td><label id="pwdId"></label></td>
-            </tr>              
+            </tr>          
             <tr>
                 <th><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;새 비밀번호&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>	
                 <td class = "idser"><input type="password" name="new_pwd" maxlength="12"></td>

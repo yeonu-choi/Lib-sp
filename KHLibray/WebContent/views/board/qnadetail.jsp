@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.khlibrary.board.model.vo.QNA" %>
+<% QNA q = (QNA)request.getAttribute("qna"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -146,7 +147,7 @@
             height: 20px;
         }
         
-        #b_area dt{
+        #content dt{
             width: 20%;
             height: 35px;
             margin-right: 10px;
@@ -157,7 +158,7 @@
             line-height: 36px;
         }
 
-        #b_area dl {
+        #content dl {
             width: 100%;
             margin-top: 5px;
             margin-bottom: 5px;
@@ -209,40 +210,18 @@
             text-align: left;
             resize: none;
         }
-
-        #down1 {
-            text-decoration: none;
-            display: inline-block;
-            margin-left: 22%;
-            margin-top: 5px;
-            padding: 5px;
-            border: 1px solid #b8b8b8;
-            border-radius: 5px;
+        
+        #btn{
+        	text-align: center;
+        }
+        
+        #btn button{
+        	width:80px;
+        	height: 35px;
+        	margin-top: 40px;
+        	margin-right: 30px;
         }
 
-        #down2 {
-            text-decoration: none;
-            display: inline-block;
-            margin-left: 2%;
-            margin-top: 5px;
-            padding: 5px;
-            border: 1px solid #b8b8b8;
-            border-radius: 5px;
-        }
-
-        #bsubmit {
-            margin-left: 50%;
-            margin-top: 20px;
-            margin-right: 15px;
-            height: 30px;
-            width: 50px;
-            
-        }
-
-        #bcancel {
-            height: 30px;
-            width: 50px;
-        }
     	      	       
     </style>
 </head>
@@ -264,10 +243,10 @@
                         <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/notice">공지사항</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/board/faq.jsp">FAQ</a></p></td>
+                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/faq/list">FAQ</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/board/qna.jsp">Q&A</a></p></td>
+                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/qna/list">Q&A</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/newbooks">이달의신간</a></p></td>
@@ -283,41 +262,49 @@
                 <h3>Q & A</h3>
                 <hr>
             </div>
-            <div id="top_empty"></div>
-            <form id="b_area">
+            <div id="top_empty"></div>           
                 <dl class="b_info">
-                    <dt class="b_info">분 류</dt>
-                    <dd class="b_info">공 통</dd>
-                    <dt class="b_info2">작성자</dt>
-                    <dd class="b_info2">홍길동</dd>                        
+                    <dt class="b_info">작성자</dt>
+                    <dd class="b_info"><%= q.getUser_Id() %></dd>
+                    <dt class="b_info2">작성일</dt>
+                    <dd class="b_info2"><%= q.getC_Date() %></dd>                        
                 </dl>
                 <dl class="b_title">
                     <dt class="b_title">제 목</dt>
                     <dd class="b_title">
-                        질문 질문 질문 질문
+                       	<%= q.getQna_Qtitle() %>
                     </dd>
                 </dl>
+               
                 <dl class="b_content">
                     <dt class="b_content">내 용</dt>
                     <dd class="b_content">
-                        <textarea readonly>내용 내용 내용</textarea>  
-                                        
-                        
+                        <textarea readonly><%= q.getQna_Qcontent() %></textarea>                                                                 
                     </dd>
                 </dl>
-                <a href="" id="down1">파일다운로드1</a><a href="" id="down2">파일다운로드2</a><br>
-
-
-                    <button type="submit" id="bsubmit">등록</button>
-                    <button type="button" id="bcancel">취소</button>
-
-
+                <div id="btn">
+                 	<% if(loginId.equals(q.getUser_Id())) { %> 
+                   <button type="submit" id="bupdate">수정</button>
+                   <button type="submit" id="bdelete">삭제</button>
+                   <% } else if(loginId.equals("admin")) { %>
+                   	<button type="submit" id="banswer">답변하기</button>
+                   	<button type="submit" id="bdelete">삭제</button>
+                   <% } %>                 
+                   <button type="button" id="btolist">목록</button>
+                 </div>
+            <form id="noForm" method="POST">
+                 <input type="hidden" name="nno" value="<%= q.getQna_No() %>">
             </form>
         </div>
 </div>
 
-
-
+	<script>
+		const updateBtn = document.getElementById('bupdate');
+		updateBtn.addEventListener('click', function(){
+			$("#noForm").attr("action", "<%= request.getContextPath() %>/qna/update");
+			$("#nnoForm").submit();
+		});
+	</script>
 
     <%@ include file="../common/footer.jsp" %>
 

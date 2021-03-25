@@ -206,10 +206,10 @@
                         <td align="center"><p class="subm1"><a href="<%= request.getContextPath() %>/notice">공지사항</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/views/board/faq.jsp">FAQ</a></p></td>
+                        <td align="center"><p class="subm2"><a href="<%= request.getContextPath() %>/faq/list">FAQ</a></p></td>
                     </tr>
                     <tr>
-                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/views/board/qna.jsp">Q&A</a></p></td>
+                        <td align="center"><p class="subm3"><a href="<%= request.getContextPath() %>/qna/list">Q&A</a></p></td>
                     </tr>
                     <tr>
                         <td align="center"><p class="subm4"><a href="<%= request.getContextPath() %>/newbooks">이달의신간</a></p></td>
@@ -228,18 +228,18 @@
             </div>
             <div id="thismonth">
             	<div id="line1">
-	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(0).getbName() %>" id="newbook1"><img src="<%= request.getContextPath() %>/<%= list.get(0).getImgPath()%>/<%=list.get(0).getImgName()%>"><pre><br><%= list.get(0).getbName() %></pre></a>
-	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(1).getbName() %>" id="newbook2"><img src="<%= request.getContextPath() %>/<%= list.get(1).getImgPath()%>/<%=list.get(1).getImgName()%>"><pre><br><%= list.get(1).getbName() %></pre></a>
-	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(2).getbName() %>" id="newbook3"><img src="<%= request.getContextPath() %>/<%= list.get(2).getImgPath()%>/<%=list.get(2).getImgName()%>"><pre><br><%= list.get(2).getbName() %></pre></a>
-	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(3).getbName() %>" id="newbook4"><img src="<%= request.getContextPath() %>/<%= list.get(3).getImgPath()%>/<%=list.get(3).getImgName()%>"><pre><br><%= list.get(3).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=서명&search=<%= list.get(0).getbName() %>" id="newbook1"><img src="<%= request.getContextPath() %>/<%= list.get(0).getImgPath()%>/<%=list.get(0).getImgName()%>"><pre><br><%= list.get(0).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=서명&search=<%= list.get(1).getbName() %>" id="newbook2"><img src="<%= request.getContextPath() %>/<%= list.get(1).getImgPath()%>/<%=list.get(1).getImgName()%>"><pre><br><%= list.get(1).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=서명&search=<%= list.get(2).getbName() %>" id="newbook3"><img src="<%= request.getContextPath() %>/<%= list.get(2).getImgPath()%>/<%=list.get(2).getImgName()%>"><pre><br><%= list.get(2).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=서명&search=<%= list.get(3).getbName() %>" id="newbook4"><img src="<%= request.getContextPath() %>/<%= list.get(3).getImgPath()%>/<%=list.get(3).getImgName()%>"><pre><br><%= list.get(3).getbName() %></pre></a>
 
             	</div>
 
             	<div id="line2">
-	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(4).getbName() %>" id="newbook5"><img src="<%= request.getContextPath() %>/<%= list.get(4).getImgPath()%>/<%=list.get(4).getImgName()%>"><pre><br><%= list.get(4).getbName() %></pre></a>
-	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(5).getbName() %>" id="newbook6"><img src="<%= request.getContextPath() %>/<%= list.get(5).getImgPath()%>/<%=list.get(5).getImgName()%>"><pre><br><%= list.get(5).getbName() %></pre></a>
-	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(6).getbName() %>" id="newbook7"><img src="<%= request.getContextPath() %>/<%= list.get(6).getImgPath()%>/<%=list.get(6).getImgName()%>"><pre><br><%= list.get(6).getbName() %></pre></a>
-	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=name&search=<%= list.get(7).getbName() %>" id="newbook8"><img src="<%= request.getContextPath() %>/<%= list.get(7).getImgPath()%>/<%=list.get(7).getImgName()%>"><pre><br><%= list.get(7).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=서명&search=<%= list.get(4).getbName() %>" id="newbook5"><img src="<%= request.getContextPath() %>/<%= list.get(4).getImgPath()%>/<%=list.get(4).getImgName()%>"><pre><br><%= list.get(4).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=서명&search=<%= list.get(5).getbName() %>" id="newbook6"><img src="<%= request.getContextPath() %>/<%= list.get(5).getImgPath()%>/<%=list.get(5).getImgName()%>"><pre><br><%= list.get(5).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=서명&search=<%= list.get(6).getbName() %>" id="newbook7"><img src="<%= request.getContextPath() %>/<%= list.get(6).getImgPath()%>/<%=list.get(6).getImgName()%>"><pre><br><%= list.get(6).getbName() %></pre></a>
+	                <a href="<%= request.getContextPath() %>/simple/search?searchSelect=서명&search=<%= list.get(7).getbName() %>" id="newbook8"><img src="<%= request.getContextPath() %>/<%= list.get(7).getImgPath()%>/<%=list.get(7).getImgName()%>"><pre><br><%= list.get(7).getbName() %></pre></a>
              	</div>
              	<div id="btns">
                 <button id="more" onclick="location.href='<%= request.getContextPath() %>/views/search/detailSearch.jsp'">더보기</button>

@@ -48,8 +48,7 @@ public class pwdSearchServlet extends HttpServlet {
 	      member.setEmail(email);
 		
 	      Member pwdSearch = new MemberService().pwdSearch(member);
-		
-		
+				
 	      if(pwdSearch==null || !pwdSearch.getEmail().equals(email))
 	        {
 	            request.getSession().setAttribute("msg", "아이디나 이메일 정보가 맞지 않습니다.");
@@ -65,7 +64,7 @@ public class pwdSearchServlet extends HttpServlet {
 	                //메일 받을 주소
 	                String to_email = pwdSearch.getEmail();
 	                
-	                //SMTP 서버 정보를 설정한다.
+	                //SMTP 서버 정보를 설정
 	                Properties props = new Properties();
 	                props.put("mail.smtp.host", host);
 	                props.put("mail.smtp.port", 465);
@@ -116,13 +115,12 @@ public class pwdSearchServlet extends HttpServlet {
 	                    System.out.println("이메일 전송");
 		        
 	                }catch (Exception e) {
-	                    e.printStackTrace();// TODO: handle exception
+	                    
 	                }
 	                HttpSession saveKey = request.getSession();
 	                saveKey.setAttribute("AuthenticationKey", AuthenticationKey);
 	                //패스워드 바꿀때 뭘 바꿀지 조건에 들어가는 id	   
-//	                HttpSession session = request.getSession();
-//	                idSession.setAttribute("user_id", user_id);
+	                saveKey.setAttribute("user_id", user_id);
 	                request.getRequestDispatcher("/views/member/pwdSearchResult.jsp").forward(request, response);
 	    }
 

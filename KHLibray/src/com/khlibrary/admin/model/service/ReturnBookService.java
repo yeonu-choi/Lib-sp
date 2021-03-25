@@ -57,6 +57,8 @@ public class ReturnBookService {
 			result = 0;
 		}
 		
+		close(conn);
+		
 		return result ;
 	}
 

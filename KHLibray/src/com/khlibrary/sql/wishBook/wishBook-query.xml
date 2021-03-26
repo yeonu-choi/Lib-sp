@@ -46,12 +46,12 @@
 		 WHERE 
 		 	   WB_NAME LIKE ?
 		   AND 
-		       STATUS LIKE '입고중'
+		       STATUS LIKE '%입고%'
 	</entry>
 	
 	<entry key="wishBookList">
 		SELECT 
-				WB_ID
+			    WB_ID
 			  , WB_NAME
 			  , WB_WRITER
 			  , WB_PUBLISHER
@@ -61,13 +61,25 @@
 			  , USER_ID
 			  , PHONE
 			  , EMAIL
-		  FROM
-		  	   WISHBOOK
-		 WHERE
-		       STATUS LIKE '%입고%'
-	  ORDER BY 
-	  		   STATUS DESC
-	  		 , REQUEST_DATE
+      	 FROM (
+      		    SELECT 
+						WB_ID
+			  		  , WB_NAME
+			  	      , WB_WRITER
+			   	      , WB_PUBLISHER
+			   	      , ISSUE_YEAR
+			   	      , REQUEST_DATE
+			   	      , STATUS
+			   	      , USER_ID
+			   	      , PHONE
+			   	      , EMAIL
+		  		 FROM
+		  	           WISHBOOK
+		 		WHERE
+		       		   STATUS LIKE '%입고%'
+			  )
+      ORDER BY STATUS DESC
+      		 , WB_ID
 	</entry>
 	
 	<entry key="insertWishBook">
@@ -81,8 +93,8 @@
 		   	   STATUS LIKE '입고중'
 	</entry>
 	<entry key="selectProcessWishBookList">
-		SELECT 
-				WB_ID
+    	SELECT 
+    			WB_ID
 			  , WB_NAME
 			  , WB_WRITER
 			  , WB_PUBLISHER
@@ -92,16 +104,28 @@
 			  , USER_ID
 			  , PHONE
 			  , EMAIL
-		  FROM
-		  	   WISHBOOK
-		 WHERE
-		       STATUS LIKE ?
-	  ORDER BY 
-			   REQUEST_DATE
+      FROM 	(	
+      		    SELECT 
+						WB_ID
+			  		  , WB_NAME
+			  	      , WB_WRITER
+			   	      , WB_PUBLISHER
+			   	      , ISSUE_YEAR
+			   	      , REQUEST_DATE
+			   	      , STATUS
+			   	      , USER_ID
+			   	      , PHONE
+			   	      , EMAIL
+		  		 FROM
+		  	           WISHBOOK
+		 		WHERE
+		       		   STATUS LIKE ?
+                )
+             ORDER BY WB_ID
 	</entry>
 	<entry key="selectFinishWishBookList">
 		SELECT 
-				WB_ID
+			    WB_ID
 			  , WB_NAME
 			  , WB_WRITER
 			  , WB_PUBLISHER
@@ -111,12 +135,24 @@
 			  , USER_ID
 			  , PHONE
 			  , EMAIL
-		  FROM
-		  	   WISHBOOK
-		 WHERE
-		       STATUS LIKE ?
-	  ORDER BY 
-			   REQUEST_DATE DESC
+      FROM 	(		
+      		    SELECT 
+						WB_ID
+			  		  , WB_NAME
+			  	      , WB_WRITER
+			   	      , WB_PUBLISHER
+			   	      , ISSUE_YEAR
+			   	      , REQUEST_DATE
+			   	      , STATUS
+			   	      , USER_ID
+			   	      , PHONE
+			   	      , EMAIL
+		  		 FROM
+		  	           WISHBOOK
+		 		WHERE
+		       		   STATUS LIKE ?
+                )
+             ORDER BY WB_ID
 	</entry>
 
 	<entry key="wishBookEmail">

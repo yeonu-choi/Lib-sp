@@ -23,8 +23,8 @@ public class NaverBookApi {
 
 
 	public List<NaverBook> searchBook(String keyword, int display) {
-        String clientId = "Lt2CWe7q40LzGBQXOYAj"; //애플리케이션 클라이언트 아이디값"
-        String clientSecret = "uC2sxKUWM6"; //애플리케이션 클라이언트 시크릿값"
+        String clientId = ""; //애플리케이션 클라이언트 아이디값"
+        String clientSecret = ""; //애플리케이션 클라이언트 시크릿값"
 
 
         String text = null;
